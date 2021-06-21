@@ -1,6 +1,6 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 
-from .forms import CreateUserForm
+from .forms import UserForm, CustomerForm
 
 
 def index(request):
@@ -8,12 +8,21 @@ def index(request):
 
 
 def registerPage(request):
-    form = CreateUserForm()
-
     if request.method == 'POST':
-        form = CreateUserForm(request.POST)
-        if form.is_valid():
-            form.save()
+        user_form = UserForm(request.POST)
+        customer_form = CustomerForm(request.POST)
 
-    context = {'form': form}
+        if user_form.is_valid() and customer_form.is_valid():
+            user = user_form.save()
+            customer = customer_form.save(commit=False)
+            customer.user = user
+
+            customer.save()
+            # TODO: add redirect here with correct namespace
+            # return redirect('register:users')
+    else:
+        user_form = UserForm()
+        customer_form = CustomerForm()
+
+    context = {'user_form': user_form, 'customer_form': customer_form}
     return render(request, 'users/register.html', context)
