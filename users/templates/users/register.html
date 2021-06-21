@@ -1,16 +1,43 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-<h3>Register</h3>
-<form method="POST">
-    {% csrf_token %}
-    {{ user_form.as_p }}
-    {{ customer_form.as_p }}
-    <input type="submit" name="Create User">
-</form>
-</body>
-</html>
+{% extends "base.html" %}
+
+{% block title %} PyCommercial | Register Account {% endblock title %}
+{% block content %}
+    <h3>Register Account</h3>
+    <form method="POST">
+        {% csrf_token %}
+
+        {{ user_form.username.label }}
+        {{ user_form.username }}
+        <br>
+        {{ user_form.email.label }}
+        {{ user_form.email }}
+        <br>
+        {{ user_form.first_name.label }}
+        {{ user_form.first_name }}
+        <br>
+        {{ user_form.last_name.label }}
+        {{ user_form.last_name }}
+        <br>
+        {{ customer_form.country.label }}
+        {{ customer_form.country }}
+        <br>
+        {{ customer_form.city.label }}
+        {{ customer_form.city }}
+        <br>
+        {{ customer_form.address.label }}
+        {{ customer_form.address }}
+        <br>
+        {{ customer_form.mobile.label }}
+        {{ customer_form.mobile }}
+        <br>
+        {{ user_form.password1.label }}
+        {{ user_form.password1 }}
+        <br>
+        {{ user_form.password2.label }}
+        {{ user_form.password2 }}
+        <br>
+        <input type="submit" name="Create User" value="Register Account">
+    </form>
+{% endblock content %}
+
+
