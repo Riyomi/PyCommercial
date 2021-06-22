@@ -6,7 +6,7 @@ name = "pypi"
 [packages]
 django = "*"
 python-decouple = "*"
-django-tailwind = "*"
+django-livereload-server = "*"
 
 [dev-packages]
 

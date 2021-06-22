@@ -3,15 +3,17 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
     <meta charset="UTF-8">
     <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static "css/tailwind-output.css" %}">
+    <link rel="shortcut icon" href="{% static 'favicon.ico' %}">
     <title>{% block title %} {% endblock %}</title>
 </head>
 <body>
-<nav>This is the navbar</nav>
-{% block content %} {% endblock content %}
-<footer>This is a footer</footer>
+<div class="content">
+    <nav>This is the navbar</nav>
+    {% block content %} {% endblock content %}
+    <footer>This is a footer</footer>
+</div>
 </body>
-
 </html>
