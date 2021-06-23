@@ -3,83 +3,58 @@
 
 {% block title %} PyCommercial | Register Account {% endblock title %}
 {% block content %}
-    <div class="container mx-auto max-w-xs">
-        <p class="block text-gray-700 font-bold text-xl mb-4">Register Account</p>
+    <div class="grid grid-cols-1 mx-auto max-w-md">
         <form method="POST" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
             {% csrf_token %}
+            <p class="block text-purple-700 opacity-75 font-bold text-3xl mb-2">Register account</p>
+            <p class="text-purple-400 mb-4 text-lg">Get started and create your free account now</p>
             <div class="fieldWrapper mb-4">
-                <p class="block text-gray-700 text-sm font-bold mb-2">
-                    {{ user_form.username.label }}
-                </p>
                 {{ user_form.username|addclass:'shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline' }}
             </div>
 
             <div class="fieldWrapper mb-4">
-                <p class="block text-gray-700 text-sm font-bold mb-2">
-                    {{ user_form.email.label }}
-                </p>
                 {{ user_form.email|addclass:'shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline' }}
             </div>
 
             <div class="fieldWrapper mb-4">
-                <p class="block text-gray-700 text-sm font-bold mb-2">
-                    {{ user_form.first_name.label }}
-                </p>
                 {{ user_form.first_name|addclass:'shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline' }}
             </div>
 
             <div class="fieldWrapper mb-4">
-                <p class="block text-gray-700 text-sm font-bold mb-2">
-                    {{ user_form.last_name.label }}
-                </p>
                 {{ user_form.last_name|addclass:'shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline' }}
             </div>
 
             <div class="fieldWrapper mb-4">
-                <p class="block text-gray-700 text-sm font-bold mb-2">
-                    {{ customer_form.country.label }}
-                </p>
                 {{ customer_form.country|addclass:'shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline' }}
             </div>
 
             <div class="fieldWrapper mb-4">
-                <p class="block text-gray-700 text-sm font-bold mb-2">
-                    {{ customer_form.city.label }}
-                </p>
                 {{ customer_form.city|addclass:'shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline' }}
             </div>
 
             <div class="fieldWrapper mb-4">
-                <p class="block text-gray-700 text-sm font-bold mb-2">
-                    {{ customer_form.address.label }}
-                </p>
                 {{ customer_form.address|addclass:'shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline' }}
             </div>
 
             <div class="fieldWrapper mb-4">
-                <p class="block text-gray-700 text-sm font-bold mb-2">
-                    {{ customer_form.mobile.label }}
-                </p>
                 {{ customer_form.mobile|addclass:'shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline' }}
             </div>
 
             <div class="fieldWrapper mb-4">
-                <p class="block text-gray-700 text-sm font-bold mb-2">
-                    {{ user_form.password1.label }}
-                </p>
                 {{ user_form.password1|addclass:'shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline' }}
             </div>
 
             <div class="fieldWrapper mb-4">
-                <p class="block text-gray-700 text-sm font-bold mb-2">
-                    {{ user_form.password2.label }}
-                </p>
                 {{ user_form.password2|addclass:'shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline' }}
             </div>
 
-            <div class="flex items-center justify-between">
+            <div class="flex">
                 <input type="submit" name="Create User" value="Register Account"
-                       class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+                       class="flex-grow m-auto mt-5 bg-purple-700 opacity-50 hover:bg-purple-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+            </div>
+
+            <div class="mt-5">
+                <span>Already have an account? </span><a href="#" class="text-purple-500 opacity-75 font-bold">Login</a>
             </div>
         </form>
     </div>

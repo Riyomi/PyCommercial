@@ -10,7 +10,7 @@
     <title>{% block title %} {% endblock %}</title>
 </head>
 <body>
-<div class="content">
+<div class="m-auto bg-purple-200">
     <nav class="flex items-center justify-between flex-wrap bg-purple-600 bg-opacity-50 p-6 filter drop-shadow-lg">
         <div class="flex items-center flex-shrink-0 text-white mr-6">
             <span class="font-semibold text-xl tracking-tight">PyCommercial</span>
@@ -25,19 +25,19 @@
         </div>
         <div class="w-full block flex-grow lg:flex lg:items-center lg:w-auto">
             <div class="text-sm lg:flex-grow">
-                <a href="#responsive-header"
+                <a href="#"
                    class="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4">
                     Home
                 </a>
-                <a href="#responsive-header"
+                <a href="#"
                    class="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4">
                     Products
                 </a>
-                <a href="#responsive-header"
+                <a href="#"
                    class="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4">
                     Stores
                 </a>
-                <a href="#responsive-header"
+                <a href="#"
                    class="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4">
                     About Us
                 </a>
@@ -52,7 +52,10 @@
     <div class="bg-purple-200 bg-opacity-50 pt-5">
         {% block content %} {% endblock content %}
     </div>
-    <footer>This is a footer</footer>
+    <footer class="bg-purple-600 bg-opacity-50 filter drop-shadow-lg p-6 text-white flex justify-between">
+        <span>© 2021 PyCommercial. All rights reserved.</span>
+        <span class="">Website created by Richard Szabo</span>
+    </footer>
 </div>
 </body>
 </html>

@@ -24,5 +24,15 @@ def registerPage(request):
         user_form = UserForm()
         customer_form = CustomerForm()
 
+    setplaceholders(user_form)
+    setplaceholders(customer_form)
+
+    customer_form.fields['mobile'].widget.attrs['placeholder'] = 'Mobile number'
+
     context = {'user_form': user_form, 'customer_form': customer_form}
     return render(request, 'users/register.html', context)
+
+
+def setplaceholders(form):
+    for field in form.fields:
+        form.fields[field].widget.attrs['placeholder'] = form.fields[field].label
