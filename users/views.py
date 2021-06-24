@@ -1,4 +1,6 @@
 from django.shortcuts import render, redirect
+from django.contrib import messages
+from django.contrib.auth import authenticate, login, logout
 
 from .forms import UserForm, CustomerForm
 
@@ -17,9 +19,10 @@ def registerPage(request):
             customer = customer_form.save(commit=False)
             customer.user = user
 
+            request.session['username'] = user_form.cleaned_data.get('username')
+
             customer.save()
-            # TODO: add redirect here with correct namespace
-            # return redirect('register:users')
+            return redirect('success')
     else:
         user_form = UserForm()
         customer_form = CustomerForm()
@@ -31,6 +34,21 @@ def registerPage(request):
 
     context = {'user_form': user_form, 'customer_form': customer_form}
     return render(request, 'users/register.html', context)
+
+
+def loginPage(request):
+    if request.method == 'POST':
+        request.POST.get('username')
+        request.POST.get('username')
+
+    return render(request, 'users/login.html')
+
+
+def successPage(request):
+    username = request.session['username']
+    messages.success(request, 'Registration successful ' + username)
+
+    return render(request, 'users/success.html')
 
 
 def setplaceholders(form):

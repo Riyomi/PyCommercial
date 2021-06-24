@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% load myfilters %}
+
+{% block title %}Login{% endblock title %}
+{% block content %}
+    <div class="grid grid-cols-1 mx-auto max-w-md">
+        <form method="POST" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+            {% csrf_token %}
+            <p class="block text-purple-700 opacity-75 font-bold text-3xl mb-4">Login</p>
+
+            <div class="fieldWrapper mb-4">
+                <input type="email" name="Email" placeholder="Email address" class="myinputfield">
+            </div>
+
+            <div class="fieldWrapper mb-4">
+                <input type="password" name="Password" placeholder="*********" class="myinputfield">
+            </div>
+
+            <div class="flex">
+                <input type="submit" name="Login" value="Login"
+                       class="purple-btn">
+            </div>
+
+            <div class="mt-5">
+                <span>Don't have an account yet? </span><a href="{% url 'users:register' %}"
+                                                           class="text-purple-500 opacity-75 font-bold">Register now</a>
+            </div>
+        </form>
+    </div>
+{% endblock content %}
+
+

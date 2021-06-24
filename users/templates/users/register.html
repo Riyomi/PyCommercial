@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% load myfilters %}
 
-{% block title %} PyCommercial | Register Account {% endblock title %}
+{% block title %}Register Account{% endblock title %}
 {% block content %}
     <div class="grid grid-cols-1 mx-auto max-w-md">
         <form method="POST" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
@@ -9,52 +9,58 @@
             <p class="block text-purple-700 opacity-75 font-bold text-3xl mb-2">Register account</p>
             <p class="text-purple-400 mb-4 text-lg">Get started and create your free account now</p>
             <div class="fieldWrapper mb-4">
-                {{ user_form.username|addclass:'shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline' }}
+                {{ user_form.username|addclass:'myinputfield' }}
             </div>
 
             <div class="fieldWrapper mb-4">
-                {{ user_form.email|addclass:'shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline' }}
+                {{ user_form.email|addclass:'myinputfield' }}
             </div>
 
             <div class="fieldWrapper mb-4">
-                {{ user_form.first_name|addclass:'shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline' }}
+                {{ user_form.first_name|addclass:'myinputfield' }}
             </div>
 
             <div class="fieldWrapper mb-4">
-                {{ user_form.last_name|addclass:'shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline' }}
+                {{ user_form.last_name|addclass:'myinputfield' }}
             </div>
 
             <div class="fieldWrapper mb-4">
-                {{ customer_form.country|addclass:'shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline' }}
+                {{ customer_form.country|addclass:'myinputfield' }}
             </div>
 
             <div class="fieldWrapper mb-4">
-                {{ customer_form.city|addclass:'shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline' }}
+                {{ customer_form.city|addclass:'myinputfield' }}
             </div>
 
             <div class="fieldWrapper mb-4">
-                {{ customer_form.address|addclass:'shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline' }}
+                {{ customer_form.address|addclass:'myinputfield' }}
             </div>
 
             <div class="fieldWrapper mb-4">
-                {{ customer_form.mobile|addclass:'shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline' }}
+                {{ customer_form.mobile|addclass:'myinputfield' }}
             </div>
 
             <div class="fieldWrapper mb-4">
-                {{ user_form.password1|addclass:'shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline' }}
+                {{ user_form.password1|addclass:'myinputfield' }}
             </div>
 
             <div class="fieldWrapper mb-4">
-                {{ user_form.password2|addclass:'shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline' }}
+                {{ user_form.password2|addclass:'myinputfield' }}
             </div>
 
             <div class="flex">
                 <input type="submit" name="Create User" value="Register Account"
-                       class="flex-grow m-auto mt-5 bg-purple-700 opacity-50 hover:bg-purple-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+                       class="purple-btn">
             </div>
 
-            <div class="mt-5">
-                <span>Already have an account? </span><a href="#" class="text-purple-500 opacity-75 font-bold">Login</a>
+            {% for message in messages %}
+                <p class="text-green-300">{{ message }}</p>
+            {% endfor %}
+            {{ user_form.errors }}
+            {{ customer_form.errors }}
+            <div class="mt-4">
+                <span>Already have an account? </span><a href="{% url 'users:login' %}"
+                                                         class="text-purple-500 opacity-75 font-bold">Login</a>
             </div>
         </form>
     </div>

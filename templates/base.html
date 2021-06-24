@@ -7,10 +7,11 @@
     <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
     <link rel="stylesheet" href="{% static "css/tailwind-output.css" %}">
     <link rel="shortcut icon" href="{% static 'favicon.ico' %}">
-    <title>{% block title %} {% endblock %}</title>
+    <title>{% block title %} {% endblock %} | PyCommercial</title>
+    {% block extrahead %} {% endblock %}
 </head>
 <body>
-<div class="m-auto bg-purple-200">
+<div class="flex flex-col min-h-screen m-auto bg-purple-200">
     <nav class="flex items-center justify-between flex-wrap bg-purple-600 bg-opacity-50 p-6 filter drop-shadow-lg">
         <div class="flex items-center flex-shrink-0 text-white mr-6">
             <span class="font-semibold text-xl tracking-tight">PyCommercial</span>
@@ -25,7 +26,7 @@
         </div>
         <div class="w-full block flex-grow lg:flex lg:items-center lg:w-auto">
             <div class="text-sm lg:flex-grow">
-                <a href="#"
+                <a href="{% url 'users:index' %}"
                    class="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4">
                     Home
                 </a>
@@ -44,17 +45,20 @@
             </div>
             <div>
                 <a href="#"
-                   class="inline-block text-sm px-4 py-2 leading-none text-white hover:text-teal-500 mt-4 lg:mt-0">Sign
-                    in</a>
+                   class="inline-block text-sm px-4 py-2 leading-none text-white hover:text-teal-500 mt-4 lg:mt-0">Cart</a>
+                <a href="{% url 'users:login' %}"
+                   class="inline-block text-sm px-4 py-2 leading-none text-white hover:text-teal-500 mt-4 lg:mt-0">My
+                    Account</a>
+
             </div>
         </div>
     </nav>
-    <div class="bg-purple-200 bg-opacity-50 pt-5">
+    <div class="bg-purple-200 bg-opacity-50 pt-5 overflow-auto">
         {% block content %} {% endblock content %}
     </div>
-    <footer class="bg-purple-600 bg-opacity-50 filter drop-shadow-lg p-6 text-white flex justify-between">
+    <footer class="w-full bg-purple-600 bg-opacity-50 filter drop-shadow-lg p-6 text-white flex justify-between mt-auto">
         <span>© 2021 PyCommercial. All rights reserved.</span>
-        <span class="">Website created by Richard Szabo</span>
+        <span class="">Created by Richard Szabo</span>
     </footer>
 </div>
 </body>
