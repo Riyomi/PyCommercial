@@ -1,6 +1,8 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
+from .decorators import unauthenticated_user
 
 from .forms import UserForm, CustomerForm
 
@@ -9,6 +11,7 @@ def index(request):
     return render(request, 'users/index.html')
 
 
+@unauthenticated_user
 def registerPage(request):
     if request.method == 'POST':
         user_form = UserForm(request.POST)
@@ -36,12 +39,26 @@ def registerPage(request):
     return render(request, 'users/register.html', context)
 
 
+@unauthenticated_user
 def loginPage(request):
     if request.method == 'POST':
-        request.POST.get('username')
-        request.POST.get('username')
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+
+        user = authenticate(request, username=username, password=password)
+
+        if user is not None:
+            login(request, user)
+            return redirect('/home/profile')
+        else:
+            messages.info(request, 'Username or password is incorrect')
 
     return render(request, 'users/login.html')
+
+
+def logoutUser(request):
+    logout(request)
+    return redirect('users:login')
 
 
 def successPage(request):
@@ -49,6 +66,11 @@ def successPage(request):
     messages.success(request, 'Registration successful ' + username)
 
     return render(request, 'users/success.html')
+
+
+@login_required(login_url='users:login')
+def profilePage(request):
+    return render(request, 'users/profile.html')
 
 
 def setplaceholders(form):

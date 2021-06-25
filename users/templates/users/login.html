@@ -9,11 +9,11 @@
             <p class="block text-purple-700 opacity-75 font-bold text-3xl mb-4">Login</p>
 
             <div class="fieldWrapper mb-4">
-                <input type="email" name="Email" placeholder="Email address" class="myinputfield">
+                <input type="text" name="username" placeholder="Username" class="myinputfield">
             </div>
 
             <div class="fieldWrapper mb-4">
-                <input type="password" name="Password" placeholder="*********" class="myinputfield">
+                <input type="password" name="password" placeholder="***************" class="myinputfield">
             </div>
 
             <div class="flex">
@@ -25,7 +25,12 @@
                 <span>Don't have an account yet? </span><a href="{% url 'users:register' %}"
                                                            class="text-purple-500 opacity-75 font-bold">Register now</a>
             </div>
+
         </form>
+
+        {% for message in messages %}
+            <p id="{{ message }}">{{ message }}</p>
+        {% endfor %}
     </div>
 {% endblock content %}
 

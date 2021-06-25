@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% load myfilters %}
+
+{% block title %}Home{% endblock title %}
+{% block content %}
+    <div class="grid grid-cols-1 mx-auto max-w-md">
+        <p>You are logged in {{ request.user }}</p>
+    </div>
+{% endblock content %}
+
+
