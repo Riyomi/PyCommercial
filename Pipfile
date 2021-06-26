@@ -10,6 +10,7 @@ django-livereload-server = "*"
 django-phonenumber-field = "*"
 phonenumbers = "*"
 babel = "*"
+fontawesome-free = "*"
 
 [dev-packages]
 

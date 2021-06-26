@@ -49,7 +49,7 @@ def loginPage(request):
 
         if user is not None:
             login(request, user)
-            return redirect('/home/profile')
+            return redirect('users:profile')
         else:
             messages.info(request, 'Username or password is incorrect')
 
@@ -70,7 +70,7 @@ def successPage(request):
 
 @login_required(login_url='users:login')
 def profilePage(request):
-    return render(request, 'users/profile.html')
+    return render(request, 'users/account/account.html')
 
 
 def setplaceholders(form):

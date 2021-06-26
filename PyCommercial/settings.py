@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 import os
+import sys
 from pathlib import Path
 from decouple import config
 
@@ -29,6 +30,7 @@ DEBUG = True
 ALLOWED_HOSTS = []
 
 # Application definition
+sys.modules['fontawesome_free'] = __import__('fontawesome-free')
 
 INSTALLED_APPS = [
     'products.apps.ProductsConfig',
@@ -41,6 +43,7 @@ INSTALLED_APPS = [
     'livereload',
     'django.contrib.staticfiles',
     'phonenumber_field',
+    'fontawesome_free',
 ]
 
 MIDDLEWARE = [

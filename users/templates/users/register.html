@@ -6,7 +6,7 @@
     <div class="grid grid-cols-1 mx-auto max-w-md">
         <form method="POST" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
             {% csrf_token %}
-            <p class="block text-purple-700 opacity-75 font-bold text-3xl mb-2">Register account</p>
+            <p class="title-h1">Register account</p>
             <p class="text-purple-400 mb-4 text-lg">Get started and create your free account now</p>
             <div class="fieldWrapper mb-4">
                 {{ user_form.username|addclass:'myinputfield' }}
@@ -60,7 +60,7 @@
             {{ customer_form.errors }}
             <div class="mt-4">
                 <span>Already have an account? </span><a href="{% url 'users:login' %}"
-                                                         class="text-purple-500 opacity-75 font-bold">Login</a>
+                                                         class="text-purple-400 font-bold">Login</a>
             </div>
         </form>
     </div>
