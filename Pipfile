@@ -11,6 +11,7 @@ django-phonenumber-field = "*"
 phonenumbers = "*"
 babel = "*"
 fontawesome-free = "*"
+pillow = "*"
 
 [dev-packages]
 

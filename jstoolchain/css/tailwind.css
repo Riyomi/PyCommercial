@@ -38,7 +38,6 @@
 
     .navbar-menu {
         @apply inline-block leading-none text-white mt-4 pr-8 lg:mt-0;
-
     }
 
     .navbar-menu:hover {

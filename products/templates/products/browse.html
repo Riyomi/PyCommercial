@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% load myfilters %}
+
+{% block title %}Home{% endblock title %}
+{% block content %}
+    <div class="flex flex-grow bg-white min-w-full min-h-full bg-purple-200">
+        <div class="grid grid-cols-6 grid-rows-6 w-full">
+            <div class="grid col-span-6 w-full content-center">
+                <div class="m-auto w-6/12 grid content-center">
+                    <i class="fas fa-search absolute"></i>
+                    <input type="text" placeholder="Search for products..."
+                           class="py-2 px-4 rounded-lg focus:outline-none focus:ring focus:ring-purple-400"/>
+                </div>
+            </div>
+            <div class="bg-purple-400 row-span-5 px-5 pt-5">
+                <div>
+                    <p class="title-h1 text-white">Filters</p>
+                </div>
+                <div>
+                    <p class="title-h3 text-white">Categories</p>
+                    <p class="title-h3 text-white">Price</p>
+                    <p class="title-h3 text-white">Ratings</p>
+                </div>
+            </div>
+            <div class="grid grid-cols-4 col-span-5 row-span-5 mx-3">
+                <div class="bg-purple-400 h-80 m-3 rounded-lg p-5">Item1</div>
+                <div class="bg-purple-300 h-80 m-3 rounded-lg p-5">Item2</div>
+                <div class="bg-purple-400 h-80 m-3 rounded-lg p-5">Item3</div>
+                <div class="bg-purple-300 h-80 m-3 rounded-lg p-5">Item4</div>
+
+                <div class="bg-purple-300 h-80 m-3 rounded-lg p-5">Item1</div>
+                <div class="bg-purple-400 h-80 m-3 rounded-lg p-5">Item2</div>
+                <div class="bg-purple-300 h-80 m-3 rounded-lg p-5">Item3</div>
+                <div class="bg-purple-400 h-80 m-3 rounded-lg p-5">Item4</div>
+
+                <div class="grid col-span-4 h-20">
+                    <div class="m-auto">Pagination will go here</div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock content %}
+
+

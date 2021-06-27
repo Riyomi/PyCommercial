@@ -7,10 +7,6 @@ from .decorators import unauthenticated_user
 from .forms import UserForm, CustomerForm
 
 
-def index(request):
-    return render(request, 'users/index.html')
-
-
 @unauthenticated_user
 def registerPage(request):
     if request.method == 'POST':

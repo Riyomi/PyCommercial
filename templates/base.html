@@ -13,9 +13,10 @@
 </head>
 <body>
 <div class="flex flex-col min-h-screen m-auto bg-purple-200">
-    <nav class="flex items-center justify-between flex-wrap bg-purple-500 p-6 filter drop-shadow-lg mb-4">
+    <nav class="flex items-center justify-between flex-wrap bg-purple-500 p-6 filter drop-shadow-lg">
         <div class="flex items-center flex-shrink-0 text-white ml-4 mr-20">
-            <span class="font-semibold text-2xl tracking-tight"><a href="{% url 'users:index' %}">PyCommercial</a></span>
+            <span class="font-semibold text-2xl tracking-tight"><a
+                    href="{% url 'products:home' %}">PyCommercial</a></span>
         </div>
         <div class="block lg:hidden">
             <button class="flex items-center px-3 py-2 border rounded text-teal-200 border-teal-400 hover:text-white hover:border-white">
@@ -26,7 +27,7 @@
         </div>
         <div class="w-full block flex-grow lg:flex lg:items-center lg:w-auto">
             <div class="lg:flex-grow">
-                <a href="#" class="navbar-menu">Browse</a>
+                <a href="{% url 'products:browse' %}" class="navbar-menu">Browse</a>
                 <a href="#" class="navbar-menu">Stores</a>
                 <a href="#" class="navbar-menu">About Us</a>
             </div>
@@ -60,8 +61,9 @@
                     </div>
                 {% else %}
                     <a href="{% url 'users:login' %}"
-                       class="navbar-menu px-4">
-                        Login
+                       class="navbar-menu pr-4 pl-2">
+                        <i class="fas fa-sign-in-alt"></i>
+                        <span class="pl-1">Login</span>
                     </a>
                 {% endif %}
             <script src="{% static 'js/dropdown.js' %}"></script>
