@@ -73,6 +73,11 @@ def profilePage(request):
     return render(request, 'users/account/account.html')
 
 
+@login_required(login_url='users:login')
+def addressPage(request):
+    return render(request, 'users/account/address.html')
+
+
 def setplaceholders(form):
     for field in form.fields:
         form.fields[field].widget.attrs['placeholder'] = form.fields[field].label

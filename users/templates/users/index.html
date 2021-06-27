@@ -3,8 +3,21 @@
 
 {% block title %}Home{% endblock title %}
 {% block content %}
-    <div class="grid grid-cols-1 mx-auto max-w-md">
-
+    <div class="flex min-w-full pl-48">
+        <div class="flex flex-col w-2/5 py-24">
+            <p class="text-8xl text-purple-500 font-semibold">Online Shopping</p>
+            <input type="text" placeholder="Search for products"
+                   class="py-2 px-4 mt-8 mb-4 rounded-md w-11/12 focus:outline-none focus:ring focus:ring-purple-400"/>
+            <p class="mb-4">...or start browsing by popular categories:</p>
+            <div class="text-purple-600">
+                <a href="#" class="underline mx-2">PC and laptop</a>
+                <a href="#" class="underline mr-2">Mobile phones</a>
+                <a href="#" class="underline mr-2">Fashion</a>
+                <a href="#" class="underline mr-2">DIY</a>
+                <a href="#" class="underline mr-2">Home appliances</a>
+            </div>
+        </div>
+        <div class="flex flex-row h-auto w-3/5 bg-purple-500"></div>
     </div>
 {% endblock content %}
 

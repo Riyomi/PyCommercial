@@ -3,7 +3,7 @@
 
 {% block title %}Register Account{% endblock title %}
 {% block content %}
-    <div class="grid grid-cols-1 mx-auto max-w-md">
+    <div class="flex flex-col mx-auto">
         <form method="POST" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
             {% csrf_token %}
             <p class="title-h1">Register account</p>

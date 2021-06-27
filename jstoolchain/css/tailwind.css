@@ -37,7 +37,7 @@
     }
 
     .navbar-menu {
-        @apply inline-block leading-none text-white mt-4 pr-4 lg:mt-0;
+        @apply inline-block leading-none text-white mt-4 pr-8 lg:mt-0;
 
     }
 
