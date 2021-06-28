@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% load products.productfilters %}
+{% load static %}
+
+{% block title %}{{ product.name }}{% endblock title %}
+{% block content %}
+    <div class="grid bg-white min-h-96 m-3 rounded-lg p-3 w-9/12 self-center">
+        <img src="{{ product.image.url|formaturl }}" alt="item1">
+        <div class="title-h1">${{ product.price }}</div>
+        <div class="text-purple-500 font-semibold mb-2">{{ product.name }}</div>
+        <div class="text-xs text-gray-600 mb-3">{{ product.description }}</div>
+        <button class="purple-btn">Add to cart</button>
+        <div class="title-h1 pt-10">Reviews</div>
+    </div>
+{% endblock content %}
+
+
