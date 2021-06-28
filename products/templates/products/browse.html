@@ -4,15 +4,15 @@
 
 {% block title %}Home{% endblock title %}
 {% block content %}
-    <div class="flex flex-grow bg-white min-w-full min-h-full bg-purple-200">
-        <div class="grid grid-cols-6 w-full">
-            <div class="grid col-span-6 p-6">
-                <form method="get" class="grid mx-auto w-6/12">
-                    <input type="text" placeholder="Search for products..." name="search" value="{{ request.GET.q }}"
-                           class="py-2 px-4 rounded-lg focus:outline-none focus:ring focus:ring-purple-400"/>
-                    <button class="block fas fa-search absolute pt-3 pr-7 right-1/4 text-purple-700 focus:outline-none"></button>
-                </form>
-            </div>
+    <div class="grid grid-cols-6 w-full bg-purple-200">
+        <div class="grid col-span-6 p-6">
+            <form method="get" class="grid mx-auto w-6/12">
+                <input type="text" placeholder="Search for products..." name="search" value="{{ request.GET.search }}"
+                       class="py-2 px-4 rounded-lg focus:outline-none focus:ring focus:ring-purple-400"/>
+                <button class="block fas fa-search absolute pt-3 pr-7 right-1/4 text-purple-700 focus:outline-none"></button>
+            </form>
+        </div>
+        <div class="grid grid-cols-6 col-span-6">
             <div class="bg-white px-5 pt-5 rounded-lg">
                 <div>
                     <p class="title-h1">Filters</p>
@@ -23,23 +23,30 @@
                     <p class="title-h3 text-purple-500">Ratings</p>
                 </div>
             </div>
-            <div class="grid grid-cols-4 col-span-5 mx-3">
+            <div class="grid md:grid-cols-2 xl:grid-cols-4 col-span-5 mx-3">
+                {% if not products %}
+                    <div class="grid col-span-4 bg-white min-h-96 m-3 rounded-lg p-3">
+                        No products match your query.
+                    </div>
+                {% endif %}
                 {% for product in products %}
                     <div class="flex flex-col bg-white min-h-96 m-3 rounded-lg p-3">
                         <a href="{% url 'products:details' product.id %}">
                             <img src="{{ product.image.url|formaturl }}" alt="item1">
                         </a>
                         <div class="title-h1">${{ product.price }}</div>
-                        <div class="text-purple-500 font-semibold mb-2">
+                        <div class="text-purple-500 text-lg	font-semibold mb-2">
                             <a href="{% url 'products:details' product.id %}">{{ product.name }}</a>
                         </div>
                         <div class="text-xs text-gray-600 mb-3">{{ product.description|truncatetext }}</div>
                         <button class="purple-btn mb-2">Add to cart</button>
                     </div>
                 {% endfor %}
-                <div class="grid col-span-4 h-20">
-                    <div class="m-auto text-purple-700 font-semibold">Pagination will go here</div>
-                </div>
+                {% if products.count > 32 %}
+                    <div class="grid col-span-4 h-20">
+                        <div class="m-auto text-purple-700 font-semibold">Pagination will go here</div>
+                    </div>
+                {% endif %}
             </div>
         </div>
     </div>
