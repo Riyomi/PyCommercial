@@ -13,7 +13,7 @@
     }
 
     .purple-btn {
-        @apply flex-grow m-auto bg-purple-500 text-white font-bold py-2 px-4 rounded;
+        @apply flex-grow bg-purple-500 text-white font-bold py-2 px-4 rounded;
     }
 
     .purple-btn:focus {
