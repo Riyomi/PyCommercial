@@ -16,7 +16,8 @@ class Product(models.Model):
 
 class Category(models.Model):
     name = models.CharField('Category Name', max_length=50)
-    parent = models.ForeignKey('Category', on_delete=models.CASCADE, blank=True, null=True)
+    parent = models.ForeignKey(
+        'Category', on_delete=models.CASCADE, blank=True, null=True)
 
     def __str__(self):
         return self.name
@@ -37,7 +38,8 @@ class Order(models.Model):
 class Review(models.Model):
     customer = models.ForeignKey('users.Customer', on_delete=models.CASCADE)
     product = models.ForeignKey('Product', on_delete=models.CASCADE)
-    value = models.IntegerField(default=3, validators=[MaxValueValidator(5), MinValueValidator(1)])
+    value = models.IntegerField(default=3, validators=[
+                                MaxValueValidator(5), MinValueValidator(1)])
     comment = models.TextField('Description', blank=True, null=True)
 
     def __str__(self):

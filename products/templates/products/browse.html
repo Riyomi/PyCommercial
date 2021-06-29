@@ -39,7 +39,8 @@
                             <a href="{% url 'products:details' product.id %}">{{ product.name }}</a>
                         </div>
                         <div class="text-xs text-gray-600 mb-3">{{ product.description|truncatetext }}</div>
-                        <button class="purple-btn mb-2">Add to cart</button>
+                        <button id="{{ product.id }}" onClick="addToCart(this.id)" class="purple-btn mb-2">Add to cart</button>
+                        <script src="{% static 'js/cart.js' %}"></script>
                     </div>
                 {% endfor %}
                 {% if products.count > 32 %}

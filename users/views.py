@@ -18,7 +18,8 @@ def registerPage(request):
             customer = customer_form.save(commit=False)
             customer.user = user
 
-            request.session['username'] = user_form.cleaned_data.get('username')
+            request.session['username'] = user_form.cleaned_data.get(
+                'username')
 
             customer.save()
             return redirect('success')
