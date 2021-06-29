@@ -2,3 +2,8 @@
 .vscode
 .env
 venv
+node_modules
+__pycache__
+tailwind-output.css
+db.sqlite3
+settings.cpython-37.pyc
