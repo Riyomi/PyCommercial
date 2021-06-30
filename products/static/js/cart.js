@@ -22,9 +22,10 @@ function countItems() {
     });
     console.log(count);
     document.getElementById("badge-count").innerHTML = count;
-    return;
+    document.getElementById("badge-count").classList.remove("hidden");
+  } else {
+    document.getElementById("badge-count").classList.add("hidden");
   }
-  document.getElementById("badge-count").innerHTML = 0;
 }
 
 window.onload = countItems;

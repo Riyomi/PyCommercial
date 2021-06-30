@@ -1,16 +1,19 @@
-function openMenu() {
-    document.getElementById("myDropDown").classList.toggle('hidden');
+function openMenu(id) {
+  document
+    .getElementById(id)
+    .nextSibling.nextSibling.classList.toggle("hidden");
 }
 
-// Close the dropdown if the user clicks outside of it
-window.onclick = function(event) {
-  if (!event.target.closest('#dropbtn')) {
-      const dropdowns = document.getElementsByClassName("dropdown-content");
-      for (let i = 0; i < dropdowns.length; i++) {
-          const openDropdown = dropdowns[i];
-          if (!openDropdown.classList.contains('hidden')) {
-            openDropdown.classList.add('hidden');
-          }
-    }
+window.onclick = function (event) {
+  const targetIsCart = event.target.closest("#dropbtncart");
+  const targetIsAccount = event.target.closest("#dropbtn");
+
+  if (targetIsAccount) {
+    document.getElementById("cartDropDown").classList.add("hidden");
+  } else if (targetIsCart) {
+    document.getElementById("accountDropDown").classList.add("hidden");
+  } else {
+    document.getElementById("cartDropDown").classList.add("hidden");
+    document.getElementById("accountDropDown").classList.add("hidden");
   }
- }
+};

@@ -32,22 +32,25 @@
                 <a href="#" class="navbar-menu">About Us</a>
             </div>
             <div>
-                <a href="#"
-                   class="navbar-menu px-4 py-2">
+                <a href="#" id="dropbtncart" class="navbar-menu px-4 py-2" onclick="openMenu(this.id)">
                    <span class="relative inline-block">
                        <span id="badge-count" class="absolute -top-2 -right-2 inline-flex items-center justify-center rounded-full h-4 w-4 text-xs font-semibold bg-red-500"></span>
-                       <i class="fas fa-shopping-cart"></i>
-                   </span>
-                    <span class="pl-1">Cart</span></a>
-                    <script src="{% static 'js/cart.js' %}"></script>
+                       <i class="fas fa-shopping-cart"></i> 
+                    </span>
+                    <span class="pl-1">Cart</span>
+                </a>
+                <div id="cartDropDown" class="hidden absolute right-20 dropdown-content mt-3 py-2 w-32 bg-purple-400 shadow rounded">
+                             <p>Cart goes here</p>
+                 </div>
+                <script src="{% static 'js/cart.js' %}"></script>
                 {% if request.user.is_authenticated %}
-                    <div class="inline-block px-4 leading-none dropdown">
-                        <button onclick="openMenu()" id="dropbtn"
+                    <div class="inline-block px-4 leading-none">
+                        <button id="dropbtn" onclick="openMenu(this.id)" 
                            class="inline-block leading-none text-white mt-4 lg:mt-0 focus:outline-none">
                             <i class="fas fa-user-circle"></i>
                             <span class="pl-1">{{ request.user }}</span>
                         </button>
-                        <div id="myDropDown" class="hidden absolute right-2 dropdown-content mt-3 py-2 w-32 bg-purple-400 shadow rounded">
+                        <div id="accountDropDown" class="hidden absolute right-2 dropdown-content mt-3 py-2 w-32 bg-purple-400 shadow rounded">
                              <a href="{% url 'users:profile' %}"
                                class="navbar-menu py-2 px-4">
                                 Account
