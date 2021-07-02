@@ -1,4 +1,5 @@
 {% load static %}
+{% load products.productfilters %}
 
 <!DOCTYPE html>
 <html lang="en">
@@ -39,9 +40,22 @@
                     </span>
                     <span class="pl-1">Cart</span>
                 </a>
-                <div id="cartDropDown" class="hidden absolute right-32 dropdown-content mt-3 py-2 w-42 bg-purple-400 shadow rounded">
-                    
-                 </div>
+                <div id="cartDropDown" class="hidden absolute right-32 w-72 overflow-hidden mt-3 bg-white text-gray-400 shadow rounded grid-flow-row auto-rows-max text-xs">
+                    {% for key, value in request.session.cartdata.items %}
+                        <div id="cart-{{key}}"  class="grid grid-flow-col auto-cols-max border-t border-b hover:bg-purple-100 p-2">
+                            <a href="/home/browse/product/{{key}}" class="grid grid-flow-col auto-cols-max w-40 my-auto">
+                                <img src="{{ value.img_url }}" class="w-16 my-auto"></img>
+                                <span class="break-words w-24 pl-2 pr-2 my-auto"> {{ value.name }} </span>
+                            </a>
+                            <span id="cart-qty-{{key}}" class="w-6 my-auto">x{{ value.qty }}</span>
+                            <span class="w-16 font-bold my-auto">${{ value.price|floatformat:2 }}</span>
+                            <button id="remove-{{key}}" onclick="removeFromCart(this.id)" class="my-auto inline-flex items-center justify-center w-4 h-4 text-red-500 bg-white hover:text-white hover:bg-red-500 rounded-lg outline-none focus:outline-none">
+                            X
+                            </button>
+                        </div>
+                    {% endfor %}
+                    <span id="cart-total" class="text-sm p-2">Total price: ${{request.session.totalprice|floatformat:2}}</span>
+                </div>
                 {% if request.user.is_authenticated %}
                     <div class="inline-block px-4 leading-none">
                         <button id="dropbtn" onclick="openMenu(this.id)" 

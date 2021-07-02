@@ -3,9 +3,7 @@ function addToCart(_productId) {
   const _productName = $(`#${_productId}-name`).val();
   const _productImgUrl = $(`#${_productId}-img-url`).val();
   const _productPrice = $(`#${_productId}-price`).val();
-  const _productQuantity = $(`#${_productId}-quantity`).val();
-
-  console.log(`${_productName} ${_productImgUrl} ${_productPrice}`);
+  const _productQty = $(`#${_productId}-qty`).val();
 
   // Run Ajax
   $.ajax({
@@ -15,7 +13,7 @@ function addToCart(_productId) {
       name: _productName,
       img_url: _productImgUrl,
       price: _productPrice,
-      quantity: _productQuantity ? _productQuantity : 1,
+      qty: _productQty ? _productQty : 1,
     },
     dataType: "json",
     beforeSend: function () {
@@ -23,44 +21,55 @@ function addToCart(_productId) {
     },
     success: function (response) {
       $("#badge-count").text(response.totalitems);
+
+      if ($(`#cartDropDown > #cart-${_productId}`).length) {
+        const qty_span = $(
+          `#cartDropDown > #cart-${_productId} > #cart-qty-${_productId}`
+        );
+        const currentQty = Number(qty_span.text().substring(1));
+        qty_span.text(`x${currentQty + 1}`);
+      } else {
+        $(
+          `<div id="cart-${_productId}"  class="grid grid-flow-col auto-cols-max border-t border-b p-2 hover:bg-purple-100">
+              <a href="/home/browse/product/${_productId}" class="grid grid-flow-col auto-cols-max w-40 my-auto">
+                  <img src="${_productImgUrl}" class="w-16 my-auto"></img>
+                  <span class="break-words w-24 pl-2 pr-2 my-auto"> ${_productName} </span>
+              </a>
+              <span id="cart-qty-${_productId}" class="w-6 my-auto">x1</span>
+              <span class="w-16 font-bold my-auto">$${_productPrice}</span>
+              <button id="remove-${_productId}" onclick="removeFromCart(this.id)" class="my-auto inline-flex items-center justify-center w-4 h-4 text-red-500 bg-white hover:text-white hover:bg-red-500 rounded-lg outline-none focus:outline-none">
+              X
+              </button>
+            </div>`
+        ).insertBefore("#cart-total");
+      }
+      $("#cart-total").text(`Total price: $${response.totalprice}`);
       _button.attr("disabled", false);
     },
   });
 }
 
-function displayCartItems() {
-  if (localStorage.getItem("cart") !== null) {
-    cart = JSON.parse(localStorage.getItem("cart"));
-    document.getElementById("cartDropDown").innerHTML = "";
-    for (item in cart) {
-      const node = document.createElement("a");
-      node.classList.add("grid");
-      node.classList.add("grid-cols-3");
-      node.classList.add("text-white");
+function removeFromCart(_productId) {
+  const _button = $(`#${_productId}`);
+  const _id = _productId.substring(7);
 
-      const img = document
-        .getElementById("product-" + item)
-        .children[0].children[0].cloneNode(true);
-      img.classList.add("w-12");
+  // Run Ajax
+  $.ajax({
+    url: "/home/remove-from-cart",
+    data: {
+      id: _id,
+    },
+    dataType: "json",
+    beforeSend: function () {
+      _button.attr("disabled", true);
+    },
+    success: function (response) {
+      $(`#cartDropDown > #cart-${_id}`).remove();
 
-      const price_text = document.getElementById("product-" + item).children[1]
-        .innerHTML;
+      $("#badge-count").text(response.totalitems);
+      $("#cart-total").text(`Total price: $${response.totalprice}`);
 
-      const price = document.createElement("p");
-      price.innerHTML = price_text;
-
-      const quantity = document.createElement("p");
-      quantity.innerHTML = cart[item];
-      quantity.classList.add("ml-2");
-
-      node.appendChild(img);
-      node.appendChild(price);
-      node.appendChild(quantity);
-      document.getElementById("cartDropDown").appendChild(node);
-    }
-  }
+      _button.attr("disabled", false);
+    },
+  });
 }
-
-document
-  .getElementById("dropbtncart")
-  .addEventListener("click", displayCartItems);
