@@ -1,7 +1,5 @@
 function openMenu(id) {
-  document
-    .getElementById(id)
-    .nextSibling.nextSibling.classList.toggle("hidden");
+  $(`#${id}`).next().toggleClass("hidden");
 }
 
 window.onclick = function (event) {
@@ -9,11 +7,11 @@ window.onclick = function (event) {
   const targetIsAccount = event.target.closest("#dropbtn");
 
   if (targetIsAccount) {
-    document.getElementById("cartDropDown").classList.add("hidden");
+    $("#cartDropDown").addClass("hidden");
   } else if (targetIsCart) {
-    document.getElementById("accountDropDown").classList.add("hidden");
+    $("#accountDropDown").addClass("hidden");
   } else {
-    document.getElementById("cartDropDown").classList.add("hidden");
-    document.getElementById("accountDropDown").classList.add("hidden");
+    $("#cartDropDown").addClass("hidden");
+    $("#accountDropDown").addClass("hidden");
   }
 };
