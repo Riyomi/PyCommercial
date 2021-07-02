@@ -1,6 +1,6 @@
 function addToCart(_productId) {
   const _button = $(`#${_productId}`);
-  const _name = $(`#${_productId}-name`).val();
+  const _productName = $(`#${_productId}-name`).val();
   const _productImgUrl = $(`#${_productId}-img-url`).val();
   const _productPrice = $(`#${_productId}-price`).val();
   const _productQty = $(`#${_productId}-qty`).val();
@@ -10,7 +10,7 @@ function addToCart(_productId) {
     url: "/home/add-to-cart",
     data: {
       id: _productId,
-      name: _name,
+      name: _productName,
       img_url: _productImgUrl,
       price: _productPrice,
       qty: _productQty ? _productQty : 1,
@@ -30,7 +30,7 @@ function addToCart(_productId) {
         qty_span.text(`x${currentQty + 1}`);
       } else {
         $(
-          cartItemHTML(_productId, _name, _productImgUrl, _productPrice)
+          cartItemHTML(_productId, _productName, _productImgUrl, _productPrice)
         ).insertBefore("#cart-total");
       }
       $("#cart-total").text(`Total price: $${response.totalprice}`);
