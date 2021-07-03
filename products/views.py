@@ -23,6 +23,10 @@ def productDetailsPage(request, product_id):
     return render(request, 'products/details.html', {'product': product})
 
 
+def checkoutPage(request):
+    return render(request, 'products/checkout.html')
+
+
 def addToCart(request):
     cart = {}
 

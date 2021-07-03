@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% load myfilters %}
+
+{% block title %}Checkout{% endblock title %}
+{% block content %}
+      <div class="grid bg-white min-w-full h-16 items-center">
+        <div class="grid grid-cols-4 auto-cols-min w-6/12 m-auto">
+          <div class="m-auto uppercase tracking-wide">(1) Personal Details</div>
+          <div class="m-auto uppercase tracking-wide">(2) Shipping</div>
+          <div class="m-auto uppercase tracking-wide">(3) Payment</div>
+          <div class="m-auto uppercase tracking-wide">(4) Summary</div>
+        </div>
+      </div>
+        {% if request.session.cartdata %}
+          <div>
+            {% for key, value in request.session.cartdata.items %}
+                <div>
+                    <a href="/home/browse/product/{{key}}">
+                        <img src="{{ value.img_url }}"></img>
+                        <span> {{ value.name }} </span>
+                    </a>
+                    <span>x{{ value.qty }}</span>
+                    <span>${{ value.price|floatformat:2 }}</span>
+                </div>
+            {% endfor %}
+          </div>
+        {% else %}
+          <span>Cart is empty.</span>
+        {% endif %}
+    </div>
+{% endblock content %}
+
+

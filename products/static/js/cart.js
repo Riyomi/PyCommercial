@@ -22,18 +22,29 @@ function addToCart(_productId) {
     success: function (response) {
       $("#badge-count").text(response.totalitems);
 
-      if ($(`#cartDropDown > #cart-${_productId}`).length) {
+      if ($(`#cartItems > #cart-${_productId}`).length) {
         const qty_span = $(
-          `#cartDropDown > #cart-${_productId} > #cart-qty-${_productId}`
+          `#cartItems > #cart-${_productId} > #cart-qty-${_productId}`
         );
         const currentQty = Number(qty_span.text().substring(1));
         qty_span.text(`x${currentQty + 1}`);
       } else {
-        $(
-          cartItemHTML(_productId, _productName, _productImgUrl, _productPrice)
-        ).insertBefore("#cart-total");
+        $("#cartItems")
+          .last()
+          .append(
+            cartItemHTML(
+              _productId,
+              _productName,
+              _productImgUrl,
+              _productPrice
+            )
+          );
       }
-      $("#cart-total").text(`Total price: $${response.totalprice}`);
+      if (response.totalprice) {
+        $("#cart-total").text(`Total price: $${response.totalprice}`);
+      } else {
+        $("#cart-total").text("Your cart is empty.");
+      }
       _button.attr("disabled", false);
     },
   });
@@ -54,10 +65,14 @@ function removeFromCart(_productId) {
       _button.attr("disabled", true);
     },
     success: function (response) {
-      $(`#cartDropDown > #cart-${_id}`).remove();
+      $(`#cartItems > #cart-${_id}`).remove();
 
       $("#badge-count").text(response.totalitems);
-      $("#cart-total").text(`Total price: $${response.totalprice}`);
+      if (response.totalprice) {
+        $("#cart-total").text(`Total price: $${response.totalprice}`);
+      } else {
+        $("#cart-total").text("Your cart is empty.");
+      }
 
       _button.attr("disabled", false);
     },
@@ -65,15 +80,25 @@ function removeFromCart(_productId) {
 }
 
 function cartItemHTML(id, name, img, price) {
-  return `<div id="cart-${id}"  class="grid grid-flow-col auto-cols-max border-t border-b p-2 hover:bg-purple-100">
+  return `<div id="cart-${id}"  class="cart-item-container">
   <a href="/home/browse/product/${id}" class="grid grid-flow-col auto-cols-max w-40 my-auto">
       <img src="${img}" class="w-16 my-auto"></img>
       <span class="break-words w-24 pl-2 pr-2 my-auto"> ${name} </span>
   </a>
   <span id="cart-qty-${id}" class="w-6 my-auto">x1</span>
   <span class="w-16 font-bold my-auto">$${price}</span>
-  <button id="remove-${id}" onclick="removeFromCart(this.id)" class="my-auto inline-flex items-center justify-center w-4 h-4 text-red-500 bg-white hover:text-white hover:bg-red-500 rounded-lg outline-none focus:outline-none">
+  <button id="remove-${id}" onclick="removeFromCart(this.id)" class="remove-btn">
   X
   </button>
   </div>`;
 }
+
+$("body").on("DOMSubtreeModified", "#badge-count", function () {
+  const count = $("#badge-count").text();
+  console.log(count);
+  if (count === "0" || count === "") {
+    $("#badge-count").addClass("hidden");
+  } else {
+    $("#badge-count").removeClass("hidden");
+  }
+});

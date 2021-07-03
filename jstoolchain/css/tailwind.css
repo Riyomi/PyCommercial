@@ -2,48 +2,84 @@
 @tailwind components;
 @tailwind utilities;
 
-
 @layer components {
-    .myinputfield {
-        @apply shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight;
-    }
+  .myinputfield {
+    @apply shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight;
+  }
 
-    .myinputfield:focus {
-        @apply outline-none ring;
-    }
+  .myinputfield:focus {
+    @apply outline-none ring;
+  }
 
-    .purple-btn {
-        @apply flex-grow bg-purple-500 text-white font-bold py-2 px-4 rounded;
-    }
+  .purple-btn {
+    @apply flex-grow bg-purple-500 text-white font-bold px-4 py-2 rounded;
+  }
 
-    .purple-btn:focus {
-        @apply outline-none ring;
-    }
+  .purple-btn:focus {
+    @apply outline-none ring;
+  }
 
-    .purple-btn:hover {
-        @apply bg-purple-600;
-    }
+  .purple-btn:hover {
+    @apply bg-purple-600;
+  }
 
-    .title-h1 {
-        @apply block text-purple-500 font-bold text-3xl mb-2;
-    }
+  .title-h1 {
+    @apply block text-purple-500 font-bold text-3xl mb-2;
+  }
 
-    .menu-option {
-        @apply block text-white mt-2 mb-2;
-    }
+  .menu-option {
+    @apply block text-white mt-2 mb-2;
+  }
 
-    .menu-option:hover {
-        @apply text-purple-200;
-    }
+  .menu-option:hover {
+    @apply text-purple-200;
+  }
 
-    .navbar-menu {
-        @apply inline-block leading-none text-white mt-4 pr-8 lg:mt-0;
-    }
+  .navbar-menu {
+    @apply inline-block leading-none text-white mt-4 pr-8 lg:mt-0;
+  }
 
-    .navbar-menu:hover {
-        @apply text-purple-200;
-    }
+  .navbar-menu:hover {
+    @apply text-purple-200;
+  }
+
+  .remove-btn {
+    @apply my-auto inline-flex items-center justify-center w-4 h-4 text-red-500 bg-white rounded-lg outline-none;
+  }
+
+  .remove-btn:hover {
+    @apply text-white bg-red-500;
+  }
+
+  .remove-btn:focus {
+    @apply outline-none;
+  }
+
+  .cart-dropdown {
+    @apply absolute right-32 w-72 overflow-hidden mt-3 bg-white text-gray-400 shadow rounded grid-flow-row auto-rows-max text-xs;
+  }
+
+  .cart-item-container {
+    @apply grid grid-flow-col auto-cols-max border-t border-b hover:bg-purple-100 p-2;
+  }
+
+  .cart-badge {
+    @apply absolute -top-2 -right-2 inline-flex items-center justify-center rounded-full h-4 w-4 text-xs font-semibold bg-red-500;
+  }
+
+  .footer-container {
+    @apply w-full bg-purple-500 filter drop-shadow-lg p-6 text-white flex justify-between mt-auto;
+  }
+
+  .account-dropdown {
+    @apply absolute right-2 mt-3 py-2 w-32 bg-purple-400 shadow rounded;
+  }
+
+  #cart-total {
+    @apply col-span-2 my-auto;
+  }
+
+  #cart-summary {
+    @apply grid grid-cols-3 text-sm p-2;
+  }
 }
-
-
-
