@@ -1,33 +1,126 @@
 {% extends "base.html" %}
 {% load myfilters %}
-
 {% block title %}Checkout{% endblock title %}
+
 {% block content %}
-      <div class="grid bg-white min-w-full h-16 items-center">
-        <div class="grid grid-cols-4 auto-cols-min w-6/12 m-auto">
-          <div class="m-auto uppercase tracking-wide">(1) Personal Details</div>
-          <div class="m-auto uppercase tracking-wide">(2) Shipping</div>
-          <div class="m-auto uppercase tracking-wide">(3) Payment</div>
-          <div class="m-auto uppercase tracking-wide">(4) Summary</div>
-        </div>
+<div class="grid bg-white min-w-full h-16 items-center drop-shadow-lg">
+  <div class="grid grid-cols-4 auto-cols-min w-6/12 m-auto">
+    <div class="m-auto uppercase tracking-wide">
+      <div
+        class="
+          inline-flex
+          items-center
+          justify-center
+          w-6
+          h-6
+          text-indigo-100
+          bg-indigo-700
+          rounded-full
+          focus:shadow-outline
+          hover:bg-indigo-800
+        "
+      >
+        1
       </div>
-        {% if request.session.cartdata %}
-          <div>
-            {% for key, value in request.session.cartdata.items %}
-                <div>
-                    <a href="/home/browse/product/{{key}}">
-                        <img src="{{ value.img_url }}"></img>
-                        <span> {{ value.name }} </span>
-                    </a>
-                    <span>x{{ value.qty }}</span>
-                    <span>${{ value.price|floatformat:2 }}</span>
-                </div>
-            {% endfor %}
-          </div>
-        {% else %}
-          <span>Cart is empty.</span>
-        {% endif %}
+      <span>Personal Details</span>
     </div>
+    <div class="m-auto uppercase tracking-wide">
+      <div
+        class="
+          inline-flex
+          items-center
+          justify-center
+          w-6
+          h-6
+          text-indigo-100
+          bg-indigo-700
+          rounded-full
+          focus:shadow-outline
+          hover:bg-indigo-800
+        "
+      >
+        2
+      </div>
+      <span>Shipping</span>
+    </div>
+    <div class="m-auto uppercase tracking-wide">
+      <div
+        class="
+          inline-flex
+          items-center
+          justify-center
+          w-6
+          h-6
+          text-indigo-100
+          bg-indigo-700
+          rounded-full
+          focus:shadow-outline
+          hover:bg-indigo-800
+        "
+      >
+        3
+      </div>
+      <span>Payment</span>
+    </div>
+    <div class="m-auto uppercase tracking-wide">
+      <div
+        class="
+          inline-flex
+          items-center
+          justify-center
+          w-6
+          h-6
+          text-indigo-100
+          bg-indigo-700
+          rounded-full
+          focus:shadow-outline
+          hover:bg-indigo-800
+        "
+      >
+        4
+      </div>
+      <span>Summary</span>
+    </div>
+  </div>
+</div>
+<div class="w-full mt-4 p-6">
+  <div class="w-7/12 mx-auto bg-white">
+    <p class="title-h1">Shopping Cart</p>
+    {% if request.session.cartdata %}
+    <table class="table-fixed w-full">
+      <thead class="border-b text-left">
+        <tr>
+          <th class="w-5/12 py-2 pl-4">Product</th>
+          <th class="w-2/12 py-2">Quantity</th>
+          <th class="w-3/12 py-2">Total Price</th>
+          <th class="w-1/12 py-2"></th>
+        </tr>
+      </thead>
+      <tbody class="border-b">
+        {% for key, value in request.session.cartdata.items %}
+        <tr>
+          <td class="mx-auto">
+            <a href="/home/browse/product/{{key}}">
+              <img src="{{ value.img_url }}" class="w-28 inline-block" />
+              <span> {{ value.name }} </span>
+            </a>
+          </td>
+          <td><span>x{{ value.qty }}</span></td>
+          <td><span>${{ value.price|floatformat:2 }}</span></td>
+          <td><button class="remove-btn">X</button></td>
+          {% endfor %}
+        </tr>
+      </tbody>
+    </table>
+    <div class="text-right">Total: ${{request.session.totalprice}}</div>
+    {% else %}
+    <span>Cart is empty.</span>
+    {% endif %}
+  </div>
+</div>
+<!-- <div>
+    <form method="post" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+
+    </form>
+  </div> -->
 {% endblock content %}
-
-

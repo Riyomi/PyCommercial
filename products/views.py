@@ -35,6 +35,7 @@ def addToCart(request):
         'img_url': request.GET['img_url'],
         'price': float(request.GET['price']),
         'qty': int(request.GET['qty']),
+        'total': float(request.GET['price'])*int(request.GET['qty']),
     }
 
     if 'cartdata' in request.session:
@@ -42,6 +43,8 @@ def addToCart(request):
         if request.GET['id'] in request.session['cartdata']:
             cart_data[request.GET['id']
                       ]['qty'] += int(request.GET['qty'])
+            cart_data[request.GET['id']
+                      ]['total'] += float(request.GET['price'])*int(request.GET['qty'])
             cart_data.update(cart_data)
         else:
             cart_data.update(cart)

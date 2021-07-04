@@ -1,22 +1,27 @@
 {% extends "base.html" %}
 {% load myfilters %}
-
 {% block title %}Successful registration{% endblock title %}
+
 {% block extrahead %}
-    <script type="text/javascript">
-        setTimeout(function () {
-            window.location.href = "/home/login";
-        }, 5000);
-    </script>
+<script type="text/javascript">
+  setTimeout(function () {
+    window.location.href = "/home/login";
+  }, 5000);
+</script>
 {% endblock %}
+
 {% block content %}
-    <div class="grid grid-cols-1 mx-auto max-w-md">
-        {% for message in messages %}
-            <p>{{ message }}</p>
-        {% endfor %}
-        <p>You'll be redirected soon to the login page. If it doesn't work, click<a
-                class="text-purple-500 opacity-75 font-bold" href="{% url 'users:login' %}"> here</a>.</p>
-    </div>
+<div class="grid grid-cols-1 mx-auto max-w-md">
+  {% for message in messages %}
+  <p>{{ message }}</p>
+  {% endfor %}
+  <p>
+    You'll be redirected soon to the login page. If it doesn't work, click<a
+      class="text-purple-500 opacity-75 font-bold"
+      href="{% url 'users:login' %}"
+    >
+      here</a
+    >.
+  </p>
+</div>
 {% endblock content %}
-
-

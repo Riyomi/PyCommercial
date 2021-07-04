@@ -3,6 +3,6 @@ def totalItemsAndPrice(data):
     totalprice = 0
     for key, value in data.items():
         totalitems += value['qty']
-        totalprice += (value['price']*value['qty'])
+        totalprice += value['total']
 
     return (totalitems, totalprice)

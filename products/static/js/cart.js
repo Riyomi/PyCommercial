@@ -28,6 +28,14 @@ function addToCart(_productId) {
         );
         const currentQty = Number(qty_span.text().substring(1));
         qty_span.text(`x${currentQty + 1}`);
+
+        const price_span = $(
+          `#cartItems > #cart-${_productId} > #cart-price-${_productId}`
+        );
+
+        console.log(response);
+
+        price_span.text(`$${response.data[_productId].total}`);
       } else {
         $("#cartItems")
           .last()
@@ -36,10 +44,11 @@ function addToCart(_productId) {
               _productId,
               _productName,
               _productImgUrl,
-              _productPrice
+              response.data[_productId].total
             )
           );
       }
+
       if (response.totalprice) {
         $("#cart-total").text(`Total price: $${response.totalprice}`);
       } else {
@@ -86,7 +95,7 @@ function cartItemHTML(id, name, img, price) {
       <span class="break-words w-24 pl-2 pr-2 my-auto"> ${name} </span>
   </a>
   <span id="cart-qty-${id}" class="w-6 my-auto">x1</span>
-  <span class="w-16 font-bold my-auto">$${price}</span>
+  <span id="cart-price-${id}" class="w-16 font-bold my-auto">$${price}</span>
   <button id="remove-${id}" onclick="removeFromCart(this.id)" class="remove-btn">
   X
   </button>

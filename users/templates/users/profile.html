@@ -1,24 +1,34 @@
 {% extends "base.html" %}
 {% load myfilters %}
-
 {% block title %}My Account{% endblock title %}
+
 {% block content %}
-    <div class="mx-auto flex flex-row w-6/12 mt-4">
-        <div class="flex flex-col rounded-bl-lg rounded-tl-lg p-5 bg-purple-500">
-            <div class="menu-option"><a href="{% url 'users:profile' %}"><i class="far fa-user-circle"></i><span
-                    class="ml-2">Profile</span></a></div>
-            <div class="menu-option"><a href="{% url 'users:address' %}"><i class="far fa-address-card"></i><span
-                    class="ml-2">Address</span></a></div>
-            <div class="menu-option"><a href="#"><i class="fas fa-lock"></i><span
-                    class="ml-2">Change Password</span></a></div>
-            <div class="menu-option text-red-300 hover:text-red-400"><a href="#"><i class="far fa-trash-alt"></i><span
-                    class="ml-2">Delete account</span></a></div>
-        </div>
-        <div class="flex flex-col flex-grow rounded-br-lg rounded-tr-lg p-5 bg-white">
-            {% block page %}
-            {% endblock %}
-        </div>
+<div class="mx-auto flex flex-row w-6/12 mt-4">
+  <div class="flex flex-col rounded-bl-lg rounded-tl-lg p-5 bg-purple-500">
+    <div class="menu-option">
+      <a href="{% url 'users:profile' %}"
+        ><i class="far fa-user-circle"></i><span class="ml-2">Profile</span></a
+      >
     </div>
+    <div class="menu-option">
+      <a href="{% url 'users:address' %}"
+        ><i class="far fa-address-card"></i><span class="ml-2">Address</span></a
+      >
+    </div>
+    <div class="menu-option">
+      <a href="#"
+        ><i class="fas fa-lock"></i><span class="ml-2">Change Password</span></a
+      >
+    </div>
+    <div class="menu-option text-red-300 hover:text-red-400">
+      <a href="#"
+        ><i class="far fa-trash-alt"></i
+        ><span class="ml-2">Delete account</span></a
+      >
+    </div>
+  </div>
+  <div class="flex flex-col flex-grow rounded-br-lg rounded-tr-lg p-5 bg-white">
+    {% block page %} {% endblock %}
+  </div>
+</div>
 {% endblock content %}
-
-
