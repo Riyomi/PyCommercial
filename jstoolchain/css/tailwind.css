@@ -82,4 +82,12 @@
   #cart-summary {
     @apply grid grid-cols-3 text-sm p-2;
   }
+
+  .step-indicator {
+    @apply inline-flex items-center justify-center w-6 h-6 text-white bg-purple-700 rounded-full mr-px;
+  }
+
+  .step {
+    @apply m-auto uppercase font-semibold text-gray-700 tracking-wide;
+  }
 }

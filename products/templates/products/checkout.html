@@ -5,94 +5,42 @@
 {% block content %}
 <div class="grid bg-white min-w-full h-16 items-center drop-shadow-lg">
   <div class="grid grid-cols-4 auto-cols-min w-6/12 m-auto">
-    <div class="m-auto uppercase tracking-wide">
-      <div
-        class="
-          inline-flex
-          items-center
-          justify-center
-          w-6
-          h-6
-          text-indigo-100
-          bg-indigo-700
-          rounded-full
-          focus:shadow-outline
-          hover:bg-indigo-800
-        "
-      >
+    <div class="step">
+      <div class="step-indicator">
         1
       </div>
       <span>Personal Details</span>
     </div>
-    <div class="m-auto uppercase tracking-wide">
-      <div
-        class="
-          inline-flex
-          items-center
-          justify-center
-          w-6
-          h-6
-          text-indigo-100
-          bg-indigo-700
-          rounded-full
-          focus:shadow-outline
-          hover:bg-indigo-800
-        "
-      >
+    <div class="step">
+      <div class="step-indicator">
         2
       </div>
       <span>Shipping</span>
     </div>
-    <div class="m-auto uppercase tracking-wide">
-      <div
-        class="
-          inline-flex
-          items-center
-          justify-center
-          w-6
-          h-6
-          text-indigo-100
-          bg-indigo-700
-          rounded-full
-          focus:shadow-outline
-          hover:bg-indigo-800
-        "
-      >
+    <div class="step">
+      <div class="step-indicator">
         3
       </div>
       <span>Payment</span>
     </div>
-    <div class="m-auto uppercase tracking-wide">
-      <div
-        class="
-          inline-flex
-          items-center
-          justify-center
-          w-6
-          h-6
-          text-indigo-100
-          bg-indigo-700
-          rounded-full
-          focus:shadow-outline
-          hover:bg-indigo-800
-        "
-      >
+    <div class="step">
+      <div class="step-indicator">
         4
       </div>
       <span>Summary</span>
     </div>
   </div>
 </div>
-<div class="w-full mt-4 p-6">
-  <div class="w-7/12 mx-auto bg-white">
+<div class="grid grid-cols-6 w-full mt-8">
+  <div class="col-span-4 w-10/12 ml-auto bg-white rounded p-6 mr-2">
     <p class="title-h1">Shopping Cart</p>
     {% if request.session.cartdata %}
     <table class="table-fixed w-full">
       <thead class="border-b text-left">
         <tr>
-          <th class="w-5/12 py-2 pl-4">Product</th>
-          <th class="w-2/12 py-2">Quantity</th>
-          <th class="w-3/12 py-2">Total Price</th>
+          <th class="w-8/12 py-2 pl-4">Product</th>
+          <th class="w-4/12 py-2">Quantity</th>
+          <th class="w-4/12 py-2">Total Price</th>
           <th class="w-1/12 py-2"></th>
         </tr>
       </thead>
@@ -106,16 +54,23 @@
             </a>
           </td>
           <td><span>x{{ value.qty }}</span></td>
-          <td><span>${{ value.price|floatformat:2 }}</span></td>
+          <td><span>${{ value.total|floatformat:2 }}</span></td>
           <td><button class="remove-btn">X</button></td>
           {% endfor %}
         </tr>
       </tbody>
     </table>
-    <div class="text-right">Total: ${{request.session.totalprice}}</div>
+    <div class="flex justify-between mt-4">
+      <a href="{% url 'products:browse' %}" class="purple-btn flex-grow-0">Continue shopping</a>
+      <div class="text-xl font-semibold text-right inline-block">Total: ${{request.session.totalprice}}</div>
+    </div>
+    {% comment %} <div class="purple-btn text-center">Checkout</div> {% endcomment %}
     {% else %}
     <span>Cart is empty.</span>
     {% endif %}
+  </div>
+  <div class="bg-white rounded w-8/12 p-6 col-span-2">
+    <p class="title-h1">Payment info</p>
   </div>
 </div>
 <!-- <div>
