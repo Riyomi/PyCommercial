@@ -5,6 +5,7 @@ from django.contrib.auth.decorators import login_required
 from .decorators import unauthenticated_user
 
 from .forms import UserForm, CustomerForm
+from products.models import Order, OrderItem, Product
 
 
 @unauthenticated_user
@@ -73,6 +74,23 @@ def profilePage(request):
 @login_required(login_url='users:login')
 def addressPage(request):
     return render(request, 'users/account/address.html')
+
+
+@login_required(login_url='users:login')
+def ordersPage(request):
+    orders = Order.objects.filter(customer=request.user.customer)
+
+    items = {}
+
+    for order in orders:
+        items[order] = OrderItem.objects.filter(
+            order=order)
+        # for id in OrderItem.objects.filter(
+        #         order=order).values_list('product', flat=True):
+        #     items[order].append(Product.objects.get(
+        #         pk=id))
+
+    return render(request, 'users/account/orders.html', {'data': items})
 
 
 def setplaceholders(form):

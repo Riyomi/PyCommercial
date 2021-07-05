@@ -24,12 +24,21 @@ class Category(models.Model):
 
 
 class Order(models.Model):
-    customer = models.ForeignKey('users.Customer', on_delete=models.CASCADE)
-    product = models.ForeignKey('Product', on_delete=models.CASCADE)
-    quantity = models.IntegerField('Quantity', default=1)
+    customer = models.ForeignKey(
+        'users.Customer', on_delete=models.CASCADE, blank=True, null=True)
 
     def __str__(self):
-        return self.id
+        return str(self.id)
+
+
+class OrderItem(models.Model):
+    product = models.ForeignKey('products.Product', on_delete=models.CASCADE)
+    order = models.ForeignKey('products.Order', on_delete=models.CASCADE)
+    quantity = models.PositiveIntegerField(
+        'Quantity', default=1, validators=[MinValueValidator(1)])
+
+    def __str__(self):
+        return str(self.id)
 
 
 # When working directly with the model, make sure to call the model full_clean method
@@ -43,4 +52,4 @@ class Review(models.Model):
     comment = models.TextField('Description', blank=True, null=True)
 
     def __str__(self):
-        return self.id
+        return str(self.id)

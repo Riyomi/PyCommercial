@@ -61,7 +61,13 @@ function addToCart(_productId) {
 
 function removeFromCart(_productId) {
   const _button = $(`#${_productId}`);
-  const _id = _productId.substring(7);
+  var _id;
+
+  if (_productId.indexOf("checkout-") >= 0) {
+    _id = _productId.substring(16);
+  } else {
+    _id = _productId.substring(7);
+  }
 
   // Run Ajax
   $.ajax({
@@ -75,12 +81,16 @@ function removeFromCart(_productId) {
     },
     success: function (response) {
       $(`#cartItems > #cart-${_id}`).remove();
+      $(`#product-checkout-${_id}`).remove();
 
       $("#badge-count").text(response.totalitems);
       if (response.totalprice) {
         $("#cart-total").text(`Total price: $${response.totalprice}`);
+        $("#checkout-total").text(`Total: $${response.totalprice}`);
       } else {
         $("#cart-total").text("Your cart is empty.");
+        $("<span>Cart is empty.</span>").insertAfter("#checkout-summary");
+        $("#checkout-summary").remove();
       }
 
       _button.attr("disabled", false);

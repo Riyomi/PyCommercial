@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% load myfilters %}
+{% load products.productfilters %}
+{% block title %}My Orders{% endblock title %}
+
+{% block content %}
+<div class="bg-white mx-auto w-9/12">
+  {% for id, orderitems in data.items %}
+  <div class="bg-purple-400 my-8 mx-8 rounded-md">
+    Order #{{id}}:
+    
+    {%for item in orderitems %}
+    <div class="bg-white m-8 rounded-lg w-6/12">
+      {{ item.product.name }}<br>
+      <img src="{{ item.product.image.url|formaturl }}">
+      ${{ item.product.price }}<br>
+      x{{ item.quantity }}<br><br>
+    </div>
+   {%endfor %}
+  </div>
+  {%endfor %}
+
+</div>
+{% endblock content %}

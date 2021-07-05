@@ -1,7 +1,7 @@
 from django.shortcuts import render, get_object_or_404
 from django.http import JsonResponse
 
-from .models import Product
+from .models import Product, Order, OrderItem
 from .utils import totalItemsAndPrice
 
 
@@ -70,3 +70,25 @@ def removeFromCart(request):
     request.session['totalprice'] = totalprice
 
     return JsonResponse({'data': request.session['cartdata'], 'totalitems': totalitems, 'totalprice': totalprice})
+
+
+def placeOrder(request):
+    if request.session['cartdata']:
+        order = None
+        if request.user.is_authenticated:
+            order = Order(customer=request.user.customer)
+        else:
+            order = Order(customer=None)
+
+        order.save()
+
+        for product_id, data in request.session['cartdata'].items():
+            product = Product.objects.get(pk=product_id)
+            qty = int(data['qty'])
+            OrderItem.objects.create(
+                product=product, order=order, quantity=qty)
+
+        del request.session['cartdata']
+        del request.session['totalitems']
+        del request.session['totalprice']
+        return render(request, 'products/home.html')
