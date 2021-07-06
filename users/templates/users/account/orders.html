@@ -1,24 +1,27 @@
-{% extends "base.html" %}
+{% extends 'users/profile.html' %}
 {% load myfilters %}
-{% load products.productfilters %}
 {% block title %}My Orders{% endblock title %}
 
-{% block content %}
-<div class="bg-white mx-auto w-9/12">
-  {% for id, orderitems in data.items %}
-  <div class="bg-purple-400 my-8 mx-8 rounded-md">
-    Order #{{id}}:
-    
-    {%for item in orderitems %}
-    <div class="bg-white m-8 rounded-lg w-6/12">
+{% block page %}
+<div class="bg-white">
+  <p class="title-h1">My Orders</p>
+  {% for order_id in orders %}
+  <div class="flex justify-between text-white bg-purple-500 rounded-md p-2 m-2">
+    <span>
+      Order #{{order_id}}
+    </span>
+    <a href="{% url 'users:order-details' order_id %}">Check Details>></a>
+    <!--Use pagination here-->
+    {% comment %} {%for item in orderitems %}
+    <div class="bg-white m-8 rounded-lg">
       {{ item.product.name }}<br>
-      <img src="{{ item.product.image.url|formaturl }}">
+      <img src="{{ item.product.image.url|formaturl }}" class="w-8">
       ${{ item.product.price }}<br>
       x{{ item.quantity }}<br><br>
     </div>
-   {%endfor %}
+   {%endfor %} {% endcomment %}
   </div>
   {%endfor %}
 
 </div>
-{% endblock content %}
+{% endblock page %}

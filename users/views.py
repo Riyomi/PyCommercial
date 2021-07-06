@@ -80,13 +80,25 @@ def addressPage(request):
 def ordersPage(request):
     orders = Order.objects.filter(customer=request.user.customer)
 
-    items = {}
+    # items = {}
 
-    for order in orders:
-        items[order] = OrderItem.objects.filter(
-            order=order)
+    # for order in orders:
+    #     items[order] = OrderItem.objects.filter(
+    #         order=order)
 
-    return render(request, 'users/account/orders.html', {'data': items})
+    return render(request, 'users/account/orders.html', {'orders': orders})
+
+
+@login_required(login_url='users:login')
+def orderDetails(request, order_id):
+    order = Order.objects.get(id=order_id)
+
+    items = {
+        'order': order,
+        'items': OrderItem.objects.filter(order=order)
+    }
+
+    return render(request, 'users/orderDetails.html', {'data': items})
 
 
 def setplaceholders(form):
