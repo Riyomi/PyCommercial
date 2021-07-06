@@ -74,12 +74,8 @@ def removeFromCart(request):
 
 def placeOrder(request):
     if request.session['cartdata']:
-        order = None
-        if request.user.is_authenticated:
-            order = Order(customer=request.user.customer)
-        else:
-            order = Order(customer=None)
-
+        order = Order(
+            customer=request.user.customer if request.user.is_authenticated else None)
         order.save()
 
         for product_id, data in request.session['cartdata'].items():
@@ -92,3 +88,5 @@ def placeOrder(request):
         del request.session['totalitems']
         del request.session['totalprice']
         return render(request, 'products/home.html')
+
+    # TODO: redirect if it's empty (or just simply don't display the button in the HTML...)

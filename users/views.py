@@ -85,10 +85,6 @@ def ordersPage(request):
     for order in orders:
         items[order] = OrderItem.objects.filter(
             order=order)
-        # for id in OrderItem.objects.filter(
-        #         order=order).values_list('product', flat=True):
-        #     items[order].append(Product.objects.get(
-        #         pk=id))
 
     return render(request, 'users/account/orders.html', {'data': items})
 

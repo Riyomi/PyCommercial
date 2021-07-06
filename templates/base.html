@@ -21,11 +21,13 @@
   </head>
 
   <body>
-    <div class="flex flex-col min-h-screen m-auto bg-purple-200">
+    <div
+      class="flex flex-col bg-purple-200"
+      style="min-height: calc(100vh - (72px))"
+    >
       <nav
         class="
           flex
-          items-center
           justify-between
           flex-wrap
           bg-purple-500
@@ -39,7 +41,7 @@
             ><a href="{% url 'products:home' %}">PyCommercial</a></span
           >
         </div>
-        <div class="block lg:hidden">
+        <div class="hidden">
           <button
             class="
               flex
@@ -80,9 +82,15 @@
                   id="badge-count"
                   class="
                     cart-badge
-                    {% if not request.session.cartdata %}
-                      hidden
-                    {% endif %}
+                    {%
+                    if
+                    not
+                    request.session.cartdata
+                    %}
+                    hidden
+                    {%
+                    endif
+                    %}
                   "
                   >{{request.session.totalitems}}</span
                 >
@@ -121,11 +129,9 @@
               </div>
               <div id="cart-summary">
                 <span id="cart-total">
-                  {% if request.session.totalprice > 0 %}
-                    Total price: ${{request.session.totalprice|floatformat:2}}
-                  {% else %}
-                    Your cart is empty.
-                  {% endif %}
+                  {% if request.session.totalprice > 0 %} Total price:
+                  ${{request.session.totalprice|floatformat:2}} {% else %} Your
+                  cart is empty. {% endif %}
                 </span>
                 <a
                   href="{% url 'products:checkout' %}"
@@ -176,14 +182,14 @@
           </div>
         </div>
       </nav>
-      <div class="flex flex-col flex-auto bg-purple-200">
+      <div class="flex flex-col bg-purple-200">
         {% block content %} {% endblock content %}
       </div>
-      <footer class="footer-container">
-        <span>© 2021 PyCommercial. All rights reserved.</span>
-        <span>Created by Richard Szabo</span>
-      </footer>
     </div>
+    <footer class="footer-container mt-0">
+      <span>© 2021 PyCommercial. All rights reserved.</span>
+      <span>Created by Richard Szabo</span>
+    </footer>
     <script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
     <script src="{% static 'js/dropdown.js' %}"></script>
     <script src="{% static 'js/cart.js' %}"></script>
