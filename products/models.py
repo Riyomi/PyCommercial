@@ -1,5 +1,6 @@
 from django.db import models
 from django.core.validators import MaxValueValidator, MinValueValidator
+from django.utils import timezone
 
 
 class Product(models.Model):
@@ -26,6 +27,8 @@ class Category(models.Model):
 class Order(models.Model):
     customer = models.ForeignKey(
         'users.Customer', on_delete=models.CASCADE, blank=True, null=True)
+    total = models.PositiveIntegerField('Total', default=0)
+    date_placed = models.DateTimeField('date placed', default=timezone.now)
 
     def __str__(self):
         return str(self.id)

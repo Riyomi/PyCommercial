@@ -3,6 +3,7 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from .decorators import unauthenticated_user
+from django.core.paginator import Paginator
 
 from .forms import UserForm, CustomerForm
 from products.models import Order, OrderItem, Product
@@ -79,26 +80,24 @@ def addressPage(request):
 @login_required(login_url='users:login')
 def ordersPage(request):
     orders = Order.objects.filter(customer=request.user.customer)
+    paginator = Paginator(orders, 4)
 
-    # items = {}
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
 
-    # for order in orders:
-    #     items[order] = OrderItem.objects.filter(
-    #         order=order)
-
-    return render(request, 'users/account/orders.html', {'orders': orders})
+    return render(request, 'users/account/orders.html', {'page_obj': page_obj})
 
 
 @login_required(login_url='users:login')
 def orderDetails(request, order_id):
     order = Order.objects.get(id=order_id)
 
-    items = {
+    data = {
         'order': order,
-        'items': OrderItem.objects.filter(order=order)
+        'items': OrderItem.objects.filter(order=order),
     }
 
-    return render(request, 'users/orderDetails.html', {'data': items})
+    return render(request, 'users/orderDetails.html', {'data': data})
 
 
 def setplaceholders(form):

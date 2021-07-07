@@ -75,7 +75,7 @@ def removeFromCart(request):
 def placeOrder(request):
     if request.session['cartdata']:
         order = Order(
-            customer=request.user.customer if request.user.is_authenticated else None)
+            customer=request.user.customer if request.user.is_authenticated else None, total=request.session['totalprice'])
         order.save()
 
         for product_id, data in request.session['cartdata'].items():

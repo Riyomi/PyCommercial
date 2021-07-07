@@ -3,25 +3,42 @@
 {% block title %}My Orders{% endblock title %}
 
 {% block page %}
-<div class="bg-white">
+<div class="bg-white flex flex-col">
   <p class="title-h1">My Orders</p>
-  {% for order_id in orders %}
-  <div class="flex justify-between text-white bg-purple-500 rounded-md p-2 m-2">
-    <span>
-      Order #{{order_id}}
-    </span>
-    <a href="{% url 'users:order-details' order_id %}">Check Details>></a>
-    <!--Use pagination here-->
-    {% comment %} {%for item in orderitems %}
-    <div class="bg-white m-8 rounded-lg">
-      {{ item.product.name }}<br>
-      <img src="{{ item.product.image.url|formaturl }}" class="w-8">
-      ${{ item.product.price }}<br>
-      x{{ item.quantity }}<br><br>
-    </div>
-   {%endfor %} {% endcomment %}
-  </div>
-  {%endfor %}
 
+  <div class="grid gap-3 rounded bg-white my-2">
+    {% for order in page_obj %}
+    <div>
+      <div class="text-white bg-purple-500 rounded-t-md py-1 px-2">
+        Order #{{order.id}}
+      </div>
+      <div class="flex flex-col rounded-b-md bg-purple-100 py-1 px-2">
+        <div class="flex justify-between">
+          <span>Placed on: {{order.date_placed}}</span>
+          <span class="font-semibold">Total: ${{order.total}}</span>
+        </div>
+        <a href="{% url 'users:order-details' order.id %}" class="self-end">Check Details »</a>
+      </div>
+    </div>
+    {%endfor %}
+  </div>
+
+  <div class="self-center">
+    <span class="step-links">
+      {% if page_obj.has_previous %}
+      <a href="?page=1">&laquo; first</a>
+      <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+      {% endif %}
+
+      <span class="current">
+        Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+      </span>
+
+      {% if page_obj.has_next %}
+      <a href="?page={{ page_obj.next_page_number }}">next</a>
+      <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+      {% endif %}
+    </span>
+  </div>
 </div>
 {% endblock page %}
