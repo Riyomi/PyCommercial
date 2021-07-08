@@ -1,7 +1,6 @@
 {% extends 'users/profile.html' %}
 {% load myfilters %}
 {% block title %}My Orders{% endblock title %}
-
 {% block page %}
 <div class="bg-white flex flex-col">
   <p class="title-h1">My Orders</p>
@@ -15,9 +14,12 @@
       <div class="flex flex-col rounded-b-md bg-purple-100 py-1 px-2">
         <div class="flex justify-between">
           <span>Placed on: {{order.date_placed}}</span>
-          <span class="font-semibold">Total: ${{order.total}}</span>
+          <span>Status: {{order.get_status_text}}</span>
         </div>
-        <a href="{% url 'users:order-details' order.id %}" class="self-end">Check Details »</a>
+        <span class="font-semibold self-end">Total: ${{order.total}}</span>
+        <a href="{% url 'users:order-details' order.id %}" class="self-end"
+          >Check Details »</a
+        >
       </div>
     </div>
     {%endfor %}
