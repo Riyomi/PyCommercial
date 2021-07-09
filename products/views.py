@@ -1,5 +1,6 @@
 from django.shortcuts import render, get_object_or_404
 from django.http import JsonResponse
+from django.core.paginator import Paginator
 
 from .models import Product, Order, OrderItem
 from .utils import totalItemsAndPrice
@@ -11,11 +12,18 @@ def homePage(request):
 
 def browsePage(request):
     search_param = request.GET.get('search')
+
+    products = Product.objects.get_queryset().order_by('id')
+
     if search_param:
         products = Product.objects.filter(name__contains=search_param)
-    else:
-        products = Product.objects.all()
-    return render(request, 'products/browse.html', {'products': products})
+
+    paginator = Paginator(products, 8)
+
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+
+    return render(request, 'products/browse.html', {'page_obj': page_obj})
 
 
 def productDetailsPage(request, product_id):

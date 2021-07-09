@@ -47,58 +47,85 @@
       </div>
     </div>
     <div class="grid md:grid-cols-2 xl:grid-cols-4 col-span-5 mx-3">
-      {% if not products %}
+      {% if not page_obj %}
       <div class="grid col-span-4 bg-white min-h-96 m-3 rounded-lg p-3">
         No products match your query.
       </div>
-      {% endif %} {% for product in products %}
-      <div
-        id="product-{{ product.id }}"
-        class="flex flex-col bg-white min-h-96 m-3 rounded-lg p-3"
-      >
-        <a href="{% url 'products:details' product.id %}">
-          <img src="{{ product.image.url|formaturl }}" alt="item1" />
-        </a>
-        <div class="title-h1">${{ product.price }}</div>
-        <div class="text-purple-500 text-lg font-semibold mb-2">
-          <a href="{% url 'products:details' product.id %}"
-            >{{ product.name }}</a
-          >
-        </div>
-        <div class="text-xs text-gray-600 mb-3">
-          {{ product.description|truncatetext }}
-        </div>
-        <input
-          type="hidden"
-          id="{{product.id}}-name"
-          value="{{product.name}}"
-        />
-        <input
-          type="hidden"
-          id="{{product.id}}-img-url"
-          value="{{product.image.url|formaturl}}"
-        />
-        <input
-          type="hidden"
-          id="{{product.id}}-price"
-          value="{{product.price}}"
-        />
-        <button
-          id="{{ product.id }}"
-          onClick="addToCart(this.id)"
-          class="purple-btn mb-2"
-        >
-          Add to cart
-        </button>
-      </div>
-      {% endfor %} {% if products.count > 32 %}
-      <div class="grid col-span-4 h-20">
-        <div class="m-auto text-purple-700 font-semibold">
-          Pagination will go here
-        </div>
-      </div>
       {% endif %}
+      {% for product in page_obj %}
+        <div
+          id="product-{{ product.id }}"
+          class="flex flex-col bg-white min-h-96 m-3 rounded-lg p-3"
+        >
+          <a href="{% url 'products:details' product.id %}" class="self-center">
+            <img src="{{ product.image.url|formaturl }}" alt="img-{{product.id}}" class="max-h-48" />
+          </a>
+          <div class="title-h1">${{ product.price }}</div>
+          <div class="text-purple-500 text-lg font-semibold mb-2">
+            <a href="{% url 'products:details' product.id %}"
+              >{{ product.name }}</a
+            >
+          </div>
+          <div class="text-xs text-gray-600 mb-3">
+            {{ product.description|truncatetext }}
+          </div>
+          <input
+            type="hidden"
+            id="{{product.id}}-name"
+            value="{{product.name}}"
+          />
+          <input
+            type="hidden"
+            id="{{product.id}}-img-url"
+            value="{{product.image.url|formaturl}}"
+          />
+          <input
+            type="hidden"
+            id="{{product.id}}-price"
+            value="{{product.price}}"
+          />
+          <button
+            id="{{ product.id }}"
+            onClick="addToCart(this.id)"
+            class="purple-btn mb-2"
+          >
+            Add to cart
+          </button>
+        </div>
+      {% endfor %}
     </div>
+     <div class="text-center col-start-2 col-span-5">
+        <span class="step-links">
+          {% if page_obj.has_previous %}
+            <a href="?page={{ page_obj.previous_page_number }}">
+              <i class="fas fa-chevron-left"></i>
+            </a>
+          {% else %}
+            <a>
+              <i class="fas fa-chevron-left"></i>
+            </a>
+          {% endif %}
+
+          {% for i in page_obj.paginator.page_range %}
+            {% if page_obj.number == i %}
+             <span>{{ i }} <span class="sr-only">(current)</span></span>
+            {% else %}
+             <a href="?page={{ i }}">{{ i }}</a>
+            {% endif %}
+          {% endfor %}
+
+          {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}">
+              <i class="fas fa-chevron-right"></i>
+            </a>
+          {%else %}
+            <a>
+              <i class="fas fa-chevron-right"></i>
+            </a>
+          {% endif %}
+        </span>
+      </div>
   </div>
 </div>
-{% endblock content %} {% block javascript %} {% endblock javascript %}
+{% endblock content %}
+{% block javascript %} {% endblock javascript %}
