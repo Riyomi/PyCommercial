@@ -112,9 +112,7 @@ function cartItemHTML(id, name, img, price) {
   </div>`;
 }
 
-//TODO: fix the bug with this function
 $("body").on("DOMSubtreeModified", "#badge-count", function () {
-  console.log("code is running now");
   const count = $("#badge-count").text();
   if (count === "0" || count === "") {
     $("#badge-count").addClass("hidden");

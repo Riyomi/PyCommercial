@@ -1,4 +1,5 @@
-{% load static %} {% load products.productfilters %}
+{% load static %}
+{% load products.productfilters %}
 
 <!DOCTYPE html>
 <html lang="en">
@@ -82,15 +83,9 @@
                   id="badge-count"
                   class="
                     cart-badge
-                    {%
-                    if
-                    not
-                    request.session.cartdata
-                    %}
+                    {% if not request.session.cartdata %}
                     hidden
-                    {%
-                    endif
-                    %}
+                    {% endif %}
                   "
                   >{{request.session.totalitems}}</span
                 >
@@ -115,7 +110,7 @@
                     >x{{ value.qty }}</span
                   >
                   <span id="cart-price-{{key}}" class="w-16 font-bold my-auto"
-                    >${{ value.total|floatformat:2 }}</span
+                    >${{ value.total }}</span
                   >
                   <button
                     id="remove-{{key}}"
@@ -130,7 +125,7 @@
               <div id="cart-summary">
                 <span id="cart-total">
                   {% if request.session.totalprice > 0 %} Total price:
-                  ${{request.session.totalprice|floatformat:2}} {% else %} Your
+                  ${{request.session.totalprice }} {% else %} Your
                   cart is empty. {% endif %}
                 </span>
                 <a
