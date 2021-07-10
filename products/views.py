@@ -3,7 +3,7 @@ from django.http import JsonResponse
 from django.core.paginator import Paginator
 
 from .models import Product, Order, OrderItem
-from .utils import totalItemsAndPrice
+from .utils import totalItemsAndPrice, get_all_categories
 
 
 def homePage(request):
@@ -28,7 +28,8 @@ def browsePage(request):
 
 def productDetailsPage(request, product_id):
     product = get_object_or_404(Product, pk=product_id)
-    return render(request, 'products/details.html', {'product': product})
+    categories = get_all_categories(product)
+    return render(request, 'products/details.html', {'product': product, 'categories': categories})
 
 
 def checkoutPage(request):

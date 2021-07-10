@@ -12,6 +12,12 @@ class OrderAdmin(admin.ModelAdmin):
     inlines = [OrderItemInLine]
 
 
+class ProductAdmin(admin.ModelAdmin):
+    list_display = ('name', 'category')
+
+
 # Register your models here.
-admin.site.register([Product, Category, OrderItem, Review])
+
+admin.site.register([Category, OrderItem, Review])
+admin.site.register(Product, ProductAdmin)
 admin.site.register(Order, OrderAdmin)

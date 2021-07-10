@@ -55,7 +55,7 @@
               </a>
             </td>
             <td><span>x{{ value.qty }}</span></td>
-            <td><span>${{ value.total|floatformat:2 }}</span></td>
+            <td><span>${{ value.total }}</span></td>
             <td><button id="remove-checkout-{{ key }}" onClick="removeFromCart(this.id)" class="remove-btn">X</button></td>
             {% endfor %}
           </tr>

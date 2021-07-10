@@ -57,17 +57,17 @@
           id="product-{{ product.id }}"
           class="flex flex-col bg-white min-h-96 m-3 rounded-lg p-3"
         >
-          <a href="{% url 'products:details' product.id %}" class="self-center">
-            <img src="{{ product.image.url|formaturl }}" alt="img-{{product.id}}" class="max-h-48" />
+          <a href="{% url 'products:details' product.id %}" class="flex h-48 justify-center">
+            <img src="{{ product.image.url|formaturl }}" alt="img-{{product.id}}" class="max-h-48 self-center justify-self-center" />
           </a>
           <div class="title-h1">${{ product.price }}</div>
           <div class="text-purple-500 text-lg font-semibold mb-2">
-            <a href="{% url 'products:details' product.id %}"
+            <a href="{% url 'products:details' product.id %}" class="block h-6 truncate"
               >{{ product.name }}</a
             >
           </div>
-          <div class="text-xs text-gray-600 mb-3">
-            {{ product.description|truncatetext }}
+          <div class="text-xs text-gray-600 mb-3 h-12">
+            {{ product.description|truncatetext:100 }}
           </div>
           <input
             type="hidden"
@@ -94,7 +94,7 @@
         </div>
       {% endfor %}
     </div>
-     <div class="text-center col-start-2 col-span-5">
+    <div class="text-center col-start-2 col-span-5">
         <span class="step-links">
           {% if page_obj.has_previous %}
             <a href="?page={{ page_obj.previous_page_number }}">
@@ -106,11 +106,13 @@
             </a>
           {% endif %}
 
-          {% for i in page_obj.paginator.page_range %}
-            {% if page_obj.number == i %}
-             <span>{{ i }} <span class="sr-only">(current)</span></span>
-            {% else %}
-             <a href="?page={{ i }}">{{ i }}</a>
+          {% for page_index in page_obj.paginator.page_range %}
+            {% if page_index <= page_obj.number|add:2 and page_index >= page_obj.number|add:-2 %}
+              {% if page_obj.number == page_index %}
+              <a class="step-active">{{ page_index }}</a>
+              {% else %}
+              <a href="?page={{ page_index }}">{{ page_index }}</a>
+              {% endif %}
             {% endif %}
           {% endfor %}
 
@@ -124,7 +126,7 @@
             </a>
           {% endif %}
         </span>
-      </div>
+    </div>
   </div>
 </div>
 {% endblock content %}

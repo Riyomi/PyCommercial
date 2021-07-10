@@ -12,7 +12,7 @@
   }
 
   .purple-btn {
-    @apply flex-grow bg-purple-500 text-white font-bold px-4 py-2 rounded;
+    @apply bg-purple-500 text-white h-10 font-bold px-4 py-2 rounded;
   }
 
   .purple-btn:focus {
@@ -89,5 +89,25 @@
 
   .step {
     @apply m-auto uppercase font-semibold text-gray-700 tracking-wide;
+  }
+
+  .step-links {
+    @apply py-2;
+  }
+
+  .step-links > a {
+    @apply px-2;
+  }
+
+  .step-active {
+    @apply text-white bg-purple-800 font-semibold rounded-full h-5 w-5;
+  }
+
+  .fa-chevron-right {
+    @apply text-purple-800;
+  }
+
+  .fa-chevron-left {
+    @apply text-purple-800;
   }
 }

@@ -10,5 +10,5 @@ def format_url(url):
 
 
 @register.filter(name='truncatetext')
-def truncate_text(text):
-    return (text[:100] + '..') if len(text) > 100 else text
+def truncate_text(text, param):
+    return (text[:param] + '..') if len(text) > param else text
