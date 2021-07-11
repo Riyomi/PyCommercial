@@ -1,6 +1,9 @@
 {% extends "products/productDetails.html" %}
 {% load static %}
 
+{% load products.productfilters %}
+
+
 {% block subpage %}
 <div class="mt-4">
   <div class="bg-purple-500 text-white text-lg p-2">
@@ -14,14 +17,19 @@
       <div>
         <div class="title-h1">Reviews by ratings</div>
         <table class="table-fixed">
+        {% for i in '54321'|make_list %}
           <tr>
-            <td>
+             <td>
               <span class="text-yellow-300 text-xs">
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
+                {% for star in i|encoderating %}
+                {% if star == 1 %}
+                  <i class="fas fa-star"></i>
+                {% elif star == 0.5 %}
+                  <i class="fas fa-star-half-alt"></i>
+                {% else %}
+                  <i class="far fa-star"></i>
+                {% endif %}
+              {% endfor %}
               </span>
             </td>
             <td>
@@ -31,74 +39,7 @@
             </td>
             <td>50%</td>
           </tr>
-          <tr>
-            <td>
-              <span class="text-yellow-300 text-xs">
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="far fa-star"></i>
-              </span>
-            </td>
-            <td>
-              <div class="bg-purple-200 h-5 w-64">
-                <div style="width: 50%" class="bg-purple-500 h-5"></div>
-              </div>
-            </td>
-            <td>50%</td>
-          </tr>
-          <tr>
-            <td>
-              <span class="text-yellow-300 text-xs">
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="far fa-star"></i>
-                <i class="far fa-star"></i>
-              </span>
-            </td>
-            <td>
-              <div class="bg-purple-200 h-5 w-64">
-                <div style="width: 50%" class="bg-purple-500 h-5"></div>
-              </div>
-            </td>
-            <td>50%</td>
-          </tr>
-          <tr>
-            <td>
-              <span class="text-yellow-300 text-xs">
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="far fa-star"></i>
-                <i class="far fa-star"></i>
-                <i class="far fa-star"></i>
-              </span>
-            </td>
-            <td>
-              <div class="bg-purple-200 h-5 w-64">
-                <div style="width: 50%" class="bg-purple-500 h-5"></div>
-              </div>
-            </td>
-            <td>50%</td>
-          </tr>
-          <tr>
-            <td>
-              <span class="text-yellow-300 text-xs">
-                <i class="fas fa-star"></i>
-                <i class="far fa-star"></i>
-                <i class="far fa-star"></i>
-                <i class="far fa-star"></i>
-                <i class="far fa-star"></i>
-              </span>
-            </td>
-            <td>
-              <div class="bg-purple-200 h-5 w-64">
-                <div style="width: 50%" class="bg-purple-500 h-5"></div>
-              </div>
-            </td>
-            <td>50%</td>
-          </tr>
+        {%endfor %}
         </table>
       </div>
       <div>
@@ -108,7 +49,7 @@
           {% csrf_token %}
           <div>
             <span>Your rating: </span>
-            <div class="rate text-yellow-300">
+            <div class="rate text-yellow-300 cursor-pointer">
               <i
                 id="star-1"
                 onClick="setRating(this.id)"
@@ -135,7 +76,7 @@
                 class="far fa-star"
               ></i>
             </div>
-            <input name="rating" type="hidden" />
+            <input name="rating" required class="hidden" oninvalid="alert('Choose a rating')" />
             <input name="product-id" type="hidden" value="{{product.id}}"
           </div>
           <textarea
@@ -146,10 +87,32 @@
             placeholder="Write about the product in detail (optional)"
           ></textarea
           ><br />
-          <input type="submit" class="purple-btn" />
+          <input type="submit" class="purple-btn cursor-pointer" />
         </form>
         {% endif %}
       </div>
+    </div>
+    <div>
+      {% for review in reviews %}
+        <div class="mb-4">
+          <div>
+            <span>{{review.customer.user.username}}</span>
+            <span class="text-yellow-300">
+              {% for star in review.value|encoderating %}
+                {% if star == 1 %}
+                  <i class="fas fa-star"></i>
+                {% elif star == 0.5 %}
+                  <i class="fas fa-star-half-alt"></i>
+                {% else %}
+                  <i class="far fa-star"></i>
+                {% endif %}
+              {% endfor %}
+            </span>
+          </div>
+
+          <div>{{review.comment}}</div>
+        </div>
+      {% endfor %}
     </div>
   </div>
 </div>

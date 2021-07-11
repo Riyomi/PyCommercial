@@ -6,7 +6,7 @@ app_name = 'products'
 urlpatterns = [
     path('', views.homePage, name='home'),
     path('browse', views.browsePage, name='browse'),
-    path('browse/product/<int:product_id>',
+    path('browse/product/<int:product_id>/',
          views.productDescriptionPage, name="details"),
     path('browse/product/<int:product_id>/details',
          views.productDescriptionPage, name="product-description"),

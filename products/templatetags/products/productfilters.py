@@ -1,4 +1,6 @@
 from django import template
+from math import floor, ceil
+
 
 register = template.Library()
 
@@ -12,3 +14,21 @@ def format_url(url):
 @register.filter(name='truncatetext')
 def truncate_text(text, param):
     return (text[:param] + '..') if len(text) > param else text
+
+
+@register.filter(name='encoderating')
+def encode_rating(rating):
+
+    if rating is None:
+        return [0] * 5
+
+    encoded = []
+    rating_rounded = round(int(rating) * 2) / 2
+
+    encoded.extend([1] * (floor(rating_rounded)))
+    # checks if the rounded rating has 0.5. It's done this way to avoid rounding errors
+    if (rating_rounded - 0.5) % 1 == 0:
+        encoded.append(0.5)
+    encoded.extend([0] * ((5-(ceil(rating_rounded)))))
+
+    return encoded

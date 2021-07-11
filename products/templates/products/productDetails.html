@@ -18,14 +18,18 @@
     <div class="grid grid-rows-4 text-lg">
       <div class="title-h1 text-5xl font-semibold mb-2 self-center">{{ product.name }}</div>
       <div>
-        <span title="4.82 out of 5 stars" class="text-yellow-300">
-          <i class="fas fa-star"></i>
-          <i class="fas fa-star"></i>
-          <i class="fas fa-star"></i>
-          <i class="fas fa-star"></i>
-          <i class="fas fa-star"></i>
+        <span title="{{avg_stars}} out of 5 stars" class="text-yellow-300">
+          {% for star in avg_stars|encoderating %}
+              {% if star == 1 %}
+                <i class="fas fa-star"></i>
+              {% elif star == 0.5 %}
+                <i class="fas fa-star-half-alt"></i>
+              {% else %}
+                <i class="far fa-star"></i>
+              {% endif %}
+          {% endfor %}
         </span>
-        (20 reviews)
+        ({{reviews.count}} reviews)
       </div>
       <div class="text-2xl">${{ product.price }}</div>
       <button class="purple-btn w-6/12">Add to cart</button>
