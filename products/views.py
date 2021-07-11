@@ -1,8 +1,9 @@
 from django.shortcuts import render, get_object_or_404
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponseRedirect
+from django.urls import reverse
 from django.core.paginator import Paginator
 
-from .models import Product, Order, OrderItem
+from .models import Product, Order, OrderItem, Review
 from .utils import totalItemsAndPrice, get_all_categories
 
 
@@ -26,10 +27,16 @@ def browsePage(request):
     return render(request, 'products/browse.html', {'page_obj': page_obj})
 
 
-def productDetailsPage(request, product_id):
+def productDescriptionPage(request, product_id):
     product = get_object_or_404(Product, pk=product_id)
     categories = get_all_categories(product)
-    return render(request, 'products/details.html', {'product': product, 'categories': categories})
+    return render(request, 'products/productDetails/descriptionPage.html', {'product': product, 'categories': categories})
+
+
+def productReviewsPage(request, product_id):
+    product = get_object_or_404(Product, pk=product_id)
+    categories = get_all_categories(product)
+    return render(request, 'products/productDetails/reviewsPage.html', {'product': product, 'categories': categories})
 
 
 def checkoutPage(request):
@@ -99,3 +106,15 @@ def placeOrder(request):
         return render(request, 'products/home.html')
 
     # TODO: redirect if it's empty (or just simply don't display the button in the HTML...)
+
+
+def rateProduct(request):
+    rating = int(request.POST['rating'])
+    comment = request.POST['comment']
+    product = Product.objects.get(pk=int(request.POST['product-id']))
+
+    review = Review(customer=request.user.customer,
+                    product=product, value=rating, comment=comment)
+    review.save()
+
+    return HttpResponseRedirect(reverse('products:product-reviews', args=(int(request.POST['product-id']),)))

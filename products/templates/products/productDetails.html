@@ -32,17 +32,8 @@
     </div>
   </div>
 
-  <div class="mt-4">
-    <div class="bg-purple-500 text-white text-lg p-2">
-      <a href="#" class="mx-6 font-semibold">Description</a>
-      <a href="#" class="mx-6">Reviews</a>
-    </div>
-    <div class="px-8 mt-2">
-      <div class="text-gray-600 mb-3">{{ product.description }}</div>
-    </div>
-  </div>
-
-
+  {% block subpage %}
+  {% endblock subpage %}
 
 </div>
 {% endblock content %}

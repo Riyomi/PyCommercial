@@ -67,7 +67,6 @@
         <a href="{% url 'products:place-order' %}" class="purple-btn flex-grow-0">Place Order</a>
       </div>
     </div>
-    {% comment %} <div class="purple-btn text-center">Checkout</div> {% endcomment %}
     {% else %}
     <span>Cart is empty.</span>
     {% endif %}
@@ -77,9 +76,4 @@
 
   </div>
 </div>
-<!-- <div>
-    <form method="post" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
-
-    </form>
-  </div> -->
 {% endblock content %}
