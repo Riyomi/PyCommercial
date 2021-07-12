@@ -23,7 +23,7 @@ def encode_rating(rating):
         return [0] * 5
 
     encoded = []
-    rating_rounded = round(int(rating) * 2) / 2
+    rating_rounded = round(float(rating) * 2) / 2.0
 
     encoded.extend([1] * (floor(rating_rounded)))
     # checks if the rounded rating has 0.5. It's done this way to avoid rounding errors

@@ -1,6 +1,7 @@
 from django.db import models
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.utils import timezone
+from django.db.models import Avg, Count
 
 
 class Product(models.Model):
@@ -13,6 +14,19 @@ class Product(models.Model):
 
     def __str__(self):
         return self.name
+
+    def get_avg_rating(self):
+        avg_rating = Review.objects.filter(product=self).aggregate(
+            avg_rating=Avg('value'))['avg_rating']
+        if avg_rating is None:
+            return 0
+        return round(avg_rating, 2)
+
+    def get_review_count(self):
+        return Review.objects.filter(product=self).aggregate(total=Count('value'))['total']
+
+    def get_review_count_by_value(self):
+        return Review.objects.filter(product=self).values('value').annotate(total=Count('value'))
 
 
 class Category(models.Model):
@@ -66,7 +80,8 @@ class OrderItem(models.Model):
 
 class Review(models.Model):
     customer = models.ForeignKey('users.Customer', on_delete=models.CASCADE)
-    product = models.ForeignKey('Product', on_delete=models.CASCADE)
+    product = models.ForeignKey(
+        'Product', on_delete=models.CASCADE)
     value = models.IntegerField(default=3, validators=[
                                 MaxValueValidator(5), MinValueValidator(1)])
     comment = models.TextField('Description', blank=True, null=True)

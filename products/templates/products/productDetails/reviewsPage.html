@@ -2,6 +2,7 @@
 {% load static %}
 
 {% load products.productfilters %}
+{% load myfilters %}
 
 
 {% block subpage %}
@@ -34,10 +35,10 @@
             </td>
             <td>
               <div class="bg-purple-200 h-5 w-64">
-                <div style="width: 50%" class="bg-purple-500 h-5"></div>
+                <div style="width: {% keyvalue product.get_review_count_by_value i product.get_review_count %}%" class="bg-purple-500 h-5"></div>
               </div>
             </td>
-            <td>50%</td>
+            <td>{% keyvalue product.get_review_count_by_value i product.get_review_count %}%</td>
           </tr>
         {%endfor %}
         </table>
@@ -83,7 +84,7 @@
             rows="4"
             cols="50"
             name="comment"
-            class="border-2"
+            class="border-2 rounded-lg p-2 focus:outline-none"
             placeholder="Write about the product in detail (optional)"
           ></textarea
           ><br />
@@ -92,12 +93,13 @@
         {% endif %}
       </div>
     </div>
-    <div>
+    <div class="mt-4 rounded-lg">
+      <p class="title-h1">Reviews</p>
       {% for review in reviews %}
         <div class="mb-4">
-          <div>
-            <span>{{review.customer.user.username}}</span>
-            <span class="text-yellow-300">
+          <div class="border rounded-lg">
+            <div class="bg-purple-500 text-white rounded-t-lg p-1 px-2"><i class="fas fa-user"></i><span class="font-semibold ml-1">{{review.customer.user.username}}</span></div>
+            <div class="text-yellow-300 mt-1 px-2">
               {% for star in review.value|encoderating %}
                 {% if star == 1 %}
                   <i class="fas fa-star"></i>
@@ -107,10 +109,9 @@
                   <i class="far fa-star"></i>
                 {% endif %}
               {% endfor %}
-            </span>
+            </div>
+          <div class="px-2 mt-1">{{review.comment}}</div>
           </div>
-
-          <div>{{review.comment}}</div>
         </div>
       {% endfor %}
     </div>

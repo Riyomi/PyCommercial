@@ -2,7 +2,6 @@ from django.shortcuts import render, get_object_or_404
 from django.http import JsonResponse, HttpResponseRedirect
 from django.urls import reverse
 from django.core.paginator import Paginator
-from django.db.models import Avg
 
 from .models import Product, Order, OrderItem, Review
 from .utils import totalItemsAndPrice, get_all_categories
@@ -20,6 +19,8 @@ def browsePage(request):
     if search_param:
         products = Product.objects.filter(name__contains=search_param)
 
+    ratings = []
+
     paginator = Paginator(products, 8)
 
     page_number = request.GET.get('page')
@@ -31,12 +32,9 @@ def browsePage(request):
 def productDescriptionPage(request, product_id):
     product = get_object_or_404(Product, pk=product_id)
     categories = get_all_categories(product)
-
     reviews = Review.objects.filter(product=product)
 
-    avg_stars = reviews.aggregate(Avg('value'))['value__avg']
-
-    return render(request, 'products/productDetails/descriptionPage.html', {'product': product, 'categories': categories, 'reviews': reviews, 'avg_stars': avg_stars})
+    return render(request, 'products/productDetails/descriptionPage.html', {'product': product, 'categories': categories, 'reviews': reviews})
 
 
 def productReviewsPage(request, product_id):
@@ -44,9 +42,7 @@ def productReviewsPage(request, product_id):
     categories = get_all_categories(product)
     reviews = Review.objects.filter(product=product)
 
-    avg_stars = reviews.aggregate(Avg('value'))['value__avg']
-
-    return render(request, 'products/productDetails/reviewsPage.html', {'product': product, 'categories': categories, 'reviews': reviews, 'avg_stars': avg_stars})
+    return render(request, 'products/productDetails/reviewsPage.html', {'product': product, 'categories': categories, 'reviews': reviews})
 
 
 def checkoutPage(request):
