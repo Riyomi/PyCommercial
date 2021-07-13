@@ -42,7 +42,7 @@
       </div>
       <div>
         <p class="title-h3 text-purple-500">Categories</p>
-        <div>
+        <div id="category-selection">
           {% for category in categories %}
             {%include "products/tree_view_template.html" %}
           {% endfor %}
@@ -146,4 +146,6 @@
   </div>
 </div>
 {% endblock content %}
-{% block javascript %} {% endblock javascript %}
+{% block javascript %}
+    <script src="{% static 'js/checkboxList.js' %}"></script>
+{% endblock javascript %}

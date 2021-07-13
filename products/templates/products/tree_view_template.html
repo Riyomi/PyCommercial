@@ -1,4 +1,4 @@
-<li class="list-none"> {{category.name}}
+<li class="list-none"><input type="checkbox" name={{category.name}} class="mr-1"><label>{{category.name}}</label>
   {%if category.get_children.count > 0 %}
       <ul>
        {%for ch in category.get_children %}
