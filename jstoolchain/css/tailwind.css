@@ -110,4 +110,8 @@
   .fa-chevron-left {
     @apply text-purple-800;
   }
+
+  ul > li {
+    @apply pl-4;
+  }
 }

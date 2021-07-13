@@ -1,0 +1,11 @@
+<li class="list-none"> {{category.name}}
+  {%if category.get_children.count > 0 %}
+      <ul>
+       {%for ch in category.get_children %}
+            {%with category=ch template_name="products/tree_view_template.html" %}
+                 {%include template_name%}
+            {%endwith%}
+       {%endfor%}
+       </ul>
+  {%endif%}
+</li>

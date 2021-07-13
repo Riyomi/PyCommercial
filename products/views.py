@@ -3,7 +3,7 @@ from django.http import JsonResponse, HttpResponseRedirect
 from django.urls import reverse
 from django.core.paginator import Paginator
 
-from .models import Product, Order, OrderItem, Review
+from .models import Product, Order, OrderItem, Review, Category
 from .utils import totalItemsAndPrice, get_all_categories
 
 
@@ -13,8 +13,8 @@ def homePage(request):
 
 def browsePage(request):
     search_param = request.GET.get('search')
-
     products = Product.objects.get_queryset().order_by('id')
+    categories = Category.objects.filter(parent=None).order_by('name')
 
     if search_param:
         products = Product.objects.filter(name__contains=search_param)
@@ -26,7 +26,7 @@ def browsePage(request):
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
 
-    return render(request, 'products/browse.html', {'page_obj': page_obj})
+    return render(request, 'products/browse.html', {'page_obj': page_obj, 'categories': categories})
 
 
 def productDescriptionPage(request, product_id):

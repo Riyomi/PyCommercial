@@ -42,6 +42,11 @@
       </div>
       <div>
         <p class="title-h3 text-purple-500">Categories</p>
+        <div>
+          {% for category in categories %}
+            {%include "products/tree_view_template.html" %}
+          {% endfor %}
+        </div>
         <p class="title-h3 text-purple-500">Price</p>
         <p class="title-h3 text-purple-500">Ratings</p>
       </div>

@@ -37,6 +37,8 @@ class Category(models.Model):
     def __str__(self):
         return self.name
 
+    def get_children(self):
+        return Category.objects.filter(parent=self).order_by('name')
 
 class Order(models.Model):
     class Status(models.IntegerChoices):
