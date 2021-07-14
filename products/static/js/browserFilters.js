@@ -27,16 +27,6 @@ $(document).ready(function () {
         });
     }
   });
-
-  $("#selected-max-price").text(
-    "Max price: $" + $('input[name="maxPrice"]').val()
-  );
-
-  $('input[name="maxPrice"]').change(function () {
-    $("#selected-max-price").text(
-      "Max price: $" + $('input[name="maxPrice"]').val()
-    );
-  });
 });
 
 function getParents(checkbox) {

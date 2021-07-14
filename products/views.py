@@ -12,20 +12,30 @@ def homePage(request):
 
 
 def browsePage(request):
-    search_param = request.GET.get('search')
-    max_price = request.GET.get('maxPrice')
-
-    products = Product.objects.get_queryset().order_by('id')
-    categories = Category.objects.filter(parent=None).order_by('name')
-
-    if search_param:
-        products = Product.objects.filter(
-            name__contains=search_param, price__gt=max_price)
-
-    products = Product.objects.filter(price__gt=max_price)
+    search_param = request.GET.get('search', '')
 
     max_price = Product.objects.latest('price').price
-    min_price = Product.objects.earliest('price').price
+
+    max_price_filter = request.GET.get('maxPrice') if request.GET.get(
+        'maxPrice') else max_price
+
+    main_categories = Category.objects.filter(parent=None).order_by('name')
+
+    category_filters = []
+    for param in request.GET:
+        if param != 'search' and param != 'maxPrice':
+            category_filters.append(param)
+
+    query_string = request.get_full_path()
+
+    if query_string.find('page') >= 0:
+        query_string = query_string[query_string.find('&')+1:]
+    else:
+        query_string = query_string[query_string.find('?')+1:]
+
+    products = Product.objects.filter(
+        name__contains=search_param, price__lte=max_price_filter, category__name__in=category_filters).order_by('id') if len(category_filters) > 0 else Product.objects.filter(
+        name__contains=search_param, price__lte=max_price_filter).order_by('id')
 
     ratings = []
 
@@ -34,7 +44,7 @@ def browsePage(request):
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
 
-    return render(request, 'products/browse.html', {'page_obj': page_obj, 'categories': categories, 'min_price': min_price, 'max_price': max_price})
+    return render(request, 'products/browse.html', {'page_obj': page_obj, 'main_categories': main_categories, 'max_price': max_price, 'query_string': query_string})
 
 
 def productDescriptionPage(request, product_id):

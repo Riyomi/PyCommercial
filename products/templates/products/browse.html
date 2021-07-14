@@ -5,57 +5,70 @@
 
 {% block content %}
 <div class="grid bg-purple-200">
-  <form method="GET" class="bg-white px-5 pt-5 rounded-lg">
+  <form method="GET" class="bg-white px-5 pt-5">
     <div>
-      <p class="title-h1">Filters</p>
+      <p class="text-purple-500 font-semibold text-2xl">Filtering</p>
     </div>
     <div id="filters">
-      <p>Seach</p>
+      <!-- Search -->
       <div>
-        <input
-          type="text"
-          placeholder="Search for products..."
-          name="search"
-          value="{{ request.GET.search }}"
-          class="
-            py-1
-            px-4
-            rounded
-            w-full
-            border
-            focus:outline-none focus:ring focus:ring-purple-400
-          "
-        />
-      </div>
-      <p>Categories</p>
-      <div id="category-selection">
-        {% for category in categories %}
-          {% include "products/tree_view_template.html" %}
-        {% endfor %}
-      </div>
-      <p>Price</p>
-      <div>
+        <p>Search</p>
         <div>
-          <span>${{min_price}}</span>
           <input
-            type="range"
-            name="maxPrice"
-            min="{{min_price}}"
-            max="{{max_price}}"
+            type="text"
+            placeholder="Search for products..."
+            name="search"
+            value="{{ request.GET.search }}"
+            class="
+              py-1
+              px-4
+              rounded
+              w-full
+              border-2
+              text-sm
+              focus:outline-none focus:ring focus:ring-purple-400
+            "
           />
-          <span>${{max_price}}</span>
-        </div>
-        <div>
-          <div id="selected-max-price"></div>
         </div>
       </div>
-      <p>Reviews</p>
+
+      <!-- Categories -->
       <div>
-        <input name="hide-without-reviews" type="checkbox" />
-        <label for="hide-without-reviews"
-          >Hide products without reviews</label
-        >
+        <p>Categories</p>
+        <div id="category-selection">
+          {% for category in main_categories %}
+            {% include "products/tree_view_template.html" %}
+          {% endfor %}
+        </div>
       </div>
+
+      <!-- Price -->
+      <div>
+        <p>Price</p>
+        <div>
+          <label for="number">Max Price</label>
+          <input
+            type="number"
+            name="maxPrice"
+            min="0"
+            max="{{max_price}}"
+            class="border-2"
+          />
+        </div>
+      </div>
+
+      <!-- Reviews -->
+      <div>
+        <p>Reviews</p>
+        <div>
+          <input name="hide-without-reviews" type="checkbox" />
+          <label for="hide-without-reviews"
+            >Hide products without reviews</label
+          >
+        </div>
+      </div>
+
+      <!-- Submit button -->
       <input
         type="submit"
         class="purple-btn cursor-pointer"
@@ -63,7 +76,7 @@
       />
     </div>
   </form>
-  <div class="grid md:grid-cols-2 xl:grid-cols-4 grid-rows-2 mx-3">
+  <div class="grid md:grid-cols-2 xl:grid-cols-4 grid-rows-2 mx-3 col-span-5">
     {% if not page_obj %}
     <div class="grid col-span-4 bg-white min-h-96 m-3 rounded-lg p-3">
       No products match your query.
@@ -124,20 +137,23 @@
           id="{{product.id}}-price"
           value="{{product.price}}"
         />
+
         <button
           id="{{ product.id }}"
           onClick="addToCart(this.id)"
           class="purple-btn mb-2"
-        >
-          Add to cart
+        ><i class="fas fa-shopping-cart"></i>
+          <span class="ml-1">Add to cart</span>
         </button>
+
+        
       </div>
     {% endfor %}
   </div>
   <div class="text-center col-start-2 col-span-5">
     <span class="step-links">
       {% if page_obj.has_previous %}
-        <a href="?page={{ page_obj.previous_page_number }}">
+        <a href="?page={{ page_obj.previous_page_number }}&{{query_string}}">
           <i class="fas fa-chevron-left"></i>
         </a>
       {% else %}
@@ -151,13 +167,13 @@
           {% if page_obj.number == page_index %}
             <a class="step-active">{{ page_index }}</a>
           {% else %}
-            <a href="?page={{ page_index }}">{{ page_index }}</a>
+            <a href="?page={{ page_index }}&{{query_string}}">{{ page_index }}</a>
           {% endif %}
         {% endif %}
       {% endfor %}
       
       {% if page_obj.has_next %}
-        <a href="?page={{ page_obj.next_page_number }}">
+        <a href="?page={{ page_obj.next_page_number }}&{{query_string}}">
           <i class="fas fa-chevron-right"></i>
         </a>
       {% else %}
