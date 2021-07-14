@@ -13,17 +13,29 @@ $(document).ready(function () {
       });
     } else {
       // if the checkbox got unchecked, only uncheck a parent if none of its children are checked
-      $(parents).each(function (index, parent) {
-        // the top category (=category without parents, which is always the first element in the array) must be handled differently because of the way the HTML is structured
-        if (index == 0) {
-          if (noSiblingsSelectedOfRoot(parent)) {
+      $(parents)
+        .reverse()
+        .each(function (index, parent) {
+          // the top category (=category without parents, which will always be the last element in the array) must be handled differently because of the way the HTML is structured
+          if (index == parents.length - 1) {
+            if (noSiblingsSelectedOfRoot(parent)) {
+              uncheck(parent);
+            }
+          } else if (noSiblingsSelected(checkbox)) {
             uncheck(parent);
           }
-        } else if (noSiblingsSelected(checkbox)) {
-          uncheck(parent);
-        }
-      });
+        });
     }
+  });
+
+  $("#selected-max-price").text(
+    "Max price: $" + $('input[name="maxPrice"]').val()
+  );
+
+  $('input[name="maxPrice"]').change(function () {
+    $("#selected-max-price").text(
+      "Max price: $" + $('input[name="maxPrice"]').val()
+    );
   });
 });
 
@@ -61,3 +73,5 @@ function check(checkbox) {
 function uncheck(checkbox) {
   $(checkbox).prop("checked", false);
 }
+
+jQuery.fn.reverse = [].reverse;

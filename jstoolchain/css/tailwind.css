@@ -27,6 +27,10 @@
     @apply block text-purple-500 font-bold text-3xl mb-2;
   }
 
+  #filters > p {
+    @apply font-semibold text-purple-500;
+  }
+
   .menu-option {
     @apply block text-white mt-2 mb-2;
   }

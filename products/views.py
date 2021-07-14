@@ -13,11 +13,19 @@ def homePage(request):
 
 def browsePage(request):
     search_param = request.GET.get('search')
+    max_price = request.GET.get('maxPrice')
+
     products = Product.objects.get_queryset().order_by('id')
     categories = Category.objects.filter(parent=None).order_by('name')
 
     if search_param:
-        products = Product.objects.filter(name__contains=search_param)
+        products = Product.objects.filter(
+            name__contains=search_param, price__gt=max_price)
+
+    products = Product.objects.filter(price__gt=max_price)
+
+    max_price = Product.objects.latest('price').price
+    min_price = Product.objects.earliest('price').price
 
     ratings = []
 
@@ -26,7 +34,7 @@ def browsePage(request):
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
 
-    return render(request, 'products/browse.html', {'page_obj': page_obj, 'categories': categories})
+    return render(request, 'products/browse.html', {'page_obj': page_obj, 'categories': categories, 'min_price': min_price, 'max_price': max_price})
 
 
 def productDescriptionPage(request, product_id):

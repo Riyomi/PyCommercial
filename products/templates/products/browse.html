@@ -4,148 +4,170 @@
 {% block title %}Products{% endblock title %}
 
 {% block content %}
-<div class="grid grid-cols-6 w-full bg-purple-200">
-  <div class="grid col-span-6 p-6">
-    <form method="get" class="grid mx-auto w-5/12">
-      <input
-        type="text"
-        placeholder="Search for products..."
-        name="search"
-        value="{{ request.GET.search }}"
-        class="
-          py-2
-          px-4
-          rounded-lg
-          focus:outline-none focus:ring focus:ring-purple-400
-        "
-      />
-      <button
-        class="
-          block
-          fas
-          fa-search
-          absolute
-          pt-3
-          pr-20
-          mr-2
-          right-1/4
-          text-purple-700
-          focus:outline-none
-        "
-      ></button>
-    </form>
-  </div>
-  <div class="grid grid-cols-6 col-span-6">
-    <div class="bg-white px-5 pt-5 rounded-lg">
-      <div>
-        <p class="title-h1">Filters</p>
-      </div>
-      <div>
-        <p class="title-h3 text-purple-500">Categories</p>
-        <div id="category-selection">
-          {% for category in categories %}
-            {%include "products/tree_view_template.html" %}
-          {% endfor %}
-        </div>
-        <p class="title-h3 text-purple-500">Price</p>
-        <p class="title-h3 text-purple-500">Ratings</p>
-      </div>
+<div class="grid bg-purple-200">
+  <form method="GET" class="bg-white px-5 pt-5 rounded-lg">
+    <div>
+      <p class="title-h1">Filters</p>
     </div>
-    <div class="grid md:grid-cols-2 xl:grid-cols-4 col-span-5 mx-3">
-      {% if not page_obj %}
-      <div class="grid col-span-4 bg-white min-h-96 m-3 rounded-lg p-3">
-        No products match your query.
+    <div id="filters">
+      <p>Seach</p>
+      <div>
+        <input
+          type="text"
+          placeholder="Search for products..."
+          name="search"
+          value="{{ request.GET.search }}"
+          class="
+            py-1
+            px-4
+            rounded
+            w-full
+            border
+            focus:outline-none focus:ring focus:ring-purple-400
+          "
+        />
       </div>
-      {% endif %}
-      {% for product in page_obj %}
-        <div
-          id="product-{{ product.id }}"
-          class="flex flex-col bg-white min-h-96 m-3 rounded-lg p-3"
+      <p>Categories</p>
+      <div id="category-selection">
+        {% for category in categories %}
+          {% include "products/tree_view_template.html" %}
+        {% endfor %}
+      </div>
+      <p>Price</p>
+      <div>
+        <div>
+          <span>${{min_price}}</span>
+          <input
+            type="range"
+            name="maxPrice"
+            min="{{min_price}}"
+            max="{{max_price}}"
+          />
+          <span>${{max_price}}</span>
+        </div>
+        <div>
+          <div id="selected-max-price"></div>
+        </div>
+      </div>
+      <p>Reviews</p>
+      <div>
+        <input name="hide-without-reviews" type="checkbox" />
+        <label for="hide-without-reviews"
+          >Hide products without reviews</label
         >
-          <a href="{% url 'products:details' product.id %}" class="flex h-48 justify-center">
-            <img src="{{ product.image.url|formaturl }}" alt="img-{{product.id}}" class="max-h-48 self-center justify-self-center" />
-          </a>
-          <div class="title-h1">${{ product.price }}</div>
-          <div class="text-purple-500 text-lg font-semibold mb-2">
-            <a href="{% url 'products:details' product.id %}" class="block h-6 truncate"
-              >{{ product.name }}</a
-            >
-            <span title="{{product.get_avg_rating}} out of 5 stars" class="text-yellow-300 text-xs">
-              {% for star in product.get_avg_rating|encoderating %}
-                {% if star == 1 %}
-                  <i class="fas fa-star"></i>
-                {% elif star == 0.5 %}
-                  <i class="fas fa-star-half-alt"></i>
-                {% else %}
-                  <i class="far fa-star"></i>
-                {% endif %}
-              {% endfor %}
-            </span>
-          </div>
-          <div class="text-xs text-gray-600 mb-3 h-12">
-            {{ product.description|truncatetext:100 }}
-          </div>
-          <input
-            type="hidden"
-            id="{{product.id}}-name"
-            value="{{product.name}}"
+      </div>
+      <input
+        type="submit"
+        class="purple-btn cursor-pointer"
+        value="Apply filters"
+      />
+    </div>
+  </form>
+  <div class="grid md:grid-cols-2 xl:grid-cols-4 grid-rows-2 mx-3">
+    {% if not page_obj %}
+    <div class="grid col-span-4 bg-white min-h-96 m-3 rounded-lg p-3">
+      No products match your query.
+    </div>
+    {% endif %}
+    {% for product in page_obj %}
+      <div
+        id="product-{{ product.id }}"
+        class="flex flex-col bg-white min-h-96 m-3 rounded-lg p-3"
+      >
+        <a
+          href="{% url 'products:details' product.id %}"
+          class="flex h-48 justify-center"
+        >
+          <img
+            src="{{ product.image.url|formaturl }}"
+            alt="img-{{product.id}}"
+            class="max-h-48 self-center justify-self-center"
           />
-          <input
-            type="hidden"
-            id="{{product.id}}-img-url"
-            value="{{product.image.url|formaturl}}"
-          />
-          <input
-            type="hidden"
-            id="{{product.id}}-price"
-            value="{{product.price}}"
-          />
-          <button
-            id="{{ product.id }}"
-            onClick="addToCart(this.id)"
-            class="purple-btn mb-2"
+        </a>
+        <div class="title-h1">${{ product.price }}</div>
+        <div class="text-purple-500 text-lg font-semibold mb-2">
+          <a
+            href="{% url 'products:details' product.id %}"
+            class="block h-6 truncate"
+            >{{ product.name }}</a
           >
-            Add to cart
-          </button>
-        </div>
-      {% endfor %}
-    </div>
-    <div class="text-center col-start-2 col-span-5">
-        <span class="step-links">
-          {% if page_obj.has_previous %}
-            <a href="?page={{ page_obj.previous_page_number }}">
-              <i class="fas fa-chevron-left"></i>
-            </a>
-          {% else %}
-            <a>
-              <i class="fas fa-chevron-left"></i>
-            </a>
-          {% endif %}
-
-          {% for page_index in page_obj.paginator.page_range %}
-            {% if page_index <= page_obj.number|add:2 and page_index >= page_obj.number|add:-2 %}
-              {% if page_obj.number == page_index %}
-              <a class="step-active">{{ page_index }}</a>
+          <span
+            title="{{product.get_avg_rating}} out of 5 stars"
+            class="text-yellow-300 text-xs"
+          >
+            {% for star in product.get_avg_rating|encoderating %}
+              {% if star == 1 %}
+                <i class="fas fa-star"></i>
+              {% elif star == 0.5 %}
+                <i class="fas fa-star-half-alt"></i>
               {% else %}
-              <a href="?page={{ page_index }}">{{ page_index }}</a>
+                <i class="far fa-star"></i>
               {% endif %}
-            {% endif %}
-          {% endfor %}
-
-          {% if page_obj.has_next %}
-            <a href="?page={{ page_obj.next_page_number }}">
-              <i class="fas fa-chevron-right"></i>
-            </a>
-          {%else %}
-            <a>
-              <i class="fas fa-chevron-right"></i>
-            </a>
+            {% endfor %}
+          </span>
+        </div>
+        <div class="text-xs text-gray-600 mb-3 h-12">
+          {{ product.description|truncatetext:100 }}
+        </div>
+        <input
+          type="hidden"
+          id="{{product.id}}-name"
+          value="{{product.name}}"
+        />
+        <input
+          type="hidden"
+          id="{{product.id}}-img-url"
+          value="{{product.image.url|formaturl}}"
+        />
+        <input
+          type="hidden"
+          id="{{product.id}}-price"
+          value="{{product.price}}"
+        />
+        <button
+          id="{{ product.id }}"
+          onClick="addToCart(this.id)"
+          class="purple-btn mb-2"
+        >
+          Add to cart
+        </button>
+      </div>
+    {% endfor %}
+  </div>
+  <div class="text-center col-start-2 col-span-5">
+    <span class="step-links">
+      {% if page_obj.has_previous %}
+        <a href="?page={{ page_obj.previous_page_number }}">
+          <i class="fas fa-chevron-left"></i>
+        </a>
+      {% else %}
+        <a>
+          <i class="fas fa-chevron-left"></i>
+        </a>
+      {% endif %}
+      
+      {% for page_index in page_obj.paginator.page_range %}
+        {% if page_index <= page_obj.number|add:2 and page_index >= page_obj.number|add:-2 %}
+          {% if page_obj.number == page_index %}
+            <a class="step-active">{{ page_index }}</a>
+          {% else %}
+            <a href="?page={{ page_index }}">{{ page_index }}</a>
           {% endif %}
-        </span>
-    </div>
+        {% endif %}
+      {% endfor %}
+      
+      {% if page_obj.has_next %}
+        <a href="?page={{ page_obj.next_page_number }}">
+          <i class="fas fa-chevron-right"></i>
+        </a>
+      {% else %}
+        <a>
+          <i class="fas fa-chevron-right"></i>
+        </a>
+      {% endif %}
+    </span>
   </div>
 </div>
-{% endblock content %}
-{% block javascript %}
-    <script src="{% static 'js/checkboxList.js' %}"></script>
+{% endblock content %} {% block javascript %}
+<script src="{% static 'js/browserFilters.js' %}"></script>
 {% endblock javascript %}
