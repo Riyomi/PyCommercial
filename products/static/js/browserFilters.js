@@ -1,4 +1,6 @@
 $(document).ready(function () {
+  persistFormInputs();
+
   // add event listener to every checkbox
   $("#category-selection input[type=checkbox]").change(function () {
     const checkbox = $(this);
@@ -62,6 +64,31 @@ function check(checkbox) {
 
 function uncheck(checkbox) {
   $(checkbox).prop("checked", false);
+}
+
+function getUrlVars() {
+  var vars = [],
+    hash;
+  var hashes = window.location.href
+    .slice(window.location.href.indexOf("?") + 1)
+    .replaceAll("+", " ")
+    .split("&");
+  for (var i = 0; i < hashes.length; i++) {
+    hash = hashes[i].split("=");
+    vars[hash[0].replaceAll("%26", "&")] = hash[1];
+  }
+
+  return vars;
+}
+
+function persistFormInputs() {
+  const params = getUrlVars();
+
+  for (const [key, value] of Object.entries(params)) {
+    if (value === "on") {
+      check(`input[name="${key}"`);
+    }
+  }
 }
 
 jQuery.fn.reverse = [].reverse;

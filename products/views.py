@@ -22,11 +22,13 @@ def browsePage(request):
     main_categories = Category.objects.filter(parent=None).order_by('name')
 
     category_filters = []
+
     for param in request.GET:
-        if param != 'search' and param != 'maxPrice':
+        if param != 'search' and param != 'maxPrice' and param != 'page':
             category_filters.append(param)
 
-    query_string = request.get_full_path()
+    query_string = request.get_full_path(
+    ) if request.get_full_path().find('?') != -1 else ''
 
     if query_string.find('page') >= 0:
         query_string = query_string[query_string.find('&')+1:]
