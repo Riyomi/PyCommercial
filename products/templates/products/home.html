@@ -5,28 +5,38 @@
 {% block content %}
 
 <div class="flex min-h-screen bg-purple-200" style="min-height: calc(100vh - (153px));">
-    <div class="flex flex-col justify-center w-3/6">
-      <p class="text-7xl text-purple-500 font-semibold">PyCommercial</p>
-      <form method="GET" action="{% url 'products:browse' %}" class="w-full">
-        <input
-        type="text"
-        name="search"
-        placeholder="Search for products..."
-        class="
-          py-2
-          px-4
-          w-full
-          rounded-lg
-          focus:outline-none focus:ring focus:ring-purple-400
-        "
-        />
+    <div class="mx-auto">
+      <p class="text-7xl text-purple-500 font-semibold my-8 text-center">PyCommercial</p>
+      <form method="GET" action="{% url 'products:browse' %}" class="w-full mb-2">
+        <div>
+          <i class="fas fa-search absolute mt-3 ml-3 text-purple-700"></i>
+          <input
+          type="text"
+          name="search"
+          placeholder="Search for products..."
+          class="
+            py-2
+            px-9
+            w-full
+            rounded-lg
+            focus:outline-none focus:ring focus:ring-purple-400
+          "
+          />
+        </div>
 
       </form>
     
       <p>...or start browsing by popular categories:</p>
-      <div class="text-purple-600">
+      <div class="text-purple-600 mt-1">
         {% for category, params in data.items %}
           <a href="{% url 'products:browse' %}?{% for param in params %}{{param.name|encode_url}}=on&{% endfor %}" class="underline mx-1">{{category}}</a>
+        {% endfor %}
+      </div>
+
+      <div>
+        <div>Best selling products</div>
+        {% for product in best_products %}
+          <div>{{product.name}}</div>
         {% endfor %}
       </div>
 

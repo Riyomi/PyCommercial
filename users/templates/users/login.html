@@ -1,46 +1,36 @@
 {% extends "base.html" %}
 {% load myfilters %}
 {% block title %}Login{% endblock title %}
+
 {% block content %}
-<div class="flex flex-col self-center mt-4">
-  <form method="POST" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
-    {% csrf_token %}
-    <p class="title-h1">Login</p>
+<form method="POST" class="user-form">
+  {% csrf_token %}
+  <p class="title-h1 mb-4">Login</p>
 
-    <div class="fieldWrapper mb-4 mt-4">
-      <input
-        type="text"
-        name="username"
-        placeholder="Username"
-        class="myinputfield"
-      />
-    </div>
+  <input
+    type="text"
+    name="username"
+    placeholder="Username"
+   />
+  
+  <input
+    type="password"
+    name="password"
+    placeholder="***************"
+  />
 
-    <div class="fieldWrapper mb-4">
-      <input
-        type="password"
-        name="password"
-        placeholder="***************"
-        class="myinputfield"
-      />
-    </div>
+  <input type="submit" name="Login" class="purple-btn w-full" />
 
-    <div class="flex">
-      <input type="submit" name="Login" value="Login" class="purple-btn" />
-    </div>
-
-    <div class="mt-5">
-      <span>Don't have an account yet? </span
-      ><a
-        href="{% url 'users:register' %}"
-        class="text-purple-500 opacity-75 font-bold"
-        >Register now</a
-      >
-    </div>
-  </form>
-
+  <div>
+    <span>Don't have an account yet? </span
+    ><a
+      href="{% url 'users:register' %}"
+      class="text-purple-400 font-bold"
+      >Register now</a
+    >
+  </div>
   {% for message in messages %}
-  <p id="{{ message }}">{{ message }}</p>
+    <p id="{{ message }}">{{ message }}</p>
   {% endfor %}
-</div>
+</form>
 {% endblock content %}

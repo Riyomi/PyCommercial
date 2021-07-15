@@ -5,18 +5,22 @@ from django.core.paginator import Paginator
 
 from .models import Product, Order, OrderItem, Review, Category
 from .utils import totalItemsAndPrice, get_all_categories, get_subcategories
+from django.db.models import Avg
 
 
 def homePage(request):
     categories_to_display = Category.objects.filter(
         parent=None).order_by('-id')[0:5]
 
+    best_products = Product.objects.annotate(
+        avg_rating=Avg('review__value')).order_by('-avg_rating')[0:5]
+
     data = {}
 
     for category in categories_to_display:
         data[category] = get_subcategories(category)
 
-    return render(request, 'products/home.html', {'data': data})
+    return render(request, 'products/home.html', {'data': data, 'best_products': best_products})
 
 
 def browsePage(request):

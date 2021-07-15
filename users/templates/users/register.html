@@ -3,71 +3,42 @@
 {% block title %}Register Account{% endblock title %}
 
 {% block content %}
-<div class="flex flex-col self-center mt-4">
-  <form method="POST" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
-    {% csrf_token %}
-    <p class="title-h1">Register account</p>
-    <p class="text-purple-400 mb-4 text-lg">
-      Get started and create your free account now
-    </p>
-    <div class="fieldWrapper mb-4">
-      {{ user_form.username|addclass:'myinputfield' }}
-    </div>
+<form method="POST" class="user-form">
+  {% csrf_token %}
+  <p class="title-h1 mb-2">Register account</p>
+  <p class="text-purple-400 mb-4 text-lg">
+    Get started and create your free account now
+  </p>
 
-    <div class="fieldWrapper mb-4">
-      {{ user_form.email|addclass:'myinputfield' }}
-    </div>
+  {{ user_form.username }}
+  {{ user_form.email }}
 
-    <div class="fieldWrapper mb-4">
-      {{ user_form.first_name|addclass:'myinputfield' }}
-    </div>
+  {{ user_form.first_name }}
+  {{ user_form.last_name }}
+  
+  {{ customer_form.country }}
+  {{ customer_form.city }}
+  {{ customer_form.address }}
+  {{ customer_form.mobile }}
 
-    <div class="fieldWrapper mb-4">
-      {{ user_form.last_name|addclass:'myinputfield' }}
-    </div>
+  {{ user_form.password1 }}
+  {{ user_form.password2 }}
+  
+  <input
+    type="submit"
+    name="Create User"
+    value="Register Account"
+    class="purple-btn w-full"
+  />
 
-    <div class="fieldWrapper mb-4">
-      {{ customer_form.country|addclass:'myinputfield' }}
-    </div>
-
-    <div class="fieldWrapper mb-4">
-      {{ customer_form.city|addclass:'myinputfield' }}
-    </div>
-
-    <div class="fieldWrapper mb-4">
-      {{ customer_form.address|addclass:'myinputfield' }}
-    </div>
-
-    <div class="fieldWrapper mb-4">
-      {{ customer_form.mobile|addclass:'myinputfield' }}
-    </div>
-
-    <div class="fieldWrapper mb-4">
-      {{ user_form.password1|addclass:'myinputfield' }}
-    </div>
-
-    <div class="fieldWrapper mb-4">
-      {{ user_form.password2|addclass:'myinputfield' }}
-    </div>
-
-    <div class="flex">
-      <input
-        type="submit"
-        name="Create User"
-        value="Register Account"
-        class="purple-btn"
-      />
-    </div>
-
-    {% for message in messages %}
+  {% for message in messages %}
     <p class="text-green-300">{{ message }}</p>
-    {% endfor %} {{ user_form.errors }} {{ customer_form.errors }}
-    <div class="mt-4">
-      <span>Already have an account? </span
-      ><a href="{% url 'users:login' %}" class="text-purple-400 font-bold"
-        >Login</a
-      >
-    </div>
-  </form>
-</div>
+  {% endfor %} {{ user_form.errors }} {{ customer_form.errors }}
+  <div>
+    <span>Already have an account? </span
+    ><a href="{% url 'users:login' %}" class="text-purple-400 font-bold"
+      >Login</a
+    >
+  </div>
+</form>
 {% endblock content %}

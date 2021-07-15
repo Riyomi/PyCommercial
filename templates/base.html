@@ -23,7 +23,7 @@
 
   <body>
     <div
-      class="flex flex-col min-h-screen bg-purple-200"
+      class="min-h-screen bg-purple-200"
       style="min-height: calc(100vh - (72px))"
     >
       <nav
@@ -124,9 +124,11 @@
               </div>
               <div id="cart-summary">
                 <span id="cart-total">
-                  {% if request.session.totalprice > 0 %} Total price:
-                  ${{request.session.totalprice }} {% else %} Your
-                  cart is empty. {% endif %}
+                  {% if request.session.totalprice > 0 %}
+                    Total price: ${{request.session.totalprice }}
+                  {% else %}
+                    Your cart is empty.
+                  {% endif %}
                 </span>
                 <a
                   href="{% url 'products:checkout' %}"
@@ -177,14 +179,19 @@
           </div>
         </div>
       </nav>
-      <div class="flex flex-col bg-purple-200">
+
+      <!-- Main Content -->
+      <div>
         {% block content %} {% endblock content %}
       </div>
+
     </div>
-    <footer class="footer-container mt-0">
+
+
+    <footer>
       <span>© 2021 PyCommercial. All rights reserved.</span>
-      <span>Created by Richard Szabo</span>
     </footer>
+
     <script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
     <script src="{% static 'js/dropdown.js' %}"></script>
     <script src="{% static 'js/cart.js' %}"></script>

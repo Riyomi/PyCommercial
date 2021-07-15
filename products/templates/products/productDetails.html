@@ -29,7 +29,7 @@
               {% endif %}
           {% endfor %}
         </span>
-        ({{reviews.count}} reviews)
+        ({{product.review_set.count}} reviews)
       </div>
       <div class="text-2xl">${{ product.price }}</div>
       <button class="purple-btn w-6/12"><i class="fas fa-shopping-cart"></i>
