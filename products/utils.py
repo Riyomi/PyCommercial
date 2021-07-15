@@ -21,3 +21,15 @@ def get_all_categories(product):
             path.append('Products')
             break
     return path
+
+
+def get_subcategories(category):
+    result = [category]
+
+    for child in category.get_children():
+        if child not in result:
+            result.append(child)
+        if child.get_children().count():
+            result.extend(child.get_children())
+
+    return result

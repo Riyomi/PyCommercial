@@ -88,6 +88,9 @@ function persistFormInputs() {
     if (value === "on") {
       check(`input[name="${key}"`);
     }
+    if (key === "maxPrice") {
+      $(`input[name=maxPrice]`).val(value);
+    }
   }
 }
 

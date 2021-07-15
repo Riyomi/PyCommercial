@@ -4,11 +4,19 @@ from django.urls import reverse
 from django.core.paginator import Paginator
 
 from .models import Product, Order, OrderItem, Review, Category
-from .utils import totalItemsAndPrice, get_all_categories
+from .utils import totalItemsAndPrice, get_all_categories, get_subcategories
 
 
 def homePage(request):
-    return render(request, 'products/home.html')
+    categories_to_display = Category.objects.filter(
+        parent=None).order_by('-id')[0:5]
+
+    data = {}
+
+    for category in categories_to_display:
+        data[category] = get_subcategories(category)
+
+    return render(request, 'products/home.html', {'data': data})
 
 
 def browsePage(request):

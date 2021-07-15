@@ -32,3 +32,8 @@ def encode_rating(rating):
     encoded.extend([0] * ((5-(ceil(rating_rounded)))))
 
     return encoded
+
+
+@register.filter
+def encode_url(value):
+    return value.replace(' ', '+').replace('&', '%26')
