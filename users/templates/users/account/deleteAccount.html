@@ -1,0 +1,15 @@
+{% extends 'users/profile.html' %}
+
+{% block page %}
+    <p class="title-h1 text-red-400">Delete Account</p>
+    <p>This action is irreversible and will delete all your data from the database.</p>
+    <form method="POST" class="mt-2">
+      {% csrf_token %}
+
+      <input name="password1" type="password" placeholder="Password" class="myInput mb-2"><br>
+      <input name="password2" type="password" placeholder="Confirm password" class="myInput">
+
+      <input type="submit" value="Delete Account" class="purple-btn bg-red-400 hover:bg-red-500 mt-5 cursor-pointer">
+    </form>
+    
+{% endblock %}

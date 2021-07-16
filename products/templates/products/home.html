@@ -1,11 +1,11 @@
 {% extends "base.html" %}
-{% load myfilters %}
+{% load static %}
 {% load products.productfilters %}
 {% block title %}Home{% endblock title %}
-{% block content %}
 
-<div class="flex min-h-screen bg-purple-200" style="min-height: calc(100vh - (153px));">
-    <div class="mx-auto">
+{% block content %}
+<div class="flex min-h-screen bg-purple-200 justify-center">
+    <div>
       <p class="text-7xl text-purple-500 font-semibold my-8 text-center">PyCommercial</p>
       <form method="GET" action="{% url 'products:browse' %}" class="w-full mb-2">
         <div>
@@ -33,13 +33,45 @@
         {% endfor %}
       </div>
 
-      <div>
-        <div>Best selling products</div>
+      <div class="mt-5">
+        <p class="title-h1">Best selling products</p>
         {% for product in best_products %}
-          <div>{{product.name}}</div>
+          <div
+        id="product-{{ product.id }}"
+        class="flex flex-col bg-white m-3 rounded-lg p-3 slides"
+      >
+        <a
+          href="{% url 'products:details' product.id %}"
+          class="flex h-48 justify-center"
+        >
+          <img
+            src="{{ product.image.url|formaturl }}"
+            alt="img-{{product.id}}"
+            class="max-h-48 self-center justify-self-center"
+          />
+        </a>
+        <div class="title-h1">${{ product.price }}</div>
+        <div class="text-purple-500 text-lg font-semibold mb-2">
+          <a
+            href="{% url 'products:details' product.id %}"
+            class="block h-6 truncate"
+            >{{ product.name }}</a
+          >
+          {% with product=product %}
+            <span class="text-xs">{% include "products/ratingTemplate.html" %}</span>
+          {% endwith %}
+        </div>
+        <div class="text-xs text-gray-600 mb-3 h-12">
+          {{ product.description|truncatetext:100 }}
+        </div>
+      </div>
         {% endfor %}
       </div>
 
   </div>
 </div>
 {% endblock content %}
+
+{% block javascript %}
+<script src="{% static 'js/homePage.js' %}"></script>
+{% endblock javascript %}

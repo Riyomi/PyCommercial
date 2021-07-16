@@ -1,10 +1,9 @@
 {% extends 'base.html' %}
-{% load myfilters %}
 {% load products.productfilters %}
 {% block title %}My Orders{% endblock title %}
 
 {% block content %}
-<div class="flex flex-col self-center rounded-lg p-5 w-6/12 mt-4 bg-white">
+<div class="flex flex-col mx-auto rounded-lg p-5 w-6/12 mt-4 bg-white">
   <div class="title-h1 px-2">Order #{{data.order}} </div>
   <div class="mt-2 px-2">Placed on: {{data.order.date_placed}} </div>
   <div class="flex justify-between">
@@ -41,28 +40,12 @@
               </a>
             </td>
             <td><span>x{{ item.quantity }}</span></td>
-            <td><span>${{item.product.price}}</span></td>
+            <td><span>${{ item.product.price }}</span></td>
             <td><span>${% widthratio item.product.price 1 item.quantity %}</span></td>
             {% endfor %}
           </tr>
         </tbody>
       </table>
-
-
-
-
-
-  {% comment %} <div class="table-auto justify-between text-black rounded-md p-2 m-2">
-    {%for item in data.items %}
-    <div class="flex justify-between rounded-lg bg-white">
-      {{ item.product.name }}<br>
-      <img src="{{ item.product.image.url|formaturl }}" class="w-8">
-      ${{ item.product.price }}<br>
-      x{{ item.quantity }}<br><br>
-    </div>
-    {%endfor %} 
-
-  </div> {% endcomment %}
   <div class="self-end">
     Total: ${{data.order.total}}
   </div>

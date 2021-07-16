@@ -37,3 +37,11 @@ def encode_rating(rating):
 @register.filter
 def encode_url(value):
     return value.replace(' ', '+').replace('&', '%26')
+
+
+@register.simple_tag
+def keyvalue(list, key, total):
+    for item in list:
+        if item['value'] == int(key):
+            return round(item['total']/total*100, 2)
+    return 0

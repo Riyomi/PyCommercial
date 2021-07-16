@@ -1,5 +1,4 @@
 {% extends "base.html" %}
-{% load myfilters %}
 {% block title %}My Account{% endblock title %}
 
 {% block content %}
@@ -26,7 +25,7 @@
       >
     </div>
     <div class="menu-option text-red-300 hover:text-red-400">
-      <a href="#"
+      <a href="{% url 'users:deleteAccount' %}"
         ><i class="far fa-trash-alt"></i
         ><span class="ml-2">Delete account</span></a
       >

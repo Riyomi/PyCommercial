@@ -75,14 +75,14 @@
   </form>
   <div class="grid md:grid-cols-2 xl:grid-cols-4 grid-rows-2 mx-3 col-span-5">
     {% if not page_obj %}
-    <div class="grid col-span-4 bg-white min-h-96 m-3 rounded-lg p-3">
+    <div class="grid col-span-4 bg-white m-3 rounded-lg p-3">
       No products match your query.
     </div>
     {% endif %}
     {% for product in page_obj %}
       <div
         id="product-{{ product.id }}"
-        class="flex flex-col bg-white min-h-96 m-3 rounded-lg p-3"
+        class="flex flex-col bg-white m-3 rounded-lg p-3"
       >
         <a
           href="{% url 'products:details' product.id %}"
@@ -101,20 +101,9 @@
             class="block h-6 truncate"
             >{{ product.name }}</a
           >
-          <span
-            title="{{product.get_avg_rating}} out of 5 stars"
-            class="text-yellow-300 text-xs"
-          >
-            {% for star in product.get_avg_rating|encoderating %}
-              {% if star == 1 %}
-                <i class="fas fa-star"></i>
-              {% elif star == 0.5 %}
-                <i class="fas fa-star-half-alt"></i>
-              {% else %}
-                <i class="far fa-star"></i>
-              {% endif %}
-            {% endfor %}
-          </span>
+          {% with product=product %}
+            <span class="text-xs">{% include "products/ratingTemplate.html" %}</span>
+          {% endwith %}
         </div>
         <div class="text-xs text-gray-600 mb-3 h-12">
           {{ product.description|truncatetext:100 }}
@@ -142,7 +131,6 @@
         ><i class="fas fa-shopping-cart"></i>
           <span class="ml-1">Add to cart</span>
         </button>
-
         
       </div>
     {% endfor %}

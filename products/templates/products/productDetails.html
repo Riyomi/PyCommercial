@@ -4,7 +4,7 @@
 {% block title %}{{ product.name }}{% endblock title %}
 
 {% block content %}
-<div class="grid bg-white m-3 rounded-lg w-9/12 self-center">
+<div class="grid bg-white mt-2 rounded-lg w-9/12 mx-auto">
   <div class="bg-purple-500 text-white px-6 p-3 rounded-t-lg">
     {% for category in categories reversed %}
       <a>{{category}}</a>
@@ -18,22 +18,33 @@
     <div class="grid grid-rows-4 text-lg">
       <div class="title-h1 text-5xl font-semibold mb-2 self-center">{{ product.name }}</div>
       <div>
-        <span title="{{product.get_avg_rating}} out of 5 stars" class="text-yellow-300">
-          {% for star in product.get_avg_rating|encoderating %}
-              {% if star == 1 %}
-                <i class="fas fa-star"></i>
-              {% elif star == 0.5 %}
-                <i class="fas fa-star-half-alt"></i>
-              {% else %}
-                <i class="far fa-star"></i>
-              {% endif %}
-          {% endfor %}
-        </span>
+        {% with product=product %}
+          {% include "products/ratingTemplate.html" %}
+        {% endwith %}
         ({{product.review_set.count}} reviews)
       </div>
       <div class="text-2xl">${{ product.price }}</div>
-      <button class="purple-btn w-6/12"><i class="fas fa-shopping-cart"></i>
-        <span class="ml-1">Add to cart</span></button>
+
+      <input
+        type="hidden"
+        id="{{product.id}}-name"
+        value="{{product.name}}"
+      />
+      <input
+        type="hidden"
+        id="{{product.id}}-img-url"
+        value="{{product.image.url|formaturl}}"
+      />
+      <input
+        type="hidden"
+        id="{{product.id}}-price"
+        value="{{product.price}}"
+      />
+
+      <button id="{{ product.id }}" onClick="addToCart(this.id)" class="purple-btn w-6/12">
+        <i class="fas fa-shopping-cart"></i>
+        <span class="ml-1">Add to cart</span>
+      </button>
     </div>
   </div>
 
@@ -42,3 +53,4 @@
 
 </div>
 {% endblock content %}
+

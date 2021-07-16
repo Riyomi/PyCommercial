@@ -78,6 +78,11 @@ def addressPage(request):
 
 
 @login_required(login_url='users:login')
+def deleteAccountPage(request):
+    return render(request, 'users/account/deleteAccount.html')
+
+
+@login_required(login_url='users:login')
 def ordersPage(request):
     orders = Order.objects.filter(customer=request.user.customer)
     paginator = Paginator(orders, 4)
