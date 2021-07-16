@@ -1,12 +1,15 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
-from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth import authenticate, login, logout, update_session_auth_hash
 from django.contrib.auth.decorators import login_required
 from .decorators import unauthenticated_user
 from django.core.paginator import Paginator
+from django.contrib.auth.hashers import check_password
 
 from .forms import UserForm, CustomerForm
 from products.models import Order, OrderItem, Product
+from django.contrib.auth.models import User
+from users.models import Customer
 
 
 @unauthenticated_user
@@ -24,7 +27,7 @@ def registerPage(request):
                 'username')
 
             customer.save()
-            return redirect('success')
+            return redirect('users:success')
     else:
         user_form = UserForm()
         customer_form = CustomerForm()
@@ -79,7 +82,34 @@ def addressPage(request):
 
 @login_required(login_url='users:login')
 def deleteAccountPage(request):
+    password1 = request.POST.get('password1')
+    password2 = request.POST.get('password2')
+
+    if password1 == password2 and password1 and password2:
+        customer = Customer.objects.get(id=request.user.customer.id)
+        if check_password(password1, customer.user.password):
+            user = User.objects.get(pk=request.user.id)
+            user.delete()
+            return redirect('products:home')
+
     return render(request, 'users/account/deleteAccount.html')
+
+
+@login_required(login_url='users:login')
+def changePasswordPage(request):
+    customer = Customer.objects.get(id=request.user.customer.id)
+    oldPassword = request.POST.get('oldPassword')
+    newPassword1 = request.POST.get('newPassword1')
+    newPassword2 = request.POST.get('newPassword2')
+
+    if check_password(oldPassword, customer.user.password) and newPassword1 and newPassword2 and newPassword1 == newPassword2:
+        customer.user.set_password(newPassword1)
+        customer.user.save()
+        messages.success(request, 'Password succesfully updated.')
+        request.user.set_password(newPassword1)
+        update_session_auth_hash(request, customer.user)
+
+    return render(request, 'users/account/changePassword.html')
 
 
 @login_required(login_url='users:login')

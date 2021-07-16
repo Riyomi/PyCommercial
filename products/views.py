@@ -1,4 +1,4 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.http import JsonResponse, HttpResponseRedirect
 from django.urls import reverse
 from django.core.paginator import Paginator
@@ -141,7 +141,7 @@ def placeOrder(request):
         del request.session['cartdata']
         del request.session['totalitems']
         del request.session['totalprice']
-        return render(request, 'products/home.html')
+        return redirect('products:home')
 
     # TODO: redirect if it's empty (or just simply don't display the button in the HTML...)
 
