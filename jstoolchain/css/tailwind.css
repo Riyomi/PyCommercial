@@ -117,6 +117,14 @@
     @apply py-2;
   }
 
+  .messages > .info {
+    @apply text-red-500;
+  }
+
+  .messages > .success {
+    @apply text-green-500;
+  }
+
   .step-links > a {
     @apply px-2;
   }
