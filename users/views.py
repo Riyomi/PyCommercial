@@ -6,7 +6,7 @@ from .decorators import unauthenticated_user
 from django.core.paginator import Paginator
 from django.contrib.auth.hashers import check_password
 
-from .forms import UserForm, CustomerForm
+from .forms import UserForm, CustomerForm, EditUserInfoForm
 from products.models import Order, OrderItem, Product
 from django.contrib.auth.models import User
 from users.models import Customer
@@ -76,8 +76,38 @@ def profilePage(request):
 
 
 @login_required(login_url='users:login')
-def addressPage(request):
-    return render(request, 'users/account/address.html')
+def editInfo(request):
+    if request.method == 'POST':
+        user_form = EditUserInfoForm(
+            request.POST, instance=request.user)
+        customer_form = CustomerForm(
+            request.POST, instance=request.user.customer)
+
+        if user_form.is_valid() and customer_form.is_valid():
+            user = user_form.save(commit=False)
+            user.is_active = True
+            user.save()
+            customer = customer_form.save(commit=False)
+            customer.user = user
+
+            request.session['username'] = user_form.cleaned_data.get(
+                'username')
+
+            customer.save()
+
+            return redirect('users:profile')
+    else:
+        user_form = EditUserInfoForm(instance=request.user)
+        customer_form = CustomerForm(instance=request.user.customer)
+        customer_form.fields['mobile'].widget.attrs['value'] = str(request.user.customer.mobile)[
+            3:]
+
+    setplaceholders(user_form)
+    setplaceholders(customer_form)
+
+    customer_form.fields['mobile'].widget.attrs['placeholder'] = 'Mobile number'
+
+    return render(request, 'users/account/editInfo.html', {'user_form': user_form, 'customer_form': customer_form})
 
 
 @login_required(login_url='users:login')

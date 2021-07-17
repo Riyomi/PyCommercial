@@ -13,6 +13,12 @@ class UserForm(UserCreationForm):
                   'password2', 'first_name', 'last_name')
 
 
+class EditUserInfoForm(forms.ModelForm):
+    class Meta:
+        model = User
+        exclude = ('password', 'password1', 'password2', 'date_joined')
+
+
 class CustomerForm(forms.ModelForm):
     mobile = PhoneNumberField(
         widget=PhoneNumberPrefixWidget(initial="HU")

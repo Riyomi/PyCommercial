@@ -2,34 +2,36 @@
 {% block title %}Login{% endblock title %}
 
 {% block content %}
-<form method="POST" class="user-form">
-  {% csrf_token %}
-  <p class="title-h1 mb-4">Login</p>
+<div class="user-form-wrapper">
+  <form method="POST" class="user-form">
+    {% csrf_token %}
+    <p class="title-h1 mb-4">Login</p>
 
-  <input
-    type="text"
-    name="username"
-    placeholder="Username"
-   />
-  
-  <input
-    type="password"
-    name="password"
-    placeholder="***************"
-  />
+    <input
+      type="text"
+      name="username"
+      placeholder="Username"
+    />
+    
+    <input
+      type="password"
+      name="password"
+      placeholder="***************"
+    />
 
-  <input type="submit" name="Login" class="purple-btn w-full" />
+    <input type="submit" name="Login" class="purple-btn w-full" />
 
-  <div>
-    <span>Don't have an account yet? </span
-    ><a
-      href="{% url 'users:register' %}"
-      class="text-purple-400 font-bold"
-      >Register now</a
-    >
-  </div>
-  {% for message in messages %}
-    <p id="{{ message }}">{{ message }}</p>
-  {% endfor %}
-</form>
+    <div>
+      <span>Don't have an account yet? </span
+      ><a
+        href="{% url 'users:register' %}"
+        class="text-purple-400 font-bold"
+        >Register now</a
+      >
+    </div>
+    {% for message in messages %}
+      <p id="{{ message }}">{{ message }}</p>
+    {% endfor %}
+  </form>
+</div>
 {% endblock content %}

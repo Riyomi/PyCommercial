@@ -2,36 +2,31 @@
 {% block title %}My Account{% endblock title %}
 
 {% block content %}
-<div class="flex flex-row mx-auto w-6/12 mt-4">
-  <div class="flex flex-col rounded-bl-lg rounded-tl-lg p-5 bg-purple-500">
+<div class="grid grid-cols-6 mx-auto w-1/2 mt-4">
+  <div class="rounded-bl-lg col-span-2 rounded-tl-lg p-5 bg-purple-500">
     <div class="menu-option">
       <a href="{% url 'users:profile' %}"
-        ><i class="far fa-user-circle"></i><span class="ml-2">Profile</span></a
-      >
-    </div>
-    <div class="menu-option">
-      <a href="{% url 'users:address' %}"
-        ><i class="far fa-address-card"></i><span class="ml-2">Address</span></a
+        ><i class="far fa-user-circle"></i><span>Profile</span></a
       >
     </div>
     <div class="menu-option">
       <a href="{% url 'users:orders' %}"
-        ><i class="fas fa-receipt"></i><span class="ml-2">My Orders</span></a
+        ><i class="fas fa-receipt"></i><span>My Orders</span></a
       >
     </div>
     <div class="menu-option">
       <a href="{% url 'users:changePassword' %}"
-        ><i class="fas fa-lock"></i><span class="ml-2">Change Password</span></a
+        ><i class="fas fa-lock"></i><span>Change Password</span></a
       >
     </div>
     <div class="menu-option text-red-300 hover:text-red-400">
       <a href="{% url 'users:deleteAccount' %}"
         ><i class="far fa-trash-alt"></i
-        ><span class="ml-2">Delete account</span></a
+        ><span>Delete account</span></a
       >
     </div>
   </div>
-  <div class="flex flex-col flex-grow rounded-br-lg rounded-tr-lg p-5 bg-white">
+  <div class="col-span-4 rounded-br-lg rounded-tr-lg p-5 bg-white">
     {% block page %} {% endblock %}
   </div>
 </div>

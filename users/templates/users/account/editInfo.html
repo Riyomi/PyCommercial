@@ -1,0 +1,30 @@
+{% extends 'users/profile.html' %}
+
+{% block page %}
+<form method="POST" class="user-form">
+  {% csrf_token %}
+  
+  <p class="title-h1 mb-2">Edit info</p>
+
+  {{ user_form.username }}
+  {{ user_form.email }}
+
+  {{ user_form.first_name }}
+  {{ user_form.last_name }}
+  
+  {{ customer_form.country }}
+  {{ customer_form.city }}
+  {{ customer_form.address }}
+  {{ customer_form.mobile }}
+  
+  <div class="mt-5 mx-auto">
+    <input type="submit" class="purple-btn" value="Confirm changes">
+  </div>
+
+  {% for message in messages %}
+    <p class="text-green-300">{{ message }}</p>
+  {% endfor %} {{ user_form.errors }} {{ customer_form.errors }}
+
+</form>
+
+{% endblock %}

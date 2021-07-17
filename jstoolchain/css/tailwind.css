@@ -3,8 +3,8 @@
 @tailwind utilities;
 
 @layer components {
-  .user-form {
-    @apply bg-white shadow-md rounded px-8 pt-6 pb-8 mx-auto w-2/6 my-4;
+  .user-form-wrapper {
+    @apply bg-white shadow-md rounded px-8 pt-6 pb-8 my-4 mx-auto w-2/6;
   }
 
   .user-form > input:not([type="submit"]),
@@ -22,7 +22,7 @@
   }
 
   .purple-btn {
-    @apply bg-purple-500 text-white h-10 font-bold px-4 py-2 rounded;
+    @apply bg-purple-500 text-white h-10 font-bold px-4 py-2 rounded cursor-pointer;
   }
 
   .purple-btn:focus {
@@ -45,8 +45,12 @@
     @apply my-2;
   }
 
+  .menu-option > a > span {
+    @apply ml-2;
+  }
+
   .menu-option {
-    @apply block text-white mt-2 mb-2;
+    @apply block text-white mt-2 mb-3;
   }
 
   .menu-option:hover {
