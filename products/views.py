@@ -10,7 +10,7 @@ from django.db.models import Avg
 
 def homePage(request):
     categories_to_display = Category.objects.filter(
-        parent=None).order_by('-id')[0:5]
+        parent=None).order_by('-id')
 
     best_products = Product.objects.annotate(
         avg_rating=Avg('review__value')).order_by('-avg_rating')[0:5]

@@ -1,16 +1,15 @@
-{% extends "base.html" %}
-{% load static %}
-{% load products.productfilters %}
-{% block title %}Home{% endblock title %}
-
-{% block content %}
+{% extends "base.html" %} {% load static %} {% load products.productfilters %}
+{% block title %}Home{% endblock title %} {% block content %}
 <div class="flex min-h-screen bg-purple-200 justify-center">
-    <div>
-      <p class="text-7xl text-purple-500 font-semibold my-8 text-center">PyCommercial</p>
-      <form method="GET" action="{% url 'products:browse' %}" class="w-full mb-2">
-        <div>
-          <i class="fas fa-search absolute mt-3 ml-3 text-purple-700"></i>
-          <input
+  <div>
+    <form
+      method="GET"
+      action="{% url 'products:browse' %}"
+      class="w-8/12 mx-auto my-4"
+    >
+      <div>
+        <i class="fas fa-search absolute mt-3 ml-3 text-purple-700"></i>
+        <input
           type="text"
           name="search"
           placeholder="Search for products..."
@@ -21,22 +20,26 @@
             rounded-lg
             focus:outline-none focus:ring focus:ring-purple-400
           "
-          />
-        </div>
-
-      </form>
-    
-      <p>...or start browsing by popular categories:</p>
-      <div class="text-purple-600 mt-1">
-        {% for category, params in data.items %}
-          <a href="{% url 'products:browse' %}?{% for param in params %}{{param.name|encode_url}}=on&{% endfor %}" class="underline mx-1">{{category}}</a>
-        {% endfor %}
+        />
       </div>
+    </form>
 
-      <div class="mt-5">
-        <p class="title-h1">Best selling products</p>
-        {% for product in best_products %}
-          <div
+    <div id="category-selector">
+      {% for category, params in data.items %}
+      <a
+        href="{% url 'products:browse' %}?{% for param in params %}{{param.name|encode_url}}=on&{% endfor %}"
+        >{{category}}</a
+      >
+      {% endfor %}
+    </div>
+
+    <div class="h-96 w-full" style='background-image: url("../../static/homepage/homepage1.jpg");  background-position: center;'></div>
+
+    <p class="title-h1 text-2xl">Best selling products</p>
+
+    <div class="flex flex-cols">
+      {% for product in best_products %}
+      <div
         id="product-{{ product.id }}"
         class="flex flex-col bg-white m-3 rounded-lg p-3 slides"
       >
@@ -58,20 +61,19 @@
             >{{ product.name }}</a
           >
           {% with product=product %}
-            <span class="text-xs">{% include "products/ratingTemplate.html" %}</span>
+          <span class="text-xs"
+            >{% include "products/ratingTemplate.html" %}</span
+          >
           {% endwith %}
         </div>
         <div class="text-xs text-gray-600 mb-3 h-12">
           {{ product.description|truncatetext:100 }}
         </div>
       </div>
-        {% endfor %}
-      </div>
-
+      {% endfor %}
+    </div>
   </div>
 </div>
-{% endblock content %}
-
-{% block javascript %}
+{% endblock content %} {% block javascript %}
 <script src="{% static 'js/homePage.js' %}"></script>
 {% endblock javascript %}

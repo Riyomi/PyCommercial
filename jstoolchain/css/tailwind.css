@@ -65,6 +65,18 @@
     @apply text-purple-200;
   }
 
+  #category-selector {
+    @apply text-white bg-purple-500 px-8 py-2;
+  }
+
+  #category-selector > a {
+    @apply mr-8;
+  }
+
+  #category-selector > a:hover {
+    @apply underline;
+  }
+
   .remove-btn {
     @apply my-auto inline-flex items-center justify-center w-4 h-4 text-red-500 bg-white rounded-lg outline-none;
   }
