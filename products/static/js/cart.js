@@ -51,6 +51,7 @@ function addToCart(_productId) {
 
       if (response.totalprice) {
         $("#cart-total").text(`Total price: $${response.totalprice}`);
+        $("#checkout-btn").removeClass("hidden");
       } else {
         $("#cart-total").text("Your cart is empty.");
       }
@@ -88,7 +89,8 @@ function removeFromCart(_productId) {
         $("#cart-total").text(`Total price: $${response.totalprice}`);
         $("#checkout-total").text(`Total: $${response.totalprice}`);
       } else {
-        $("#cart-total").text("Your cart is empty.");
+        $("#cart-total").text("Your cart is empty");
+        $("#checkout-btn").addClass("hidden");
         $("<span>Cart is empty.</span>").insertAfter("#checkout-summary");
         $("#checkout-summary").remove();
       }
