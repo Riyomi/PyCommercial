@@ -1,5 +1,4 @@
-{% load static %}
-{% load products.productfilters %}
+{% load static %} {% load products.productfilters %}
 
 <!DOCTYPE html>
 <html lang="en">
@@ -83,9 +82,15 @@
                   id="badge-count"
                   class="
                     cart-badge
-                    {% if not request.session.cartdata %}
+                    {%
+                    if
+                    not
+                    request.session.cartdata
+                    %}
                     hidden
-                    {% endif %}
+                    {%
+                    endif
+                    %}
                   "
                   >{{request.session.totalitems}}</span
                 >
@@ -124,15 +129,11 @@
               </div>
               <div id="cart-summary">
                 <span id="cart-total">
-                  {% if request.session.totalprice > 0 %}
-                    Total price: ${{request.session.totalprice }}
-                  {% else %}
-                    Your cart is empty.
-                  {% endif %}
+                  {% if request.session.totalprice > 0 %} Total price:
+                  ${{request.session.totalprice }} {% else %} Your cart is
+                  empty. {% endif %}
                 </span>
-                <a
-                  href="{% url 'products:checkout' %}"
-                  class="purple-btn"
+                <a href="{% url 'products:checkout' %}" class="purple-btn"
                   >Checkout</a
                 >
               </div>
@@ -182,9 +183,7 @@
 
       <!-- Main Content -->
       {% block content %} {% endblock content %}
-      
     </div>
-
 
     <footer>
       <span>© 2021 PyCommercial. All rights reserved.</span>

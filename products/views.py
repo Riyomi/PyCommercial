@@ -9,18 +9,28 @@ from django.db.models import Avg
 
 
 def homePage(request):
-    categories_to_display = Category.objects.filter(
+    main_categories = Category.objects.filter(
         parent=None).order_by('-id')
 
     best_products = Product.objects.annotate(
-        avg_rating=Avg('review__value')).order_by('-avg_rating')[0:5]
+        avg_rating=Avg('review__value')).order_by('-avg_rating')[:5]
 
     data = {}
 
-    for category in categories_to_display:
+    for category in main_categories:
         data[category] = get_subcategories(category)
 
-    return render(request, 'products/home.html', {'data': data, 'best_products': best_products})
+    recommendations = []
+
+    # Get the first 5 products ordered by average rating, from the first 3 main categories
+    for category in main_categories[:3]:
+        recommendations.append([
+            get_subcategories(category),
+            Product.objects.annotate(
+                avg_rating=Avg('review__value')).order_by('-avg_rating').filter(category__in=get_subcategories(category))[:5]
+        ])
+
+    return render(request, 'products/home.html', {'data': data, 'best_products': best_products, 'recommendations': recommendations})
 
 
 def browsePage(request):

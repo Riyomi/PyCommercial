@@ -1,0 +1,34 @@
+{% load products.productfilters %}
+
+<div class="grid grid-cols-5">
+  {% for product in products %}
+  <div
+    id="product-{{ product.id }}"
+    class="flex flex-col bg-white m-3 rounded-lg p-3 slides"
+  >
+    <a
+      href="{% url 'products:details' product.id %}"
+      class="flex h-48 justify-center"
+    >
+      <img
+        src="{{ product.image.url|formaturl }}"
+        alt="img-{{product.id}}"
+        class="max-h-48 self-center justify-self-center"
+      />
+    </a>
+    <div class="title-h1">${{ product.price }}</div>
+    <div class="text-purple-500 text-lg font-semibold mb-2">
+      <a
+        href="{% url 'products:details' product.id %}"
+        class="block h-6 truncate"
+        >{{ product.name }}</a
+      >
+      {% with product=product %}
+      <span class="text-xs"
+        >{% include "products/ratingTemplate.html" %}</span
+      >
+      {% endwith %}
+    </div>
+  </div>
+  {% endfor %}
+</div>

@@ -1,5 +1,9 @@
-{% extends "base.html" %} {% load static %} {% load products.productfilters %}
-{% block title %}Home{% endblock title %} {% block content %}
+{% extends "base.html" %}
+{% load static %}
+{% load products.productfilters %}
+{% block title %}Home{% endblock title %}
+
+{% block content %}
 <div class="flex min-h-screen bg-purple-200 justify-center">
   <div>
     <form
@@ -35,43 +39,29 @@
 
     <div class="h-96 w-full" style='background-image: url("../../static/homepage/homepage1.jpg");  background-position: center;'></div>
 
-    <p class="title-h1 text-2xl">Best selling products</p>
+    <div class="mx-2 mt-4">
 
-    <div class="flex flex-cols">
-      {% for product in best_products %}
-      <div
-        id="product-{{ product.id }}"
-        class="flex flex-col bg-white m-3 rounded-lg p-3 slides"
-      >
-        <a
-          href="{% url 'products:details' product.id %}"
-          class="flex h-48 justify-center"
-        >
-          <img
-            src="{{ product.image.url|formaturl }}"
-            alt="img-{{product.id}}"
-            class="max-h-48 self-center justify-self-center"
-          />
-        </a>
-        <div class="title-h1">${{ product.price }}</div>
-        <div class="text-purple-500 text-lg font-semibold mb-2">
+      <div class>
+        <p class="title-h1 text-2xl">Best selling products</p>
+        {% with products=best_products %}
+          {% include "products/productShowcase.html" %}
+        {% endwith %}
+      </div>
+
+      {% for recommendation in recommendations %}
+        <div>
           <a
-            href="{% url 'products:details' product.id %}"
-            class="block h-6 truncate"
-            >{{ product.name }}</a
-          >
-          {% with product=product %}
-          <span class="text-xs"
-            >{% include "products/ratingTemplate.html" %}</span
-          >
+            href="{% url 'products:browse' %}?{% for param in recommendation.0 %}{{param.name|encode_url}}=on&{% endfor %}"
+            class="title-h1 text-2xl">{{recommendation.0.0}}
+          </a>
+          {% with products=recommendation.1 %}
+            {% include "products/productShowcase.html" %}
           {% endwith %}
         </div>
-        <div class="text-xs text-gray-600 mb-3 h-12">
-          {{ product.description|truncatetext:100 }}
-        </div>
-      </div>
       {% endfor %}
+      
     </div>
+
   </div>
 </div>
 {% endblock content %} {% block javascript %}
