@@ -2,44 +2,46 @@
 {% block title %}Register Account{% endblock title %}
 
 {% block content %}
-<div class="user-form-wrapper">
-  <form method="POST" class="user-form">
-    {% csrf_token %}
-    <p class="title-h1 mb-2">Register account</p>
-    <p class="text-purple-400 mb-4 text-lg">
-      Get started and create your free account now
-    </p>
+<div class="pb-4">
+  <div class="user-form-wrapper mb-0">
+    <form method="POST" class="user-form">
+      {% csrf_token %}
+      <p class="title-h1 mb-2">Register account</p>
+      <p class="text-purple-400 mb-4 text-lg">
+        Get started and create your free account now
+      </p>
 
-    {{ user_form.username }}
-    {{ user_form.email }}
+      {{ user_form.username }}
+      {{ user_form.email }}
 
-    {{ user_form.first_name }}
-    {{ user_form.last_name }}
-    
-    {{ customer_form.country }}
-    {{ customer_form.city }}
-    {{ customer_form.address }}
-    {{ customer_form.mobile }}
+      {{ user_form.first_name }}
+      {{ user_form.last_name }}
+      
+      {{ customer_form.country }}
+      {{ customer_form.city }}
+      {{ customer_form.address }}
+      {{ customer_form.mobile }}
 
-    {{ user_form.password1 }}
-    {{ user_form.password2 }}
-    
-    <input
-      type="submit"
-      name="Create User"
-      value="Register Account"
-      class="purple-btn w-full"
-    />
+      {{ user_form.password1 }}
+      {{ user_form.password2 }}
+      
+      <input
+        type="submit"
+        name="Create User"
+        value="Register Account"
+        class="purple-btn w-full"
+      />
 
-    {% for message in messages %}
-      <p class="text-green-300">{{ message }}</p>
-    {% endfor %} {{ user_form.errors }} {{ customer_form.errors }}
-    <div>
-      <span>Already have an account? </span
-      ><a href="{% url 'users:login' %}" class="text-purple-400 font-bold"
-        >Login</a
-      >
-    </div>
-  </form>
+      {% for message in messages %}
+        <p class="text-green-300">{{ message }}</p>
+      {% endfor %} {{ user_form.errors }} {{ customer_form.errors }}
+      <div>
+        <span>Already have an account? </span
+        ><a href="{% url 'users:login' %}" class="text-purple-400 font-bold"
+          >Login</a
+        >
+      </div>
+    </form>
+  </div>
 </div>
 {% endblock content %}
