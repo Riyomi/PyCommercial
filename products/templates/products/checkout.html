@@ -55,7 +55,7 @@
             </td>
             <td><span>x{{ value.qty }}</span></td>
             <td><span>${{ value.total }}</span></td>
-            <td><button id="remove-checkout-{{ key }}" onClick="removeFromCart(this.id)" class="remove-btn">X</button></td>
+            <td><button id="remove-checkout-{{ key }}" onClick="removeProduct(this.id)" class="remove-btn">X</button></td>
             {% endfor %}
           </tr>
         </tbody>

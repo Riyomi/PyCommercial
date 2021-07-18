@@ -1,103 +1,118 @@
-function addToCart(_productId) {
-  const _button = $(`#${_productId}`);
-  const _productName = $(`#${_productId}-name`).val();
-  const _productImgUrl = $(`#${_productId}-img-url`).val();
-  const _productPrice = $(`#${_productId}-price`).val();
-  const _productQty = $(`#${_productId}-qty`).val();
+function addProduct(id) {
+  const btn = $(`#${id}`);
+  const name = $(`#${id}-name`).val();
+  const img_url = $(`#${id}-img-url`).val();
+  const price = $(`#${id}-price`).val();
+  const qty = $(`#${id}-qty`).val();
 
   // Run Ajax
   $.ajax({
     url: "/home/add-to-cart",
     data: {
-      id: _productId,
-      name: _productName,
-      img_url: _productImgUrl,
-      price: _productPrice,
-      qty: _productQty ? _productQty : 1,
+      id: id,
+      name: name,
+      img_url: img_url,
+      price: price,
+      qty: qty ? qty : 1,
     },
     dataType: "json",
     beforeSend: function () {
-      _button.attr("disabled", true);
+      btn.attr("disabled", true);
     },
     success: function (response) {
       $("#badge-count").text(response.totalitems);
 
-      if ($(`#cartItems > #cart-${_productId}`).length) {
-        const qty_span = $(
-          `#cartItems > #cart-${_productId} > #cart-qty-${_productId}`
-        );
-        const currentQty = Number(qty_span.text().substring(1));
-        qty_span.text(`x${currentQty + 1}`);
-
-        const price_span = $(
-          `#cartItems > #cart-${_productId} > #cart-price-${_productId}`
-        );
-
-        console.log(response);
-
-        price_span.text(`$${response.data[_productId].total}`);
+      if (productAlreadyInCart(id)) {
+        increaseQtyByOne(id);
+        updateTotalPrice(id, response);
       } else {
-        $("#cartItems")
-          .last()
-          .append(
-            cartItemHTML(
-              _productId,
-              _productName,
-              _productImgUrl,
-              response.data[_productId].total
-            )
-          );
+        addItem(id, response);
       }
 
-      if (response.totalprice) {
-        $("#cart-total").text(`Total price: $${response.totalprice}`);
-        $("#checkout-btn").removeClass("hidden");
-      } else {
-        $("#cart-total").text("Your cart is empty.");
-      }
-      _button.attr("disabled", false);
+      updateCartTotal(response);
+
+      btn.attr("disabled", false);
     },
   });
 }
 
-function removeFromCart(_productId) {
-  const _button = $(`#${_productId}`);
-  var _id;
+function removeProduct(id) {
+  const btn = $(`#${id}`);
+  var id;
 
-  if (_productId.indexOf("checkout-") >= 0) {
-    _id = _productId.substring(16);
+  if (id.indexOf("checkout-") >= 0) {
+    id = id.substring(16);
   } else {
-    _id = _productId.substring(7);
+    id = id.substring(7);
   }
 
   // Run Ajax
   $.ajax({
     url: "/home/remove-from-cart",
     data: {
-      id: _id,
+      id: id,
     },
     dataType: "json",
     beforeSend: function () {
-      _button.attr("disabled", true);
+      btn.attr("disabled", true);
     },
     success: function (response) {
-      $(`#cartItems > #cart-${_id}`).remove();
-      $(`#product-checkout-${_id}`).remove();
+      $(`#cartItems > #cart-${id}`).remove();
+      $(`#product-checkout-${id}`).remove();
 
       $("#badge-count").text(response.totalitems);
+
+      updateCartTotal(response);
+
       if (response.totalprice) {
-        $("#cart-total").text(`Total price: $${response.totalprice}`);
         $("#checkout-total").text(`Total: $${response.totalprice}`);
       } else {
-        $("#cart-total").text("Your cart is empty");
-        $("#checkout-btn").addClass("hidden");
         $("<span>Cart is empty.</span>").insertAfter("#checkout-summary");
         $("#checkout-summary").remove();
       }
 
-      _button.attr("disabled", false);
+      btn.attr("disabled", false);
     },
   });
+}
+
+function productAlreadyInCart(id) {
+  return $(`#cartItems > #cart-${id}`).length;
+}
+
+function increaseQtyByOne(id) {
+  const qty_span = $(`#cartItems > #cart-${id} > #cart-qty-${id}`);
+  const currentQty = Number(qty_span.text().substring(1));
+  qty_span.text(`x${currentQty + 1}`);
+}
+
+function updateTotalPrice(id, response) {
+  $(`#cartItems > #cart-${id} > #cart-price-${id}`).text(
+    `$${response.data[id].total}`
+  );
+}
+
+function updateCartTotal(response) {
+  if (response.totalprice) {
+    $("#cart-total").text(`Total price: $${response.totalprice}`);
+    $("#checkout-btn").removeClass("hidden");
+  } else {
+    $("#cart-total").text("Your cart is empty.");
+    $("#checkout-btn").addClass("hidden");
+  }
+}
+
+function addItem(id, response) {
+  $("#cartItems")
+    .last()
+    .append(
+      cartItemHTML(
+        id,
+        response.data[id].name,
+        response.data[id].img_url,
+        response.data[id].total
+      )
+    );
 }
 
 function cartItemHTML(id, name, img, price) {
@@ -108,7 +123,7 @@ function cartItemHTML(id, name, img, price) {
   </a>
   <span id="cart-qty-${id}" class="w-6 my-auto">x1</span>
   <span id="cart-price-${id}" class="w-16 font-bold my-auto">$${price}</span>
-  <button id="remove-${id}" onclick="removeFromCart(this.id)" class="remove-btn">
+  <button id="remove-${id}" onclick="removeProduct(this.id)" class="remove-btn">
   X
   </button>
   </div>`;
