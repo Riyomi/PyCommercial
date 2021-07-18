@@ -2,36 +2,22 @@
 {% block title %}Checkout{% endblock title %}
 
 {% block content %}
-<div class="grid bg-white min-w-full h-16 items-center drop-shadow-lg">
-  <div class="grid grid-cols-4 auto-cols-min w-6/12 m-auto">
-    <div class="step">
-      <div class="step-indicator">
-        1
-      </div>
-      <span>Personal Details</span>
-    </div>
-    <div class="step">
-      <div class="step-indicator">
-        2
-      </div>
-      <span>Shipping</span>
-    </div>
-    <div class="step">
-      <div class="step-indicator">
-        3
-      </div>
-      <span>Payment</span>
-    </div>
-    <div class="step">
-      <div class="step-indicator">
-        4
-      </div>
-      <span>Summary</span>
-    </div>
-  </div>
-</div>
 <div class="grid grid-cols-6 w-full mt-8">
   <div class="col-span-4 w-10/12 ml-auto bg-white rounded p-6 mr-2">
+    <form class="user-form">
+      {% csrf_token %}
+
+      {{user_info_order_form.first_name}}
+      {{user_info_order_form.last_name}}
+      {{user_info_order_form.email}}
+
+
+      {{customer_info_order_form.city}}
+      {{customer_info_order_form.country}}
+      {{customer_info_order_form.address}}
+      {{customer_info_order_form.mobile}}
+    </form>
+
     <p class="title-h1">Shopping Cart</p>
     {% if request.session.cartdata %}
     <div id="checkout-summary">

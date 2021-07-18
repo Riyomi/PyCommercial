@@ -3,7 +3,13 @@ from .models import Order, OrderItem
 from django.forms import modelformset_factory
 
 
-class OrderForm(forms.ModelForm):
+class CustomerInfoOrderForm(forms.ModelForm):
     class Meta:
         model = Order
-        fields = ('id', 'customer')
+        fields = ('address', 'country', 'mobile', 'city')
+
+
+class UserInfoOrderForm(forms.ModelForm):
+    class Meta:
+        model = Order
+        fields = ('last_name', 'first_name', 'email')

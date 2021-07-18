@@ -3,6 +3,7 @@ from django.http import JsonResponse, HttpResponseRedirect
 from django.urls import reverse
 from django.core.paginator import Paginator
 
+from .forms import CustomerInfoOrderForm, UserInfoOrderForm
 from .models import Product, Order, OrderItem, Review, Category
 from .utils import totalItemsAndPrice, get_all_categories, get_subcategories
 from django.db.models import Avg
@@ -88,7 +89,30 @@ def productReviewsPage(request, product_id):
 
 
 def checkoutPage(request):
-    return render(request, 'products/checkout.html')
+    if request.POST:
+        if request.method == 'POST':
+            user_info_order_form = UserInfoOrderForm(
+                request.POST)
+            customer_info_order_form = CustomerInfoOrderForm(
+                request.POST)
+
+            if user_info_order_form.is_valid() and customer_info_order_form.is_valid():
+                pass
+
+    elif request.user.is_authenticated:
+        user_info_order_form = UserInfoOrderForm(instance=request.user)
+        customer_info_order_form = CustomerInfoOrderForm(
+            instance=request.user.customer)
+    else:
+        user_info_order_form = UserInfoOrderForm()
+        customer_info_order_form = CustomerInfoOrderForm()
+
+    setplaceholders(user_info_order_form)
+    setplaceholders(customer_info_order_form)
+
+    customer_info_order_form.fields['mobile'].widget.attrs['placeholder'] = 'Mobile number'
+
+    return render(request, 'products/checkout.html', {'user_info_order_form': user_info_order_form, 'customer_info_order_form': customer_info_order_form})
 
 
 def addToCart(request):
@@ -166,3 +190,8 @@ def rateProduct(request):
     review.save()
 
     return HttpResponseRedirect(reverse('products:product-reviews', args=(int(request.POST['product-id']),)))
+
+
+def setplaceholders(form):
+    for field in form.fields:
+        form.fields[field].widget.attrs['placeholder'] = form.fields[field].label

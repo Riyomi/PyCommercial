@@ -2,6 +2,7 @@ from django.db import models
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.utils import timezone
 from django.db.models import Avg, Count
+from phonenumber_field.modelfields import PhoneNumberField
 
 
 class Product(models.Model):
@@ -40,6 +41,7 @@ class Category(models.Model):
     def get_children(self):
         return Category.objects.filter(parent=self).order_by('name')
 
+
 class Order(models.Model):
     class Status(models.IntegerChoices):
         PLACED = 0
@@ -49,9 +51,19 @@ class Order(models.Model):
 
     customer = models.ForeignKey(
         'users.Customer', on_delete=models.CASCADE, blank=True, null=True)
+
     total = models.PositiveIntegerField('Total', default=0)
     date_placed = models.DateTimeField('date placed', default=timezone.now)
     status = models.IntegerField(choices=Status.choices, default=Status.PLACED)
+
+    first_name = models.CharField('First Name', max_length=150)
+    last_name = models.CharField('Last Name', max_length=150)
+    email = models.EmailField('Email')
+
+    mobile = PhoneNumberField()
+    country = models.CharField('Country', max_length=50)
+    city = models.CharField('City', max_length=30)
+    address = models.CharField('Address', max_length=50)
 
     def get_status_choices(self):
         return self.Status.choices
