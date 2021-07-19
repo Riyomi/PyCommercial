@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load static %}
 
 {% block title %}Checkout{% endblock title %}
 
@@ -9,21 +10,21 @@
   <div class="bg-white rounded p-6 mr-2">
     <p class="title-h1 mb-4">Order details</p>
 
-    <form class="user-form">
+    <form method="POST" class="user-form">
       {% csrf_token %}
       
      <p class="font-semibold">1 Customer info</p>
       <div class="mx-4">
-        <label for="{{ form.user_info_order_form.id_for_label }}">First name</label>
+        <label>First name</label>
         {{user_info_order_form.first_name}}
 
-        <label for="{{ form.user_info_order_form.id_for_label }}">Last name</label>
+        <label>Last name</label>
         {{user_info_order_form.last_name}}
 
-        <label for="{{ form.user_info_order_form.id_for_label }}">Email</label>
+        <label>Email</label>
         {{user_info_order_form.email}}
 
-        <label for="{{ form.user_info_order_form.id_for_label }}">Mobile</label>
+        <label>Mobile</label>
         {{customer_info_order_form.mobile}}
       </div>
 
@@ -31,29 +32,33 @@
       <p class="font-semibold">2 Delivery info</p>
 
       <div class="mx-4">
-        <label for="{{ form.user_info_order_form.id_for_label }}">Country</label>
+        <label>Country</label>
         {{customer_info_order_form.country}}
 
-        <label for="{{ form.user_info_order_form.id_for_label }}">City</label>
+        <label>City</label>
         {{customer_info_order_form.city}}
 
-        <label for="{{ form.user_info_order_form.id_for_label }}">Address</label>
+        <label>Address</label>
         {{customer_info_order_form.address}}
       </div>
 
       <p class="font-semibold">3 Payment info</p>
       <div class="mx-4">
 
-        <label for="{{ form.user_info_order_form.id_for_label }}">Country</label>
-        {{customer_info_order_form.country}}
+        <label>Credit Card number</label>
+        {{customer_info_order_form.cc_number}}
 
-        <label for="{{ form.user_info_order_form.id_for_label }}">City</label>
-        {{customer_info_order_form.city}}
+        <label>Expiry date</label>
+        {{customer_info_order_form.cc_expiry}}
 
-        <label for="{{ form.user_info_order_form.id_for_label }}">Address</label>
-        {{customer_info_order_form.address}}
+        <label>Security code</label>
+        {{customer_info_order_form.cc_code}}
       </div>
 
+      <button type="submit" class="purple-btn">
+        <i class="fas fa-shopping-cart"></i>
+        <span>Complete purchase</span>
+      </button>
     </form>
   </div>
 
@@ -67,3 +72,9 @@
   </div>
 </div>
 {% endblock content %}
+
+
+{% block javascript %}
+  <script src="{% static 'js/checkout.js' %}"></script>
+{% endblock javascript %}
+

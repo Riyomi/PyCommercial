@@ -3,6 +3,7 @@ from django.core.validators import MaxValueValidator, MinValueValidator
 from django.utils import timezone
 from django.db.models import Avg, Count
 from phonenumber_field.modelfields import PhoneNumberField
+from creditcards.models import CardNumberField, CardExpiryField, SecurityCodeField
 
 
 class Product(models.Model):
@@ -51,6 +52,8 @@ class Order(models.Model):
 
     customer = models.ForeignKey(
         'users.Customer', on_delete=models.CASCADE, blank=True, null=True)
+
+    payment = models.ForeignKey('products.Payment', on_delete=models.CASCADE)
 
     total = models.PositiveIntegerField('Total', default=0)
     date_placed = models.DateTimeField('date placed', default=timezone.now)
@@ -102,3 +105,9 @@ class Review(models.Model):
 
     def __str__(self):
         return str(self.id)
+
+
+class Payment(models.Model):
+    cc_number = CardNumberField('card number')
+    cc_expiry = CardExpiryField('expiration date')
+    cc_code = SecurityCodeField('security code')
