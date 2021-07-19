@@ -107,9 +107,6 @@ def checkoutPage(request):
         user_info_order_form = UserInfoOrderForm()
         customer_info_order_form = CustomerInfoOrderForm()
 
-    setplaceholders(user_info_order_form)
-    setplaceholders(customer_info_order_form)
-
     customer_info_order_form.fields['mobile'].widget.attrs['placeholder'] = 'Mobile number'
 
     return render(request, 'products/checkout.html', {'user_info_order_form': user_info_order_form, 'customer_info_order_form': customer_info_order_form})

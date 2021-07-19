@@ -1,63 +1,68 @@
 {% extends "base.html" %}
+
 {% block title %}Checkout{% endblock title %}
 
 {% block content %}
-<div class="grid grid-cols-6 w-full mt-8">
-  <div class="col-span-4 w-10/12 ml-auto bg-white rounded p-6 mr-2">
+<div class="mx-auto mt-8 flex w-9/12">
+
+  <!-- Order Form -->
+  <div class="bg-white rounded p-6 mr-2">
+    <p class="title-h1 mb-4">Order details</p>
+
     <form class="user-form">
       {% csrf_token %}
+      
+     <p class="font-semibold">1 Customer info</p>
+      <div class="mx-4">
+        <label for="{{ form.user_info_order_form.id_for_label }}">First name</label>
+        {{user_info_order_form.first_name}}
 
-      {{user_info_order_form.first_name}}
-      {{user_info_order_form.last_name}}
-      {{user_info_order_form.email}}
+        <label for="{{ form.user_info_order_form.id_for_label }}">Last name</label>
+        {{user_info_order_form.last_name}}
 
+        <label for="{{ form.user_info_order_form.id_for_label }}">Email</label>
+        {{user_info_order_form.email}}
 
-      {{customer_info_order_form.city}}
-      {{customer_info_order_form.country}}
-      {{customer_info_order_form.address}}
-      {{customer_info_order_form.mobile}}
-    </form>
-
-    <p class="title-h1">Shopping Cart</p>
-    {% if request.session.cartdata %}
-    <div id="checkout-summary">
-      <table class="table-fixed w-full">
-        <thead class="border-b text-left">
-          <tr>
-            <th class="w-8/12 py-2 pl-4">Product</th>
-            <th class="w-4/12 py-2">Quantity</th>
-            <th class="w-4/12 py-2">Total Price</th>
-            <th class="w-1/12 py-2"></th>
-          </tr>
-        </thead>
-        <tbody class="border-b">
-          {% for key, value in request.session.cartdata.items %}
-          <tr id="product-checkout-{{key}}">
-            <td class="mx-auto">
-              <a href="/home/browse/product/{{key}}">
-                <img src="{{ value.img_url }}" class="w-28 inline-block" />
-                <span> {{ value.name }} </span>
-              </a>
-            </td>
-            <td><span>x{{ value.qty }}</span></td>
-            <td><span>${{ value.total }}</span></td>
-            <td><button id="remove-checkout-{{ key }}" onClick="removeProduct(this.id)" class="remove-btn">X</button></td>
-            {% endfor %}
-          </tr>
-        </tbody>
-      </table>
-      <div class="flex justify-between mt-4">
-        <a href="{% url 'products:browse' %}" class="purple-btn flex-grow-0">Continue shopping</a>
-        <div id="checkout-total" class="text-xl font-semibold text-right inline-block">Total: ${{request.session.totalprice}}</div>
-        <a href="{% url 'products:place-order' %}" class="purple-btn flex-grow-0">Place Order</a>
+        <label for="{{ form.user_info_order_form.id_for_label }}">Mobile</label>
+        {{customer_info_order_form.mobile}}
       </div>
-    </div>
-    {% else %}
-    <span>Cart is empty.</span>
-    {% endif %}
+
+
+      <p class="font-semibold">2 Delivery info</p>
+
+      <div class="mx-4">
+        <label for="{{ form.user_info_order_form.id_for_label }}">Country</label>
+        {{customer_info_order_form.country}}
+
+        <label for="{{ form.user_info_order_form.id_for_label }}">City</label>
+        {{customer_info_order_form.city}}
+
+        <label for="{{ form.user_info_order_form.id_for_label }}">Address</label>
+        {{customer_info_order_form.address}}
+      </div>
+
+      <p class="font-semibold">3 Payment info</p>
+      <div class="mx-4">
+
+        <label for="{{ form.user_info_order_form.id_for_label }}">Country</label>
+        {{customer_info_order_form.country}}
+
+        <label for="{{ form.user_info_order_form.id_for_label }}">City</label>
+        {{customer_info_order_form.city}}
+
+        <label for="{{ form.user_info_order_form.id_for_label }}">Address</label>
+        {{customer_info_order_form.address}}
+      </div>
+
+    </form>
   </div>
-  <div class="bg-white rounded w-8/12 p-6 col-span-2">
-    <p class="title-h1">Payment info</p>
+
+  <!-- Shopping cart -->
+  <div class="bg-white rounded p-6">
+
+    <p class="title-h1 text-2xl">Shopping Cart</p>
+
+    {% include "products/cart.html" %}
 
   </div>
 </div>

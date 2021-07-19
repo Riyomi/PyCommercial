@@ -8,16 +8,19 @@
   }
 
   .user-form > input:not([type="submit"]),
+  .user-form > div > input:not([type="submit"]),
   .user-form > select,
   .myInput {
     @apply shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight;
   }
 
-  .user-form > input {
+  .user-form > input,
+  .user-form > div > input {
     @apply mb-4;
   }
 
-  .user-form > input:not([type="submit"]):focus {
+  .user-form > input:not([type="submit"]):focus,
+  .user-form > div > input:not([type="submit"]):focus {
     @apply outline-none ring;
   }
 
@@ -109,11 +112,11 @@
     @apply absolute right-2 mt-3 py-2 w-32 bg-purple-400 shadow rounded;
   }
 
-  #cart-total {
+  .cart-total {
     @apply col-span-2 my-auto;
   }
 
-  #cart-summary {
+  .cart-summary {
     @apply grid grid-cols-3 text-sm p-2;
   }
 

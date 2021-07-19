@@ -1,0 +1,50 @@
+{% if request.session.cartdata %}
+  <div id="checkout-summary">
+    <div id="cartItems" class="overflow-y-auto max-h-96">
+      {% for key, value in request.session.cartdata.items %}
+      <div id="cart-{{key}}" class="cart-item-container">
+        <a
+          href="/home/browse/product/{{key}}"
+          class="grid grid-flow-col auto-cols-max w-40 my-auto"
+        >
+          <img src="{{ value.img_url }}" class="w-16 my-auto" />
+          <span class="break-words w-24 pl-2 pr-2 my-auto">
+            {{ value.name }}
+          </span>
+        </a>
+        <span id="cart-qty-{{key}}" class="w-6 my-auto"
+          >x{{ value.qty }}</span
+        >
+        <span id="cart-price-{{key}}" class="w-16 font-bold my-auto"
+          >${{ value.total }}</span
+        >
+        <button
+          id="remove-{{key}}"
+          onclick="removeProduct(this.id)"
+          class="remove-btn"
+        >
+          X
+        </button>
+      </div>
+      {% endfor %}
+    </div>
+
+    <div class="cart-summary">
+      <span class="checkout-total">
+        {% if request.session.totalprice > 0 %}
+          Total price: ${{ request.session.totalprice }} 
+        {% else %}
+          Your cart is empty.
+        {% endif %}
+      </span>
+      <a id="checkout-btn"
+         href="{% url 'products:checkout' %}"
+         class="purple-btn {% if request.session.totalprice == 0 %}hidden{% endif %}">
+          Checkout
+      </a>
+    </div>
+
+  </div>
+{% else %}
+  <span>Cart is empty.</span>
+{% endif %}
