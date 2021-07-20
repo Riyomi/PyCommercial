@@ -4,12 +4,18 @@ from .models import Product, Category, Order, OrderItem, Review
 
 class OrderItemInLine(admin.StackedInline):
     model = OrderItem
-    extra = 1
+    extra = 0
 
 
 class OrderAdmin(admin.ModelAdmin):
     list_display = ('id', 'customer')
+    exclude = ('payment',)
+    readonly_fields = ['creditcard', ]
+
     inlines = [OrderItemInLine]
+
+    def creditcard(self, order):
+        return '{}\n{}\n{}\n'.format(order.payment.name, order.payment.number, order.payment.expiry_date)
 
 
 class ProductAdmin(admin.ModelAdmin):

@@ -55,9 +55,9 @@ class Order(models.Model):
     payment = models.ForeignKey(
         'products.CreditCard', on_delete=models.CASCADE)
 
-    total = models.PositiveIntegerField('Total', default=0)
     date_placed = models.DateTimeField('date placed', default=timezone.now)
     status = models.IntegerField(choices=Status.choices, default=Status.PLACED)
+    total = models.PositiveIntegerField('Total', default=0)
 
     first_name = models.CharField('First Name', max_length=150)
     last_name = models.CharField('Last Name', max_length=150)

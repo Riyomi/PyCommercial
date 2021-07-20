@@ -4,7 +4,7 @@ from django.urls import reverse
 from django.core.paginator import Paginator
 
 from .forms import OrderForm
-from .models import Product, Order, OrderItem, Review, Category
+from .models import Product, Order, OrderItem, Review, Category, CreditCard
 from .utils import totalItemsAndPrice, get_all_categories, get_subcategories
 from django.db.models import Avg
 
@@ -94,7 +94,37 @@ def checkoutPage(request):
             order_form = OrderForm(request.POST)
 
             if order_form.is_valid():
-                print('form is valid')
+                data = order_form.cleaned_data
+
+                payment = CreditCard(
+                    name=data['name'], number=data['number'], expiry_date=data['expiry_date'])
+                payment.save()
+
+                customer = request.user.customer if request.user.is_authenticated else None
+                order = Order(
+                    customer=customer,
+                    total=request.session['totalprice'],
+                    payment=payment,
+                    first_name=data['first_name'],
+                    last_name=data['last_name'],
+                    email=data['email'],
+                    mobile=data['mobile'],
+                    country=data['country'],
+                    city=data['city'],
+                    address=data['address'])
+
+                order.save()
+
+                for product_id, data in request.session['cartdata'].items():
+                    product = Product.objects.get(pk=product_id)
+                    qty = int(data['qty'])
+                    OrderItem.objects.create(
+                        product=product, order=order, quantity=qty)
+
+                del request.session['cartdata']
+                del request.session['totalitems']
+                del request.session['totalprice']
+                return redirect('products:home')
 
     elif request.user.is_authenticated:
         order_form = OrderForm(instance=request.user.customer)
@@ -153,26 +183,6 @@ def removeFromCart(request):
     request.session['totalprice'] = totalprice
 
     return JsonResponse({'data': request.session['cartdata'], 'totalitems': totalitems, 'totalprice': totalprice})
-
-
-def placeOrder(request):
-    if request.session['cartdata']:
-        order = Order(
-            customer=request.user.customer if request.user.is_authenticated else None, total=request.session['totalprice'])
-        order.save()
-
-        for product_id, data in request.session['cartdata'].items():
-            product = Product.objects.get(pk=product_id)
-            qty = int(data['qty'])
-            OrderItem.objects.create(
-                product=product, order=order, quantity=qty)
-
-        del request.session['cartdata']
-        del request.session['totalitems']
-        del request.session['totalprice']
-        return redirect('products:home')
-
-    # TODO: redirect if it's empty (or just simply don't display the button in the HTML...)
 
 
 def rateProduct(request):
