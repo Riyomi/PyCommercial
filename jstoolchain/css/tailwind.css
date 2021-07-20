@@ -7,21 +7,17 @@
     @apply bg-white shadow-md rounded px-8 pt-6 pb-8 my-4 mx-auto w-2/6;
   }
 
-  .user-form > input:not([type="submit"]),
-  .user-form > div > input:not([type="submit"]),
-  .user-form > select,
-  .user-form > div > select,
+  .user-form input:not([type="submit"]),
+  .user-form select,
   .myInput {
     @apply shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight;
   }
 
-  .user-form > input,
-  .user-form > div > input {
+  .user-form input {
     @apply mb-4;
   }
 
-  .user-form > input:not([type="submit"]):focus,
-  .user-form > div > input:not([type="submit"]):focus {
+  .user-form input:not([type="submit"]):focus {
     @apply outline-none ring;
   }
 
@@ -37,8 +33,16 @@
     @apply bg-purple-600;
   }
 
+  #complete-purchase:disabled {
+    @apply bg-gray-300;
+  }
+
   .title-h1 {
     @apply block text-purple-500 font-bold text-3xl mb-2;
+  }
+
+  .title-h2 {
+    @apply block text-purple-500 font-bold text-xl;
   }
 
   #filters > div > p {

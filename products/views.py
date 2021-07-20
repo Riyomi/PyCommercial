@@ -124,6 +124,9 @@ def checkoutPage(request):
                 del request.session['cartdata']
                 del request.session['totalitems']
                 del request.session['totalprice']
+
+                if request.user.is_authenticated:
+                    return redirect(reverse('users:order-details', kwargs={"order_id": order.id}))
                 return redirect('products:home')
 
     elif request.user.is_authenticated:

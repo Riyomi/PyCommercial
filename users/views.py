@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout, update_session_auth_hash
 from django.contrib.auth.decorators import login_required
@@ -160,7 +160,8 @@ def ordersPage(request):
 
 @login_required(login_url='users:login')
 def orderDetails(request, order_id):
-    order = Order.objects.get(id=order_id)
+    order = get_object_or_404(Order, pk=order_id,
+                              customer=request.user.customer)
 
     data = {
         'order': order,

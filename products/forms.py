@@ -11,11 +11,11 @@ from django.core.validators import RegexValidator
 class OrderForm(forms.ModelForm):
     name = forms.CharField(max_length=150, min_length=1)
     number = forms.CharField(max_length=19, min_length=19, validators=[
-        RegexValidator('(\d{4} ){3}\d{4}',), ])
+        RegexValidator('(\d{4} ){3}\d{4}',), ], error_messages={'invalid': 'Invalid credit card number'})
     expiry_date = forms.CharField(max_length=5, validators=[
-                                  RegexValidator('\d\d/\d\d',), ])
+                                  RegexValidator('\d\d/\d\d',), ], error_messages={'invalid': 'Invalid expiry date'})
     security_code = forms.CharField(
-        widget=forms.PasswordInput(), max_length=3, min_length=3, validators=[RegexValidator('\d{3}',), ])
+        widget=forms.PasswordInput(), max_length=3, min_length=3, validators=[RegexValidator('\d{3}',), ], error_messages={'invalid': 'Invalid security code'})
 
     mobile = PhoneNumberField(
         widget=PhoneNumberPrefixWidget(initial="HU")

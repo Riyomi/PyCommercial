@@ -45,3 +45,8 @@ def keyvalue(list, key, total):
         if item['value'] == int(key):
             return round(item['total']/total*100, 2)
     return 0
+
+
+@register.filter
+def hide_credit_card_info(number):
+    return '**** **** **** {}'.format(number[-4:])
