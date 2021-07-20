@@ -10,6 +10,7 @@
   .user-form > input:not([type="submit"]),
   .user-form > div > input:not([type="submit"]),
   .user-form > select,
+  .user-form > div > select,
   .myInput {
     @apply shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight;
   }

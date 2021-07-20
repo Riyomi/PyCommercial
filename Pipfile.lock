@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "17dd963250a83fa1de4c151b7b4db6061a4756e9f3acb2dd72c9bb918922850e"
+            "sha256": "c2f03486e249696b09311d5a6bfcb2bd3862adfd70dceadcbed1ea3aa8e14708"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -47,14 +47,6 @@
             ],
             "index": "pypi",
             "version": "==3.2.5"
-        },
-        "django-credit-cards": {
-            "hashes": [
-                "sha256:63f651070d556689d57907d49a5fd6a12df698db303665c0daebdcefc34abe96",
-                "sha256:e9c51399b718375cbddee18c13559de154c8de1b1cae4ae9e5db29d5df258bff"
-            ],
-            "index": "pypi",
-            "version": "==0.4.1"
         },
         "django-livereload-server": {
             "hashes": [

@@ -49,7 +49,7 @@ function removeProduct(id) {
       btn.attr("disabled", true);
     },
     success: function (response) {
-      $(`#cartItems > #cart-${id}`).remove();
+      $(`.cart-items > #cart-${id}`).remove();
       $(`#product-checkout-${id}`).remove();
 
       $("#badge-count").text(response.totalitems);
@@ -62,33 +62,33 @@ function removeProduct(id) {
 }
 
 function productAlreadyInCart(id) {
-  return $(`#cartItems > #cart-${id}`).length;
+  return $(`.cart-items > #cart-${id}`).length;
 }
 
 function increaseQtyByOne(id) {
-  const qty_span = $(`#cartItems > #cart-${id} > #cart-qty-${id}`);
+  const qty_span = $(`.cart-items > #cart-${id} > #cart-qty-${id}`);
   const currentQty = Number(qty_span.text().substring(1));
   qty_span.text(`x${currentQty + 1}`);
 }
 
 function updateTotalPrice(id, response) {
-  $(`#cartItems > #cart-${id} > #cart-price-${id}`).text(
+  $(`.cart-items > #cart-${id} > #cart-price-${id}`).text(
     `$${response.data[id].total}`
   );
 }
 
 function updateCartTotal(response) {
   if (response.totalprice) {
-    $("#cart-total").text(`Total price: $${response.totalprice}`);
-    $("#checkout-btn").removeClass("hidden");
+    $(".checkout-total").text(`Total price: $${response.totalprice}`);
+    $(".checkout-btn").removeClass("hidden");
   } else {
-    $("#cart-total").text("Your cart is empty.");
-    $("#checkout-btn").addClass("hidden");
+    $(".checkout-total").text("Your cart is empty.");
+    $(".checkout-btn").addClass("hidden");
   }
 }
 
 function addItem(id, response) {
-  $("#cartItems")
+  $(".cart-items")
     .last()
     .append(
       cartItemHTML(

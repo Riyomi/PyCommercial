@@ -1,23 +1,27 @@
 from django import forms
-from .models import Order, OrderItem
-from django.forms import modelformset_factory
-from creditcards.forms import CardNumberField, CardExpiryField, SecurityCodeField
+from django.db import models
+
+from .models import Order
+from phonenumber_field.formfields import PhoneNumberField
+from phonenumber_field.widgets import PhoneNumberPrefixWidget
+
+from django.core.validators import RegexValidator
 
 
-class CustomerInfoOrderForm(forms.ModelForm):
-    cc_number = CardNumberField(
-        label='Card Number', required=True, max_length=19)
-    cc_expiry = CardExpiryField(
-        label='Expiration Date', required=True, widget=forms.TextInput(attrs={'maxlength': 5}))
-    cc_code = SecurityCodeField(
-        label='CVV/CVC', max_length=3, required=True, widget=forms.PasswordInput())
+class OrderForm(forms.ModelForm):
+    name = forms.CharField(max_length=150, min_length=1)
+    number = forms.CharField(max_length=19, min_length=19, validators=[
+        RegexValidator('(\d{4} ){3}\d{4}',), ])
+    expiry_date = forms.CharField(max_length=5, validators=[
+                                  RegexValidator('\d\d/\d\d',), ])
+    security_code = forms.CharField(
+        widget=forms.PasswordInput(), max_length=3, min_length=3, validators=[RegexValidator('\d{3}',), ])
+
+    mobile = PhoneNumberField(
+        widget=PhoneNumberPrefixWidget(initial="HU")
+    )
 
     class Meta:
         model = Order
-        fields = ('address', 'country', 'mobile', 'city')
-
-
-class UserInfoOrderForm(forms.ModelForm):
-    class Meta:
-        model = Order
-        fields = ('last_name', 'first_name', 'email')
+        fields = ('last_name', 'first_name', 'email',
+                  'address', 'country', 'mobile', 'city')

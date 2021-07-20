@@ -12,7 +12,6 @@ phonenumbers = "*"
 babel = "*"
 fontawesome-free = "*"
 pillow = "*"
-django-credit-cards = "*"
 
 [dev-packages]
 
