@@ -72,10 +72,10 @@ def profilePage(request):
     fields = [{'label': 'Username', 'value': user.username},
               {'label': 'Name', 'value': user.first_name + ' ' + user.last_name},
               {'label': 'Email address', 'value': user.email},
-              {'label': 'Mobile number', 'value': user.customer.mobile},
-              {'label': 'Country', 'value': user.customer.country},
-              {'label': 'City', 'value': user.customer.city},
-              {'label': 'Street', 'value': user.customer.address}]
+              {'label': 'Mobile number', 'value': customer.mobile},
+              {'label': 'Country', 'value': customer.country},
+              {'label': 'City', 'value': customer.city},
+              {'label': 'Street', 'value': customer.address}]
 
     return render(request, 'users/account/account.html', {'fields': fields})
 
@@ -170,8 +170,9 @@ def orderDetails(request, order_id):
                                   customer=request.user.customer)
     elif request.session['guest']:
         order = get_object_or_404(Order, pk=request.session['guest'])
+        items = OrderItem.objects.filter(order=order)
 
-    return render(request, 'users/orderDetails.html', {'order': order, 'items': OrderItem.objects.filter(order=order)})
+    return render(request, 'users/orderDetails.html', {'order': order, 'items': items})
 
 
 def setplaceholders(form):
