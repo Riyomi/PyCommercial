@@ -170,7 +170,8 @@ def orderDetails(request, order_id):
                                   customer=request.user.customer)
     elif request.session['guest']:
         order = get_object_or_404(Order, pk=request.session['guest'])
-        items = OrderItem.objects.filter(order=order)
+
+    items = OrderItem.objects.filter(order=order)
 
     return render(request, 'users/orderDetails.html', {'order': order, 'items': items})
 
