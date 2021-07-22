@@ -10,7 +10,7 @@
     <div>
       <p class="title-h2">Order information</p>
       <div class="px-2">ID: #{{data.order}} </div>
-      <div class="px-2">Placed on: {{data.order.date_placed}} </div>
+      <div class="px-2">Placed on: {{data.order.date_placed|date:"d/m/Y G:i" }} </div>
     </div>
 
     <div>

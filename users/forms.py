@@ -26,4 +26,4 @@ class CustomerForm(forms.ModelForm):
 
     class Meta:
         model = Customer
-        fields = ('mobile', 'country', 'city', 'address')
+        exclude = ('user',)

@@ -13,7 +13,7 @@
       </div>
       <div class="flex flex-col rounded-b-md bg-purple-100 py-1 px-2">
         <div class="flex justify-between">
-          <span>Placed on: {{order.date_placed}}</span>
+          <span>Placed on: {{order.date_placed|date:"d/m/Y G:i" }}</span>
           <span>Status: {{order.get_status_text}}</span>
         </div>
         <span class="font-semibold self-end">Total: ${{order.total}}</span>

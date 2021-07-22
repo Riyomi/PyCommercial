@@ -89,45 +89,46 @@ def productReviewsPage(request, product_id):
 
 
 def checkoutPage(request):
-    if request.POST:
-        if request.method == 'POST':
-            order_form = OrderForm(request.POST)
+    if request.method == 'POST':
+        order_form = OrderForm(request.POST)
 
-            if order_form.is_valid():
-                data = order_form.cleaned_data
+        if order_form.is_valid():
+            data = order_form.cleaned_data
 
-                payment = CreditCard(
-                    name=data['name'], number=data['number'], expiry_date=data['expiry_date'])
-                payment.save()
+            payment = CreditCard(
+                name=data['name'], number=data['number'], expiry_date=data['expiry_date'])
+            payment.save()
 
-                customer = request.user.customer if request.user.is_authenticated else None
-                order = Order(
-                    customer=customer,
-                    total=request.session['totalprice'],
-                    payment=payment,
-                    first_name=data['first_name'],
-                    last_name=data['last_name'],
-                    email=data['email'],
-                    mobile=data['mobile'],
-                    country=data['country'],
-                    city=data['city'],
-                    address=data['address'])
+            customer = request.user.customer if request.user.is_authenticated else None
+            order = Order(
+                customer=customer,
+                total=request.session['totalprice'],
+                payment=payment,
+                first_name=data['first_name'],
+                last_name=data['last_name'],
+                email=data['email'],
+                mobile=data['mobile'],
+                country=data['country'],
+                city=data['city'],
+                address=data['address'])
 
-                order.save()
+            order.save()
 
-                for product_id, data in request.session['cartdata'].items():
-                    product = Product.objects.get(pk=product_id)
-                    qty = int(data['qty'])
-                    OrderItem.objects.create(
-                        product=product, order=order, quantity=qty)
+            for product_id, data in request.session['cartdata'].items():
+                product = Product.objects.get(pk=product_id)
+                qty = int(data['qty'])
+                OrderItem.objects.create(
+                    product=product, order=order, quantity=qty)
 
-                del request.session['cartdata']
-                del request.session['totalitems']
-                del request.session['totalprice']
+            del request.session['cartdata']
+            del request.session['totalitems']
+            del request.session['totalprice']
 
-                if request.user.is_authenticated:
-                    return redirect(reverse('users:order-details', kwargs={"order_id": order.id}))
-                return redirect('products:home')
+            if request.user.is_authenticated:
+                return redirect(reverse('users:order-details', kwargs={"order_id": order.id}))
+            else:
+                request.session['guest'] = order.id
+                return redirect(reverse('users:order-details', kwargs={"order_id": order.id}))
 
     elif request.user.is_authenticated:
         order_form = OrderForm(instance=request.user.customer)

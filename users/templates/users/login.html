@@ -19,19 +19,21 @@
       placeholder="***************"
     />
 
-    <input type="submit" name="Login" class="purple-btn w-full" value="Login" />
+    <input type="submit" class="purple-btn w-full" value="Login" />
 
-    <div>
-      <span>Don't have an account yet? </span
-      ><a
+    <div class="mb-1">
+      <span>Don't have an account yet? </span>
+      <a
         href="{% url 'users:register' %}"
         class="text-purple-400 font-bold"
-        >Register now</a
-      >
+        >Register now
+      </a>
     </div>
+
     {% for message in messages %}
-      <p id="{{ message }}">{{ message }}</p>
+      <p id="{{ message }}" class="text-red-500">{{ message }}</p>
     {% endfor %}
+
   </form>
 </div>
 {% endblock content %}
