@@ -23,7 +23,15 @@
 
   {% for message in messages %}
     <p class="text-green-300">{{ message }}</p>
-  {% endfor %} {{ user_form.errors }} {{ customer_form.errors }}
+  {% endfor %}
+
+  {% for field, errors in user_form.errors.items %}
+    <div class="text-red-500">{{errors.0}}</div>
+  {% endfor %}
+  
+  {% for field, errors in customer_fom.errors.items %}
+    <div class="text-red-500">{{errors.0}}</div>
+  {% endfor %}
 
 </form>
 

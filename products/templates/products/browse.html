@@ -37,7 +37,7 @@
         <p>Categories</p>
         <div id="category-selection">
           {% for category in main_categories %}
-            {% include "products/tree_view_template.html" %}
+            {% include "products/categoryTree.html" %}
           {% endfor %}
         </div>
       </div>
@@ -74,12 +74,7 @@
     </div>
   </form>
   <div class="grid md:grid-cols-2 xl:grid-cols-4 grid-rows-2 mx-3 col-span-5">
-    {% if not page_obj %}
-    <div class="grid col-span-4 bg-white m-3 rounded-lg p-3">
-      No products match your query.
-    </div>
-    {% endif %}
-    {% for product in page_obj %}
+    {% for product in page %}
       <div
         id="product-{{ product.id }}"
         class="flex flex-col bg-white m-3 rounded-lg p-3"
@@ -133,42 +128,18 @@
         </button>
         
       </div>
+    {% empty %}
+      <div class="bg-white m-3 rounded-lg p-3">No products match your query.</div>
     {% endfor %}
   </div>
-  <div class="text-center col-start-2 col-span-5">
-    <span class="step-links">
-      {% if page_obj.has_previous %}
-        <a href="?page={{ page_obj.previous_page_number }}&{{query_string}}">
-          <i class="fas fa-chevron-left"></i>
-        </a>
-      {% else %}
-        <a>
-          <i class="fas fa-chevron-left"></i>
-        </a>
-      {% endif %}
-      
-      {% for page_index in page_obj.paginator.page_range %}
-        {% if page_index <= page_obj.number|add:2 and page_index >= page_obj.number|add:-2 %}
-          {% if page_obj.number == page_index %}
-            <a class="step-active">{{ page_index }}</a>
-          {% else %}
-            <a href="?page={{ page_index }}&{{query_string}}">{{ page_index }}</a>
-          {% endif %}
-        {% endif %}
-      {% endfor %}
-      
-      {% if page_obj.has_next %}
-        <a href="?page={{ page_obj.next_page_number }}&{{query_string}}">
-          <i class="fas fa-chevron-right"></i>
-        </a>
-      {% else %}
-        <a>
-          <i class="fas fa-chevron-right"></i>
-        </a>
-      {% endif %}
-    </span>
+  <div class="col-start-2 col-span-5 text-center">
+    {% with page=page %}
+      {% include "paginator.html" %}
+    {% endwith %}
   </div>
 </div>
-{% endblock content %} {% block javascript %}
-<script src="{% static 'js/browserFilters.js' %}"></script>
+{% endblock content %}
+
+{% block javascript %}
+  <script src="{% static 'js/browserFilters.js' %}"></script>
 {% endblock javascript %}

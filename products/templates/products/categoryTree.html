@@ -1,0 +1,13 @@
+<li class="list-none">
+  <input type="checkbox" name="{{ category.name }}" class="mr-1">
+  <label>{{ category.name }}</label>
+  {% if category.get_children.count > 0 %}
+    <ul>
+       {% for subcategory in category.get_children %}
+          {% with category=subcategory %}
+             {% include 'products/categoryTree.html' %}
+          {% endwith %}
+       {% endfor %}
+     </ul>
+  {% endif %}
+</li>

@@ -16,7 +16,7 @@ class UserForm(UserCreationForm):
 class EditUserInfoForm(forms.ModelForm):
     class Meta:
         model = User
-        exclude = ('password', 'date_joined')
+        fields = ('username', 'email', 'first_name', 'last_name')
 
 
 class CustomerForm(forms.ModelForm):

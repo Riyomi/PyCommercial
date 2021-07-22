@@ -133,19 +133,19 @@
     @apply m-auto uppercase font-semibold text-gray-700 tracking-wide;
   }
 
-  .step-links {
-    @apply py-2;
+  .paginator {
+    @apply py-2 text-center;
   }
 
-  .messages > .info {
+  .error {
     @apply text-red-500;
   }
 
-  .messages > .success {
+  .success {
     @apply text-green-500;
   }
 
-  .step-links > a {
+  .paginator > a {
     @apply px-2;
   }
 

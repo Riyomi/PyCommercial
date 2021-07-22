@@ -54,7 +54,7 @@ def loginPage(request):
             login(request, user)
             return redirect('products:home')
         else:
-            messages.info(request, 'Username or password is incorrect')
+            messages.error(request, 'Username or password is incorrect')
 
     return render(request, 'users/login.html')
 
@@ -66,7 +66,18 @@ def logoutUser(request):
 
 @login_required(login_url='users:login')
 def profilePage(request):
-    return render(request, 'users/account/account.html')
+    user = request.user
+    customer = request.user.customer
+
+    fields = [{'label': 'Username', 'value': user.username},
+              {'label': 'Name', 'value': user.first_name + ' ' + user.last_name},
+              {'label': 'Email address', 'value': user.email},
+              {'label': 'Mobile number', 'value': user.customer.mobile},
+              {'label': 'Country', 'value': user.customer.country},
+              {'label': 'City', 'value': user.customer.city},
+              {'label': 'Street', 'value': user.customer.address}]
+
+    return render(request, 'users/account/account.html', {'fields': fields})
 
 
 @login_required(login_url='users:login')
@@ -118,7 +129,7 @@ def deleteAccountPage(request):
                 user.delete()
                 return redirect('products:home')
         else:
-            messages.info(request, 'Passwords do not match.')
+            messages.error(request, 'Passwords do not match.')
 
     return render(request, 'users/account/deleteAccount.html')
 
@@ -136,7 +147,7 @@ def changePasswordPage(request):
             request.user.set_password(newPassword1)
             update_session_auth_hash(request, user)
         else:
-            messages.info(request, 'Passwords do not match.')
+            messages.error(request, 'Passwords do not match.')
 
     return render(request, 'users/account/changePassword.html')
 
@@ -148,9 +159,9 @@ def ordersPage(request):
     paginator = Paginator(orders, 4)
 
     page_number = request.GET.get('page')
-    page_obj = paginator.get_page(page_number)
+    page = paginator.get_page(page_number)
 
-    return render(request, 'users/account/orders.html', {'page_obj': page_obj})
+    return render(request, 'users/account/orders.html', {'page': page})
 
 
 def orderDetails(request, order_id):
@@ -160,12 +171,7 @@ def orderDetails(request, order_id):
     elif request.session['guest']:
         order = get_object_or_404(Order, pk=request.session['guest'])
 
-    data = {
-        'order': order,
-        'items': OrderItem.objects.filter(order=order),
-    }
-
-    return render(request, 'users/orderDetails.html', {'data': data})
+    return render(request, 'users/orderDetails.html', {'order': order, 'items': OrderItem.objects.filter(order=order)})
 
 
 def setplaceholders(form):

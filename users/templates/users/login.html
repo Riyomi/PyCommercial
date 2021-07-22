@@ -30,8 +30,9 @@
       </a>
     </div>
 
+      
     {% for message in messages %}
-      <p id="{{ message }}" class="text-red-500">{{ message }}</p>
+      <p class="{{ message.tags }}">{{ message }}</p>
     {% endfor %}
 
   </form>

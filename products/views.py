@@ -67,9 +67,9 @@ def browsePage(request):
     paginator = Paginator(products, 8)
 
     page_number = request.GET.get('page')
-    page_obj = paginator.get_page(page_number)
+    page = paginator.get_page(page_number)
 
-    return render(request, 'products/browse.html', {'page_obj': page_obj, 'main_categories': main_categories, 'max_price': max_price, 'query_string': query_string})
+    return render(request, 'products/browse.html', {'page': page, 'main_categories': main_categories, 'max_price': max_price, 'query_string': query_string})
 
 
 def productDescriptionPage(request, product_id):
