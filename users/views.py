@@ -22,7 +22,6 @@ def registerPage(request):
             user = user_form.save()
             customer = customer_form.save(commit=False)
             customer.user = user
-
             customer.save()
 
             user = authenticate(
@@ -36,8 +35,6 @@ def registerPage(request):
 
     setplaceholders(user_form)
     setplaceholders(customer_form)
-
-    customer_form.fields['mobile'].widget.attrs['placeholder'] = 'Mobile number'
 
     return render(request, 'users/register.html', {'user_form': user_form, 'customer_form': customer_form})
 
@@ -92,12 +89,9 @@ def editInfo(request):
             user = user_form.save(commit=False)
             user.is_active = True
             user.save()
+
             customer = customer_form.save(commit=False)
             customer.user = user
-
-            request.session['username'] = user_form.cleaned_data.get(
-                'username')
-
             customer.save()
 
             return redirect('users:profile')
@@ -111,8 +105,6 @@ def editInfo(request):
 
     setplaceholders(user_form)
     setplaceholders(customer_form)
-
-    customer_form.fields['mobile'].widget.attrs['placeholder'] = 'Mobile number'
 
     return render(request, 'users/account/editInfo.html', {'user_form': user_form, 'customer_form': customer_form})
 
@@ -143,6 +135,7 @@ def changePasswordPage(request):
             user = Customer.objects.get(id=request.user.customer.id).user
             user.set_password(newPassword1)
             user.save()
+
             messages.success(request, 'Password succesfully updated.')
             request.user.set_password(newPassword1)
             update_session_auth_hash(request, user)
@@ -156,8 +149,8 @@ def changePasswordPage(request):
 def ordersPage(request):
     orders = Order.objects.filter(
         customer=request.user.customer).order_by('-date_placed')
-    paginator = Paginator(orders, 4)
 
+    paginator = Paginator(orders, 4)
     page_number = request.GET.get('page')
     page = paginator.get_page(page_number)
 

@@ -7,6 +7,30 @@
     @apply bg-white shadow-md rounded px-8 pt-6 pb-8 my-4 mx-auto w-2/6;
   }
 
+  nav {
+    @apply flex flex-wrap bg-purple-500 justify-between p-6 filter drop-shadow-lg;
+  }
+
+  #logo {
+    @apply flex items-center flex-shrink-0 text-white text-2xl font-semibold tracking-tight ml-4 mr-20;
+  }
+
+  #accountDropDown {
+    @apply absolute right-2 mt-3 py-2 w-32 bg-purple-400 shadow rounded;
+  }
+
+  #accountDropDown > a {
+    @apply navbar-menu py-2 px-4;
+  }
+
+  #dropbtncart {
+    @apply navbar-menu px-4 py-2 cursor-pointer;
+  }
+
+  .badge {
+    @apply relative hidden -top-3 -right-8 items-center justify-center rounded-full h-4 w-4 text-xs font-semibold bg-red-500;
+  }
+
   .user-form input:not([type="submit"]),
   .user-form select,
   .myInput {
@@ -66,7 +90,7 @@
   }
 
   .navbar-menu {
-    @apply inline-block leading-none text-white mt-4 pr-8 lg:mt-0;
+    @apply inline-block text-white pr-8;
   }
 
   .navbar-menu:hover {
@@ -105,16 +129,8 @@
     @apply grid grid-flow-col auto-cols-max border-t border-b hover:bg-purple-100 p-2;
   }
 
-  .cart-badge {
-    @apply absolute -top-2 -right-2 inline-flex items-center justify-center rounded-full h-4 w-4 text-xs font-semibold bg-red-500;
-  }
-
   footer {
     @apply w-full bg-purple-500 filter drop-shadow-lg p-6 text-white flex justify-between mt-auto;
-  }
-
-  .account-dropdown {
-    @apply absolute right-2 mt-3 py-2 w-32 bg-purple-400 shadow rounded;
   }
 
   .cart-total {
@@ -153,10 +169,7 @@
     @apply text-white bg-purple-800 font-semibold rounded-full h-5 w-5;
   }
 
-  .fa-chevron-right {
-    @apply text-purple-800;
-  }
-
+  .fa-chevron-right,
   .fa-chevron-left {
     @apply text-purple-800;
   }

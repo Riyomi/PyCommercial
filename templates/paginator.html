@@ -1,7 +1,7 @@
 
 {% if page.object_list %}
   <span class="paginator">
-    <a {% if page.has_previous %} href="?page={{ page.previous_page_number }}" {% endif %}>
+    <a {% if page.has_previous %} href="?page={{ page.previous_page_number }}&{{query_string}}" {% endif %}>
       <i class="fas fa-chevron-left"></i>
     </a>
 
@@ -10,12 +10,12 @@
         {% if page.number == page_index %}
           <a class="step-active">{{ page_index }}</a>
         {% else %}
-          <a href="?page={{ page_index }}">{{ page_index }}</a>
+          <a href="?page={{ page_index }}&{{query_string}}">{{ page_index }}</a>
         {% endif %}
       {% endif %}
     {% endfor %}
 
-    <a {% if page.has_next %} href="?page={{ page.next_page_number }}" {% endif %}>
+    <a {% if page.has_next %} href="?page={{ page.next_page_number }}&{{query_string}}" {% endif %}>
       <i class="fas fa-chevron-right"></i>
     </a>
   </span>

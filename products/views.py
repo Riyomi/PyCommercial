@@ -23,7 +23,7 @@ def homePage(request):
 
     recommendations = []
 
-    # Get the first 5 products ordered by average rating, from the first 3 main categories
+    # From the first 3 main categories, get the first 5 products ordered by average rating,
     for category in main_categories[:3]:
         recommendations.append([
             get_subcategories(category),
@@ -38,7 +38,6 @@ def browsePage(request):
     search_param = request.GET.get('search', '')
 
     max_price = Product.objects.latest('price').price
-
     max_price_filter = request.GET.get('maxPrice') if request.GET.get(
         'maxPrice') else max_price
 
@@ -199,8 +198,3 @@ def rateProduct(request):
     review.save()
 
     return HttpResponseRedirect(reverse('products:product-reviews', args=(int(request.POST['product-id']),)))
-
-
-def setplaceholders(form):
-    for field in form.fields:
-        form.fields[field].widget.attrs['placeholder'] = form.fields[field].label

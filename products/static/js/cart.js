@@ -126,8 +126,8 @@ function cartItemHTML(id, name, img, price) {
 $("body").on("DOMSubtreeModified", "#badge-count", function () {
   const count = $("#badge-count").text();
   if (count === "0" || count === "") {
-    $("#badge-count").addClass("hidden");
+    $("#badge-count").removeClass("inline-flex");
   } else {
-    $("#badge-count").removeClass("hidden");
+    $("#badge-count").addClass("inline-flex");
   }
 });

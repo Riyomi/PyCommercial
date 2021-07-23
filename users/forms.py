@@ -21,8 +21,7 @@ class EditUserInfoForm(forms.ModelForm):
 
 class CustomerForm(forms.ModelForm):
     mobile = PhoneNumberField(
-        widget=PhoneNumberPrefixWidget(initial="HU")
-    )
+        widget=PhoneNumberPrefixWidget(), label='Mobile number')
 
     class Meta:
         model = Customer

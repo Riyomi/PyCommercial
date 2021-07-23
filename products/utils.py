@@ -1,6 +1,3 @@
-from .models import Product, Category
-
-
 def totalItemsAndPrice(data):
     totalitems = 0
     totalprice = 0

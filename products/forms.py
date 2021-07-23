@@ -1,15 +1,13 @@
 from django import forms
-from django.db import models
+from django.core.validators import RegexValidator
 
 from .models import Order
 from phonenumber_field.formfields import PhoneNumberField
 from phonenumber_field.widgets import PhoneNumberPrefixWidget
 
-from django.core.validators import RegexValidator
-
 
 class OrderForm(forms.ModelForm):
-    name = forms.CharField(max_length=150, min_length=1)
+    name = forms.CharField(max_length=150, min_length=3)
     number = forms.CharField(max_length=19, min_length=19, validators=[
         RegexValidator('(\d{4} ){3}\d{4}',), ], error_messages={'invalid': 'Invalid credit card number'})
     expiry_date = forms.CharField(max_length=5, validators=[
