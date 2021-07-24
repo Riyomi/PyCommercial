@@ -33,3 +33,15 @@ def get_subcategories(category):
             result.extend(child.get_children())
 
     return result
+
+
+def get_query_string(request):
+    if request.get_full_path().find('?') == -1:
+        return ''
+
+    query = request.get_full_path()
+
+    if query.find('page') >= 0:
+        return query[query.find('&')+1:]
+
+    return query[query.find('?')+1:]

@@ -9,11 +9,10 @@
     <form
       method="GET"
       action="{% url 'products:browse' %}"
-      class="w-8/12 mx-auto mb-6"
+      class="w-full -mt-2 pb-4"
     >
     {% csrf_token %}
-
-      <div>
+      <div class="w-8/12 h-full mx-auto">
         <i class="fas fa-search relative top-8 left-3 text-purple-700"></i>
         <input
           type="text"
@@ -30,15 +29,7 @@
       </div>
     </form>
 
-    <div id="category-selector">
-      {% for category, params in data.items %}
-        <a
-          href="{% url 'products:browse' %}?{% for param in params %}{{ param.name|encode_url }}=on&{% endfor %}"
-          >{{category}}</a>
-      {% endfor %}
-    </div>
-
-    <div class="h-96 w-full" style='background-image: url("../../static/homepage/homepage1.jpg");  background-position: center;'/>
+    <div class="w-full h-96" style='background-image: url("../../static/homepage/homepage1.jpg");  background-position: center;' />
 
     <div class="mx-2 mt-2">
 
@@ -53,7 +44,7 @@
         <div>
           <a
             href="{% url 'products:browse' %}?{% for param in recommendation.0 %}{{ param.name|encode_url }}=on&{% endfor %}"
-            class="title-h1 text-2xl">{{recommendation.0.0}}
+            class="title-h1 text-2xl">{{ recommendation.0.0 }}
           </a>
           {% with products=recommendation.1 %}
             {% include "products/productShowcase.html" %}

@@ -1,11 +1,11 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from django.http import JsonResponse, HttpResponseRedirect
+from django.http import JsonResponse
 from django.urls import reverse
 from django.core.paginator import Paginator
 
 from .forms import OrderForm
 from .models import Product, Order, OrderItem, Review, Category, CreditCard
-from .utils import refreshTotal, get_all_categories, get_subcategories
+from .utils import refreshTotal, get_all_categories, get_subcategories, get_query_string
 from django.db.models import Avg
 
 
@@ -17,10 +17,6 @@ def homePage(request):
         avg_rating=Avg('review__value')).order_by('-avg_rating')[:5]
 
     data = {}
-
-    for category in main_categories:
-        data[category] = get_subcategories(category)
-
     recommendations = []
 
     # From the first 3 main categories, get the first 5 products ordered by average rating,
@@ -46,19 +42,13 @@ def browsePage(request):
     category_filters = []
 
     for param in request.GET:
-        if param != 'search' and param != 'maxPrice' and param != 'page':
+        if param not in ['search', 'maxPrice', 'page']:
             category_filters.append(param)
 
-    query_string = request.get_full_path(
-    ) if request.get_full_path().find('?') != -1 else ''
-
-    if query_string.find('page') >= 0:
-        query_string = query_string[query_string.find('&')+1:]
-    else:
-        query_string = query_string[query_string.find('?')+1:]
+    query_string = get_query_string(request)
 
     products = Product.objects.filter(
-        name__contains=search_param, price__lte=max_price_filter, category__name__in=category_filters).order_by('id') if len(category_filters) > 0 else Product.objects.filter(
+        name__contains=search_param, price__lte=max_price_filter, category__name__in=category_filters).order_by('id') if category_filters else Product.objects.filter(
         name__contains=search_param, price__lte=max_price_filter).order_by('id')
 
     ratings = []
@@ -71,20 +61,11 @@ def browsePage(request):
     return render(request, 'products/browse.html', {'page': page, 'main_categories': main_categories, 'max_price': max_price, 'query_string': query_string})
 
 
-def productDescriptionPage(request, product_id):
+def detailsPage(request, product_id):
     product = get_object_or_404(Product, pk=product_id)
     categories = get_all_categories(product)
-    reviews = Review.objects.filter(product=product)
 
-    return render(request, 'products/productDetails/descriptionPage.html', {'product': product, 'categories': categories, 'reviews': reviews})
-
-
-def productReviewsPage(request, product_id):
-    product = get_object_or_404(Product, pk=product_id)
-    categories = get_all_categories(product)
-    reviews = Review.objects.filter(product=product)
-
-    return render(request, 'products/productDetails/reviewsPage.html', {'product': product, 'categories': categories, 'reviews': reviews})
+    return render(request, 'products/details.html', {'product': product, 'categories': categories})
 
 
 def checkoutPage(request):
@@ -123,11 +104,10 @@ def checkoutPage(request):
             del request.session['totalitems']
             del request.session['totalprice']
 
-            if request.user.is_authenticated:
-                return redirect(reverse('users:order-details', kwargs={"order_id": order.id}))
-            else:
+            if not request.user.is_authenticated:
                 request.session['guest'] = order.id
-                return redirect(reverse('users:order-details', kwargs={"order_id": order.id}))
+
+            return redirect(reverse('users:order-details', kwargs={"order_id": order.id}))
 
     elif request.user.is_authenticated:
         order_form = OrderForm(instance=request.user.customer)
@@ -193,4 +173,4 @@ def rateProduct(request):
                     product=product, value=rating, comment=comment)
     review.save()
 
-    return HttpResponseRedirect(reverse('products:product-reviews', args=(int(request.POST['product-id']),)))
+    return redirect("%s?p=reviews" % reverse('products:details', kwargs={"product_id": int(request.POST['product-id'])}))
