@@ -5,52 +5,55 @@
 
 {% block content %}
 <div class="grid bg-white mt-2 rounded-lg w-9/12 mx-auto">
-  <div class="bg-purple-500 text-white px-6 p-3 rounded-t-lg">
+  <div class="bg-purple-500 text-white px-6 py-3 rounded-t-lg">
     {% for category in categories reversed %}
-      <a>{{category}}</a>
+      <a>{{ category }}</a>
       {% if not category == product.name %}
          >
       {% endif %}
     {% endfor %}
   </div>
+
   <div class="grid grid-cols-2 mt-4">
-    <img src="{{ product.image.url|formaturl }}" alt="product-{{product.id}}" class="self-center justify-self-center min-w-64 max-h-96"/>
+    <img src="{{ product.image.url|formaturl }}" class="mx-auto min-w-32 max-h-52"/>
+
     <div class="grid grid-rows-4 text-lg">
-      <div class="title-h1 text-5xl font-semibold mb-2 self-center">{{ product.name }}</div>
+      <p class="title-h1 text-4xl font-semibold">{{ product.name }}</p>
+
       <div>
         {% with product=product %}
           {% include "products/ratingTemplate.html" %}
         {% endwith %}
-        ({{product.review_set.count}} reviews)
+        ({{ product.review_set.count }} reviews)
       </div>
-      <div class="text-2xl">${{ product.price }}</div>
+
+      <p class="text-2xl -mt-2">${{ product.price }}</p>
 
       <input
         type="hidden"
-        id="{{product.id}}-name"
-        value="{{product.name}}"
+        id="{{ product.id }}-name"
+        value="{{ product.name }}"
       />
       <input
         type="hidden"
-        id="{{product.id}}-img-url"
-        value="{{product.image.url|formaturl}}"
+        id="{{ product.id }}-img-url"
+        value="{{ product.image.url|formaturl }}"
       />
       <input
         type="hidden"
-        id="{{product.id}}-price"
-        value="{{product.price}}"
+        id="{{ product.id }}-price"
+        value="{{ product.price }}"
       />
 
       <button id="{{ product.id }}" onClick="addProduct(this.id)" class="purple-btn w-6/12">
         <i class="fas fa-shopping-cart"></i>
         <span class="ml-1">Add to cart</span>
       </button>
+
     </div>
   </div>
 
-  {% block subpage %}
-  {% endblock subpage %}
-
+  {% block subpage %} {% endblock subpage %}
 </div>
 {% endblock content %}
 

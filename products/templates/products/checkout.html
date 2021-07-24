@@ -55,29 +55,26 @@
         <div class="text-red-500">{{order_form.number.errors.0}}</div>
         {{order_form.number}}
 
-
         <label>Expiry Date</label>
         <div class="text-red-500">{{order_form.expiry_date.errors.0}}</div>
         {{order_form.expiry_date}}
 
-
         <label>Security code</label>
         <div class="text-red-500">{{order_form.security_code.errors.0}}</div>
         {{order_form.security_code}}
-        
-
       </div>
 
       <button id="complete-purchase" type="submit" class="purple-btn" {% if not request.session.totalprice %} disabled {%endif%}>
         <i class="fas fa-shopping-cart"></i>
         <span>Complete purchase</span>
       </button>
+
     </form>
   </div>
+
   <!-- Shopping cart -->
   <div class="bg-white rounded p-6" >
     <p class="title-h1 text-2xl">Shopping Cart</p>
-
     {% include "products/cart.html" %}
   </div>
 </div>

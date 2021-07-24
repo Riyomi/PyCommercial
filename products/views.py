@@ -5,7 +5,7 @@ from django.core.paginator import Paginator
 
 from .forms import OrderForm
 from .models import Product, Order, OrderItem, Review, Category, CreditCard
-from .utils import totalItemsAndPrice, get_all_categories, get_subcategories
+from .utils import refreshTotal, get_all_categories, get_subcategories
 from django.db.models import Avg
 
 
@@ -146,7 +146,9 @@ def checkoutPage(request):
 def addToCart(request):
     cart = {}
 
-    cart[request.GET['id']] = {
+    id = request.GET['id']
+
+    cart[id] = {
         'name': request.GET['name'],
         'img_url': request.GET['img_url'],
         'price': int(request.GET['price']),
@@ -156,36 +158,30 @@ def addToCart(request):
 
     if 'cartdata' in request.session:
         cart_data = request.session['cartdata']
-        if request.GET['id'] in request.session['cartdata']:
-            cart_data[request.GET['id']
-                      ]['qty'] += int(request.GET['qty'])
-            cart_data[request.GET['id']
-                      ]['total'] += int(request.GET['price'])*int(request.GET['qty'])
+        if id in request.session['cartdata']:
+            cart_data[id]['qty'] += int(request.GET['qty'])
+            cart_data[id]['total'] += int(request.GET['price']) * \
+                int(request.GET['qty'])
             cart_data.update(cart_data)
         else:
             cart_data.update(cart)
     else:
         request.session['cartdata'] = cart
 
-    totalitems, totalprice = totalItemsAndPrice(request.session['cartdata'])
+    refreshTotal(request)
 
-    request.session['totalitems'] = totalitems
-    request.session['totalprice'] = totalprice
-
-    return JsonResponse({'data': request.session['cartdata'], 'totalitems': totalitems, 'totalprice': totalprice})
+    return JsonResponse({'data': request.session['cartdata'], 'totalitems': request.session['totalitems'], 'totalprice': request.session['totalprice']})
 
 
 def removeFromCart(request):
     id = request.GET['id']
+
     if id in request.session['cartdata']:
         del request.session['cartdata'][id]
 
-    totalitems, totalprice = totalItemsAndPrice(request.session['cartdata'])
+    refreshTotal(request)
 
-    request.session['totalitems'] = totalitems
-    request.session['totalprice'] = totalprice
-
-    return JsonResponse({'data': request.session['cartdata'], 'totalitems': totalitems, 'totalprice': totalprice})
+    return JsonResponse({'data': request.session['cartdata'], 'totalitems': request.session['totalitems'], 'totalprice': request.session['totalprice']})
 
 
 def rateProduct(request):

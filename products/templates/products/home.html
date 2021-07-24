@@ -9,10 +9,12 @@
     <form
       method="GET"
       action="{% url 'products:browse' %}"
-      class="w-8/12 mx-auto my-4"
+      class="w-8/12 mx-auto mb-6"
     >
+    {% csrf_token %}
+
       <div>
-        <i class="fas fa-search absolute mt-3 ml-3 text-purple-700"></i>
+        <i class="fas fa-search relative top-8 left-3 text-purple-700"></i>
         <input
           type="text"
           name="search"
@@ -30,16 +32,15 @@
 
     <div id="category-selector">
       {% for category, params in data.items %}
-      <a
-        href="{% url 'products:browse' %}?{% for param in params %}{{param.name|encode_url}}=on&{% endfor %}"
-        >{{category}}</a
-      >
+        <a
+          href="{% url 'products:browse' %}?{% for param in params %}{{ param.name|encode_url }}=on&{% endfor %}"
+          >{{category}}</a>
       {% endfor %}
     </div>
 
-    <div class="h-96 w-full" style='background-image: url("../../static/homepage/homepage1.jpg");  background-position: center;'></div>
+    <div class="h-96 w-full" style='background-image: url("../../static/homepage/homepage1.jpg");  background-position: center;'/>
 
-    <div class="mx-2 mt-4">
+    <div class="mx-2 mt-2">
 
       <div class>
         <p class="title-h1 text-2xl">Best rated products</p>
@@ -51,7 +52,7 @@
       {% for recommendation in recommendations %}
         <div>
           <a
-            href="{% url 'products:browse' %}?{% for param in recommendation.0 %}{{param.name|encode_url}}=on&{% endfor %}"
+            href="{% url 'products:browse' %}?{% for param in recommendation.0 %}{{ param.name|encode_url }}=on&{% endfor %}"
             class="title-h1 text-2xl">{{recommendation.0.0}}
           </a>
           {% with products=recommendation.1 %}
@@ -64,6 +65,4 @@
 
   </div>
 </div>
-{% endblock content %} {% block javascript %}
-<script src="{% static 'js/homePage.js' %}"></script>
-{% endblock javascript %}
+{% endblock content %}

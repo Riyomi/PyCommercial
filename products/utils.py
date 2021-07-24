@@ -1,9 +1,12 @@
-def totalItemsAndPrice(data):
+def refreshTotal(request):
     totalitems = 0
     totalprice = 0
-    for key, value in data.items():
+    for key, value in request.session['cartdata'].items():
         totalitems += value['qty']
         totalprice += value['total']
+
+    request.session['totalitems'] = totalitems
+    request.session['totalprice'] = totalprice
 
     return (totalitems, totalprice)
 

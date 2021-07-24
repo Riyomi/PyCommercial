@@ -110,17 +110,19 @@ function getIdFromString(id) {
 }
 
 function cartItemHTML(id, name, img, price) {
-  return `<div id="cart-${id}"  class="cart-item-container">
-  <a href="/home/browse/product/${id}" class="grid grid-flow-col auto-cols-max w-40 my-auto">
-      <img src="${img}" class="w-16 my-auto"></img>
-      <span class="break-words w-24 pl-2 pr-2 my-auto"> ${name} </span>
-  </a>
-  <span id="cart-qty-${id}" class="w-6 my-auto">x1</span>
-  <span id="cart-price-${id}" class="w-16 font-bold my-auto">$${price}</span>
-  <button id="remove-${id}" onclick="removeProduct(this.id)" class="remove-btn">
-  X
-  </button>
-  </div>`;
+  return `
+  <div id="cart-${id}" class="cart-item-container">
+    <a href="/home/browse/product/${id}" class="grid grid-flow-col auto-cols-max w-40">
+      <div class="w-16">
+        <img src="${img}" class="max-h-12 mx-auto" />
+      </div>
+      <span class="break-words w-24 px-2 my-auto">${name}</span>
+    </a>
+    <span id="cart-qty-${id}" class="w-6 my-auto">x1</span>
+    <span id="cart-price-${id}" class="w-16 font-bold my-auto">$${price}</span>
+    <button id="remove-${id}" onclick="removeProduct(this.id)" class="remove-btn">X</button>
+  </div>
+  `;
 }
 
 $("body").on("DOMSubtreeModified", "#badge-count", function () {
