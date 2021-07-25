@@ -4,7 +4,7 @@
 {% block title %}Products{% endblock title %}
 
 {% block content %}
-<div class="grid bg-purple-200">
+<div class="grid">
   <form method="GET" class="bg-white px-5 pt-3">
     <div id="filters">
       <!-- Search -->
@@ -19,11 +19,7 @@
             class="
               py-1
               px-4
-              rounded
-              w-full
-              border-2
               text-sm
-              focus:outline-none focus:ring focus:ring-purple-400
             "
           />
         </div>
@@ -49,7 +45,6 @@
             name="maxPrice"
             min="0"
             max="{{max_price}}"
-            class="border-2"
           />
         </div>
       </div>
@@ -77,7 +72,7 @@
           <img src="{{ product.image.url|formaturl }}" class="max-h-48 self-center"/>
         </a>
         <p class="title-h1">${{ product.price }}</p>
-        <div class="text-purple-500 text-lg font-semibold mb-2">
+        <div class="text-color text-lg font-semibold mb-2">
           <a
             href="{% url 'products:details' product.id %}"
             class="block h-6 truncate"

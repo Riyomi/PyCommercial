@@ -4,8 +4,8 @@
 <p class="title-h1">My Account</p>
 
 {% for field in fields %}
-  <div class="border-purple-300 border-b-2 flex justify-between">
-    <span class="p-2 text-purple-500">{{ field.label }}</span>
+  <div class="text-color border-b-2 flex justify-between">
+    <span class="p-2 secondary-text-color">{{ field.label }}</span>
     <span class="p-2">{{ field.value }}</span>
   </div>
 {% endfor %}

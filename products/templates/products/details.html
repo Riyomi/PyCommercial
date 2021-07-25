@@ -4,8 +4,8 @@
 {% block title %}{{ product.name }}{% endblock title %}
 
 {% block content %}
-<div class="grid bg-white mt-2 rounded-lg w-9/12 mx-auto">
-  <div class="bg-purple-500 text-white px-6 py-3 rounded-t-lg">
+<div class="grid mt-2 w-9/12 mx-auto">
+  <div class="background-color text-white px-6 py-3 rounded-t-lg">
     {% for category in categories reversed %}
       <a>{{ category }}</a>
       {% if not category == product.name %}
@@ -14,7 +14,7 @@
     {% endfor %}
   </div>
 
-  <div class="grid grid-cols-2 mt-4">
+  <div class="grid grid-cols-2 py-4 bg-white rounded-b-lg">
     <img src="{{ product.image.url|formaturl }}" class="mx-auto min-w-32 max-h-52"/>
 
     <div class="grid grid-rows-4 text-lg">
@@ -55,8 +55,8 @@
 
   {% if request.GET.p == 'reviews' %}
 
-  <div class="mt-4">
-    <div class="bg-purple-500 text-white text-lg p-2">
+  <div class="mb-4 bg-white rounded-b-lg">
+    <div class="background-color text-white text-lg p-2">
       <a href="{% url 'products:details' product.id %}" class="mx-6" >Description</a>
       <a class="mx-6 font-semibold">Reviews</a>
     </div>
@@ -76,8 +76,8 @@
                 </span>
               </td>
               <td>
-                <div class="bg-purple-200 h-5 w-64">
-                  <div style="width: {% keyvalue product.get_review_count_by_value i product.get_review_count %}%" class="bg-purple-500 h-5"></div>
+                <div class="secondary-bg-color h-5 w-64">
+                  <div style="width: {% keyvalue product.get_review_count_by_value i product.get_review_count %}%" class="background-color h-5"></div>
                 </div>
               </td>
               <td>{% keyvalue product.get_review_count_by_value i product.get_review_count %}%</td>
@@ -134,26 +134,30 @@
           {% endif %}
         </div>
       </div>
-      <div class="mt-4 rounded-lg">
+      <div class="mt-4 rounded-lg pb-4">
         <p class="title-h1">Reviews</p>
         {% for review in product.review_set.all %}
           <div class="mb-4">
             <div class="border rounded-lg">
-              <div class="bg-purple-500 text-white rounded-t-lg p-1 px-2"><i class="fas fa-user"></i><span class="font-semibold ml-1">{{ review.customer.user.username }}</span></div>
+              <div class="background-color text-white rounded-t-lg p-1 px-2"><i class="fas fa-user"></i><span class="font-semibold ml-1">{{ review.customer.user.username }}</span></div>
+            <span class="px-2">
             {% with rating=review.value %}
               {% include "products/ratingTemplate.html" %}
             {% endwith %}
-            <div class="px-2 mt-1">{{ review.comment }}</div>
+            </span>
+            <div class="p-2 pt-0">{{ review.comment }}</div>
             </div>
           </div>
+        {% empty %}
+          <p>This product does not have any reviews yet.</p>
         {% endfor %}
       </div>
     </div>
   </div>
 
   {% else %}
-    <div class="mt-4">
-      <div class="bg-purple-500 text-white text-lg p-2">
+    <div class="bg-white rounded-b-lg">
+      <div class="background-color text-white text-lg p-2">
         <a class="mx-6 font-semibold">Description</a>
         <a href="{% url 'products:details' product.id %}?p=reviews" class="mx-6">Reviews</a>
       </div>

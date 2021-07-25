@@ -51,8 +51,6 @@ def browsePage(request):
         name__contains=search_param, price__lte=max_price_filter, category__name__in=category_filters).order_by('id') if category_filters else Product.objects.filter(
         name__contains=search_param, price__lte=max_price_filter).order_by('id')
 
-    ratings = []
-
     paginator = Paginator(products, 8)
 
     page_number = request.GET.get('page')
@@ -138,7 +136,7 @@ def addToCart(request):
 
     if 'cartdata' in request.session:
         cart_data = request.session['cartdata']
-        if id in request.session['cartdata']:
+        if id in cart_data:
             cart_data[id]['qty'] += int(request.GET['qty'])
             cart_data[id]['total'] += int(request.GET['price']) * \
                 int(request.GET['qty'])

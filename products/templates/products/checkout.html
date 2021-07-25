@@ -3,14 +3,14 @@
 {% block title %}Checkout{% endblock title %}
 
 {% block content %}
-<div class="mx-auto mt-8 flex w-9/12">
+<div class="mt-4 pb-4 flex justify-center">
   <!-- Order Form -->
-  <div class="bg-white rounded p-6 mr-2">
-    <p class="title-h1 mb-4">Order details</p>
-    <form method="POST" class="user-form">
+  <div class="bg-white rounded p-6">
+    <p class="title-h1">Order details</p>
+    <form method="POST">
       {% csrf_token %}
 
-      <p class="font-semibold">1 Customer info</p>
+      <p class="font-semibold">Customer info</p>
       <div class="mx-4">
         <label>First name</label>
         <div class="text-red-500">{{order_form.first_name.errors.0}}</div>
@@ -29,7 +29,7 @@
         {{order_form.mobile}}
       </div>
 
-      <p class="font-semibold">2 Delivery info</p>
+      <p class="font-semibold">Delivery info</p>
 
       <div class="mx-4">
         <label>Country</label>
@@ -45,7 +45,7 @@
         {{order_form.address}}
       </div>
 
-      <p class="font-semibold">3 Payment info</p>
+      <p class="font-semibold">Payment info</p>
       <div class="mx-4">
         <label>Name on card</label>
         <div class="text-red-500">{{order_form.name.errors.0}}</div>
@@ -64,18 +64,46 @@
         {{order_form.security_code}}
       </div>
 
-      <button id="complete-purchase" type="submit" class="purple-btn" {% if not request.session.totalprice %} disabled {%endif%}>
-        <i class="fas fa-shopping-cart"></i>
-        <span>Complete purchase</span>
-      </button>
+      <div class="w-full flex justify-center px-2">
+        <button id="complete-purchase" type="submit" class="purple-btn disabled:opacity-50 w-full" {% if not request.session.cartdata %} disabled {% endif %}>
+          <i class="fas fa-shopping-cart"></i>
+          <span>Complete purchase</span>
+        </button>
+      </div>
 
     </form>
   </div>
 
   <!-- Shopping cart -->
-  <div class="bg-white rounded p-6" >
-    <p class="title-h1 text-2xl">Shopping Cart</p>
-    {% include "products/cart.html" %}
+  <div class="background-color text-gray-100 rounded p-6" >
+    <p class="title-h1 text-gray-100 text-2xl">Shopping Cart</p>
+
+    <div class="checkout-summary">
+      <!-- Cart items -->
+      <div class="cart-items overflow-y-auto">
+        {% for id, item in request.session.cartdata.items %}
+          <div id="cart-{{id}}" class="grid grid-flow-col py-3">
+            <a href="/home/browse/product/{{ id }}" class="grid grid-flow-col auto-cols-max w-40">
+              <span class="break-words px-2 my-auto">{{ item.name }}</span>
+            </a>
+            <span id="cart-qty-{{id}}" class="w-6 my-auto">x{{ item.qty }}</span>
+            <span id="cart-price-{{id}}" class="w-16 font-bold my-auto">${{ item.total }}</span>
+          </div>
+        {% endfor %}
+      </div>
+
+      <!-- Cart total -->
+      <div class="cart-summary">
+        <span class="checkout-total">
+          {% if request.session.totalprice > 0 %}
+            Total price: ${{ request.session.totalprice }} 
+          {% else %}
+            Your cart is empty.
+          {% endif %}
+        </span>
+      </div>
+      
+    </div>
   </div>
 </div>
 {% endblock content %}

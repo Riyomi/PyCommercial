@@ -9,22 +9,16 @@
     <form
       method="GET"
       action="{% url 'products:browse' %}"
-      class="w-full -mt-2 pb-4"
+      class="w-full -mt-2"
     >
     {% csrf_token %}
       <div class="w-8/12 h-full mx-auto">
-        <i class="fas fa-search relative top-8 left-3 text-purple-700"></i>
+        <i class="fas fa-search relative top-8 left-3 text-color"></i>
         <input
+          id="searchbar-home"
           type="text"
           name="search"
           placeholder="Search for products..."
-          class="
-            py-2
-            px-9
-            w-full
-            rounded-lg
-            focus:outline-none focus:ring focus:ring-purple-400
-          "
         />
       </div>
     </form>

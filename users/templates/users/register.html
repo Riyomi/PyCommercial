@@ -7,7 +7,7 @@
     <form method="POST" class="user-form">
       {% csrf_token %}
       <p class="title-h1 mb-2">Register account</p>
-      <p class="text-lg text-purple-400 mb-4">
+      <p class="text-lg text-color mb-4">
         Get started and create your free account now
       </p>
 
@@ -28,7 +28,7 @@
       <input type="submit" value="Register Account" class="purple-btn w-full" />
 
       <span>Already have an account?</span>
-      <a href="{% url 'users:login' %}" class="text-purple-400 font-bold">Login</a>
+      <a href="{% url 'users:login' %}" class="text-color font-bold">Login</a>
 
       {% for field, errors in user_form.errors.items %}
         <div class="text-red-500">{{errors.0}}</div>

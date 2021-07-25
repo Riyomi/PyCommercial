@@ -11,7 +11,7 @@
       <p class="title-h1">${{ product.price }}</p>
       <a
         href="{% url 'products:details' product.id %}"
-        class="block truncate text-purple-500 text-lg font-semibold"
+        class="block truncate text-color text-lg font-semibold"
         >{{ product.name }}</a>
    
       {% with rating=product.get_avg_rating %}
