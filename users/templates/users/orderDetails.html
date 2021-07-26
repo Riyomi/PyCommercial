@@ -3,84 +3,86 @@
 {% block title %}My Orders{% endblock title %}
 
 {% block content %}
-<div class="flex flex-col mx-auto rounded-lg p-5 w-6/12 mt-4 bg-white">
-  <p class="title-h1">Order #{{ order }}</p>
+<div class="flex flex-col mx-auto rounded-lg lg:w-1/2 md:w-4/6 mt-4 bg-white">
+  <p class="font-semibold text-2xl background-color text-white px-6 py-2 rounded-t-lg">Order #{{ order }}</p>
  
-  <div class="grid grid-cols-2 px-4">
+  <div class="flex flex-col mx-4 my-2 self-justify-center border mb-4">
     <div>
-      <p class="title-h2">Order information</p>
-      <p class="px-2">ID: #{{ order }}</p>
-      <p class="px-2">Placed on: {{ order.date_placed|date:"d/m/Y G:i" }}</p>
+      <p class="text-white background-color px-4 py-1 rounded-t">Order information</p>
+      <div class="px-6 py-1">
+        <p>ID: #{{ order }}</p>
+        <p>Placed on: {{ order.date_placed|date:"d/m/Y G:i" }}</p>
+      </div>
+    </div>
+
+    <div >
+      <p class="text-white background-color px-4 py-1">Customer information</p>
+      <div class="px-6 py-1">
+        <p>{{ order.first_name }} {{ order.last_name }}</p>
+        <p>{{ order.email }}</p>
+        <p>{{ order.mobile }}</p>
+      </div>
     </div>
 
     <div>
-      <p class="title-h2">Customer information</p>
-      <p class="px-2">{{ order.first_name }} {{ order.last_name }}</p>
-      <p class="px-2">{{ order.email }}</p>
-      <p class="px-2">{{ order.mobile }}</p>
+      <p class="text-white background-color px-4 py-1">Delivery information</p>
+      <p class="px-6 py-1">{{ order.address }}, {{ order.city }}, {{ order.country }}</p>
     </div>
 
     <div>
-      <p class="title-h2">Delivery information</p>
-      <p class="px-2">{{ order.address }}, {{ order.city }}, {{ order.country }}</p>
+      <p class="text-white background-color px-4 py-1">Payment information</p>
+      <div class="px-6 py-1">
+        <p>{{ order.payment.name }}</p>
+        <p>{{ order.payment.number|hide_credit_card_info }}</p>
+        <p>{{ order.payment.expiry_date }}</p>
+      </div>
+    </div>
+
+    <div class="mb-4">  
+      <p class="text-white background-color px-4 py-1 mb-4">Status</p>
+      <div class="flex justify-between">
+        {% for status in order.get_status_choices %}
+          {% if status.0 <= order.status %}
+            <div class="stepper-item completed">
+              <div class="step-counter">✓</div>
+              <div class="step-name">{{status.1}}</div>
+            </div>
+          {% else %}
+            <div class="stepper-item">
+              <div class="step-counter"></div>
+              <div class="step-name">{{status.1}}</div>
+            </div>
+          {% endif %}
+        {% endfor %}
+      </div>
     </div>
 
     <div>
-      <p class="title-h2">Payment information</p>
-      <p class="px-2">{{ order.payment.name }}</p>
-      <p class="px-2">{{ order.payment.number|hide_credit_card_info }}</p>
-      <p class="px-2">{{ order.payment.expiry_date }}</p>
+      <p class="text-white background-color px-4 py-1">Products</p>
+      <div class="w-full rounded-lg">
+        {% for item in items %}
+          <div class="order-items">
+            <span>
+              <a href="{% url 'products:details' item.product.id %}" class="flex">
+                <div class="w-32 inline-block">
+                 <img src="{{ item.product.image.url|formaturl }}" class="max-h-24 mx-auto" />
+                </div>
+                <span class="self-center"> {{ item.product.name }} </span>
+              </a>
+            </span>
+            <span class="self-center">x{{ item.quantity }}</span>
+            <span class="self-center mx-auto">${{ item.product.price }}</span>
+            <span class="self-center mx-auto">${% widthratio item.product.price 1 item.quantity %}</span>
+          </div>
+        {% endfor %}
+      </div>  
+
+      <div class="order-total">
+        <span>Total</span>
+        <span class=" mx-auto">${{ order.total }}</span>
+      </div>
     </div>
   </div>
-
-  <div class="mb-4">  
-    <p class="title-h2">Status</p>
-    <div class="flex justify-between">
-      {% for status in order.get_status_choices %}
-        {% if status.0 <= order.status %}
-          <div class="stepper-item completed">
-            <div class="step-counter">✓</div>
-            <div class="step-name">{{status.1}}</div>
-          </div>
-        {% else %}
-          <div class="stepper-item">
-            <div class="step-counter"></div>
-            <div class="step-name">{{status.1}}</div>
-          </div>
-        {% endif %}
-      {% endfor %}
-    </div>
-  </div>
-
-  <p class="title-h2">Products</p>
-
-  <table class="table-fixed w-full rounded-lg">
-    <thead class="border-b text-left">
-      <tr>
-        <th class="w-8/12 py-2 pl-4">Product</th>
-        <th class="w-4/12 py-2">Quantity</th>
-        <th class="w-4/12 py-2">Price</th>
-        <th class="w-4/12 py-2">Total Price</th>
-      </tr>
-    </thead>
-    <tbody class="border-b">
-      {% for item in items %}
-        <tr>
-          <td>
-            <a href="{% url 'products:details' item.product.id %}">
-              <img src="{{ item.product.image.url|formaturl }}" class="w-28 inline-block" />
-              <span> {{ item.product.name }} </span>
-            </a>
-          </td>
-          <td>x{{ item.quantity }}</td>
-          <td>${{ item.product.price }}</td>
-          <td>${% widthratio item.product.price 1 item.quantity %}</td>
-        </tr>
-      {% endfor %}
-    </tbody>
-  </table>
-
-  <p class="self-end">Total: ${{ order.total }}</p>
 
 </div>
 {% endblock content %}

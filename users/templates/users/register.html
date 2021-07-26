@@ -27,8 +27,10 @@
 
       <input type="submit" value="Register Account" class="purple-btn w-full" />
 
-      <span>Already have an account?</span>
-      <a href="{% url 'users:login' %}" class="text-color font-bold">Login</a>
+      <div class="mt-4">
+        <span>Already have an account?</span>
+        <a href="{% url 'users:login' %}" class="text-color font-bold">Login</a>
+      </div>
 
       {% for field, errors in user_form.errors.items %}
         <div class="text-red-500">{{errors.0}}</div>

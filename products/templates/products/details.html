@@ -4,7 +4,7 @@
 {% block title %}{{ product.name }}{% endblock title %}
 
 {% block content %}
-<div class="grid mt-2 w-9/12 mx-auto">
+<div class="grid mt-2 xl:w-9/12 md:w-10/12 mx-auto">
   <div class="background-color text-white px-6 py-3 rounded-t-lg">
     {% for category in categories reversed %}
       <a>{{ category }}</a>
@@ -62,7 +62,7 @@
     </div>
 
     <div class="px-8 mt-2">
-      <div class="grid grid-cols-2">
+      <div class="grid xl:grid-cols-2">
         <div>
           <p class="title-h1">Reviews by ratings</p>
           <table class="table-fixed">

@@ -4,14 +4,13 @@
 {% block title %}Home{% endblock title %}
 
 {% block content %}
-<div class="flex min-h-screen bg-purple-200 justify-center">
+<div class="flex min-h-screen secondary-bg-color justify-center">
   <div>
     <form
       method="GET"
       action="{% url 'products:browse' %}"
       class="w-full -mt-2"
     >
-    {% csrf_token %}
       <div class="w-8/12 h-full mx-auto">
         <i class="fas fa-search relative top-8 left-3 text-color"></i>
         <input

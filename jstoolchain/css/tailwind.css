@@ -24,7 +24,7 @@
   }
 
   .ring-color {
-    @apply ring-green-400;
+    @apply ring-green-600;
   }
 
   .title-h1 {
@@ -125,7 +125,7 @@
 
   /* User form */
   .user-form-wrapper {
-    @apply bg-white shadow-md rounded px-8 pt-6 pb-8 my-4 mx-auto w-2/6;
+    @apply bg-white shadow-md rounded px-8 pt-6 pb-8 my-4 mx-auto lg:w-2/6 md:w-4/6;
   }
 
   /* Browse page filter section components */
@@ -194,6 +194,16 @@
 
   /* Footer styling */
   footer {
-    @apply w-full background-color filter drop-shadow-lg p-6 text-white flex justify-between mt-auto;
+    @apply w-full background-color filter drop-shadow-lg p-6 text-white flex;
+  }
+
+  .order-items {
+    @apply grid border-b px-4;
+    grid-template-columns: 6fr 1fr 2fr 2fr;
+  }
+
+  .order-total {
+    @apply grid background-color text-white font-semibold py-1 px-4 rounded-b;
+    grid-template-columns: 9fr 2fr;
   }
 }
