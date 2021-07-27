@@ -2,7 +2,7 @@
 {% block title %}My Account{% endblock title %}
 
 {% block content %}
-<div class="grid tablet:grid-cols-6 mx-auto desktop:w-1/2 tablet:w-5/6 w-11/12 mt-4 pb-4">
+<div class="grid tablet:grid-cols-6 mx-auto desktop:w-1/2 tablet:w-5/6 w-11/12 mt-4 pb-4 text-sm laptop:text-base">
   <div class="hidden tablet:flex flex-col col-span-2 background-color p-5 rounded-tl-lg rounded-bl-lg">
 
     <div class="menu-option">
@@ -35,15 +35,9 @@
 
   </div>
 
-  <script>
-    function openMobileAccountDropDown() {
-      document.getElementById('mobileAccountDropDown').classList.toggle('hidden');
-    }
-  </script>
-
-  <div class="flex tablet:hidden col-span-4 background-color px-5 py-3 text-white flex-grow items-center rounded-t-lg" onclick="openMobileAccountDropDown()">
+  <div id="mobileaccountdropdown" class="flex tablet:hidden col-span-4 background-color px-5 py-3 text-white flex-grow items-center rounded-t-lg">
     <svg class="h-6 w-6 block" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+        <path id="accountMenuIcon" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
       </svg>
   </div>
 

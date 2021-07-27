@@ -26,7 +26,7 @@
       {% endif %}
     </span>
     <a href="{% url 'products:checkout' %}"
-        class="checkout-btn purple-btn {% if request.session.totalprice == 0 %}hidden{% endif %}">
+        class="checkout-btn purple-btn {% if not request.session.totalprice > 0 %}hidden{% endif %}">
         Checkout
     </a>
   </div>

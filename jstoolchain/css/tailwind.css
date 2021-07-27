@@ -28,7 +28,7 @@
   }
 
   .title-h1 {
-    @apply block text-color font-bold text-3xl mb-2;
+    @apply block text-color font-bold text-2xl desktop:text-3xl mb-1 tablet:mb-2;
   }
 
   .title-h2 {
@@ -134,7 +134,7 @@
 
   /* Cart styling */
   .cart-dropdown {
-    @apply absolute right-32 w-72 overflow-hidden mt-3 bg-white text-gray-400 shadow rounded grid-flow-row auto-rows-max text-xs;
+    @apply absolute w-72 overflow-hidden right-1 m-3 bg-white text-gray-400 shadow rounded grid-flow-row auto-rows-max text-xs;
   }
 
   .cart-item-container {
@@ -190,11 +190,11 @@
 
   .order-items {
     @apply grid border-b px-4;
-    grid-template-columns: 6fr 1fr 2fr 2fr;
+    grid-template-columns: 4fr 1fr 2fr;
   }
 
   .order-total {
     @apply grid background-color text-white font-semibold py-1 px-4 rounded-b;
-    grid-template-columns: 9fr 2fr;
+    grid-template-columns: 5fr 2fr;
   }
 }

@@ -1,5 +1,4 @@
-{% load static %}
-{% load products.productfilters %}
+{% load static %} {% load products.productfilters %}
 
 <!DOCTYPE html>
 <html lang="en">
@@ -22,11 +21,11 @@
     {% block extrahead %} {% endblock %}
   </head>
 
-  <body>
+  <body class="secondary-bg-color">
     <div
       class="min-h-screen secondary-bg-color"
-      style="min-height: calc(100vh - (72px))">
-      
+      style="min-height: calc(100vh - (72px))"
+    >
       {% include 'navbar.html' %}
 
       <!-- Main Content -->
