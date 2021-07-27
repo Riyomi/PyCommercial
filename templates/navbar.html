@@ -1,11 +1,24 @@
-<nav>
-  <a href="{% url 'products:home' %}" id="logo">PyCommercial</a>
+<script>
+function openMobileDropDown() {
+  document.getElementById('mobileDropDownMenu').classList.toggle('hidden');
+}
+</script>
+
+<nav class="flex flex-wrap background-color justify-between p-3 laptop:p-6 filter drop-shadow-lg">
+  <a href="{% url 'products:home' %}" class="hidden laptop:flex laptop:flex-shrink-0 laptop:items-center text-white text-2xl font-semibold ml-4 mr-20">PyCommercial</a>
 
   <div class="flex flex-grow items-center">
-    <div class="flex-grow">
-      <a href="{% url 'products:browse' %}" class="navbar-menu">Browse</a>
+    <div class="hidden laptop:flex flex-grow">
+      <a href="{% url 'products:browse' %}" class="navbar-menu text-center">Browse</a>
       <a href="#" class="navbar-menu">Stores</a>
       <a href="#" class="navbar-menu">About Us</a>
+    </div>
+
+    <div id="mobiledropdown" class="flex flex-grow items-center laptop:hidden text-white" onclick="openMobileDropDown()">
+      <svg class="h-6 w-6 block" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+        </svg>
+      <span class="ml-2">Menu</span>
     </div>
 
     <div>
@@ -49,3 +62,10 @@
     </div>
   </div>
 </nav>
+
+<div id="mobileDropDownMenu" class="flex flex-col background-color text-white hidden">
+  <a href="{% url 'products:home' %}" class="p-2">Home</a>
+  <a href="{% url 'products:browse' %}" class="p-2">Browse</a>
+  <a href="#" class="p-2">Stores</a>
+  <a href="#" class="p-2">About Us</a>
+</div>

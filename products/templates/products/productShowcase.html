@@ -1,6 +1,6 @@
 {% load products.productfilters %}
 
-<div class="grid grid-cols-5">
+<div class="grid xl:grid-cols-5 md:grid-cols-4">
   {% for product in products %}
     <div
       id="product-{{ product.id }}"

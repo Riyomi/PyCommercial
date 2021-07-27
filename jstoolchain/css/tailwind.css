@@ -85,21 +85,12 @@
     @apply outline-none;
   }
 
-  /* Navbar components */
-  nav {
-    @apply flex flex-wrap background-color justify-between p-6 filter drop-shadow-lg;
-  }
-
   .navbar-menu {
     @apply inline-block text-white pr-8;
   }
 
   .navbar-menu:hover {
-    @apply text-purple-200;
-  }
-
-  #logo {
-    @apply flex items-center flex-shrink-0 text-white text-2xl font-semibold tracking-tight ml-4 mr-20;
+    @apply text-gray-200;
   }
 
   /* Account dropdown menu components */
