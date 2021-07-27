@@ -11,7 +11,7 @@
       action="{% url 'products:browse' %}"
       class="w-full -mt-2"
     >
-      <div class="w-8/12 h-full mx-auto">
+      <div class="w-11/12 laptop:w-7/12 h-full mx-auto">
         <i class="fas fa-search relative top-8 left-3 text-color"></i>
         <input
           id="searchbar-home"
@@ -22,11 +22,11 @@
       </div>
     </form>
 
-    <div class="w-full h-96" style='background-image: url("../../static/homepage/homepage1.jpg");  background-position: center;' />
+    <div class="w-full h-64 laptop:h-96 bg-cover" style='background-image: url("../../static/homepage/homepage1.jpg");  background-position: center;' />
 
-    <div class="mx-2 mt-2">
+    <div class="px-4 w-screen desktop:w-full">
 
-      <div class>
+      <div class="my-4">
         <p class="title-h1 text-2xl">Best rated products</p>
         {% with products=best_products %}
           {% include "products/productShowcase.html" %}
@@ -34,7 +34,7 @@
       </div>
 
       {% for recommendation in recommendations %}
-        <div>
+        <div class="my-4">
           <a
             href="{% url 'products:browse' %}?{% for param in recommendation.0 %}{{ param.name|encode_url }}=on&{% endfor %}"
             class="title-h1 text-2xl">{{ recommendation.0.0 }}

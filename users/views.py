@@ -150,7 +150,7 @@ def ordersPage(request):
     orders = Order.objects.filter(
         customer=request.user.customer).order_by('-date_placed')
 
-    paginator = Paginator(orders, 4)
+    paginator = Paginator(orders, 3)
     page_number = request.GET.get('page')
     page = paginator.get_page(page_number)
 
