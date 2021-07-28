@@ -4,119 +4,123 @@
 {% block title %}Products{% endblock title %}
 
 {% block content %}
-<div class="grid">
-  <form method="GET" class="bg-white px-5 pt-3">
-    <div id="filters">
-      <!-- Search -->
-      <div>
-        <p>Search</p>
+<div id="browse-page">
+  <div id="browse-page-content">
+    <form method="GET" class="py-3">
+      <div id="filters" class="bg-white rounded-lg mx-2 tablet:mr-0 px-5 py-4 h-full">
+        <!-- Search -->
         <div>
-          <input
-            type="text"
-            placeholder="Search for products..."
-            name="search"
-            value="{{ request.GET.search }}"
-            class="
-              py-1
-              px-4
-              text-sm
-            "
-          />
+          <p>Search</p>
+          <div>
+            <input
+              type="text"
+              placeholder="Search for products..."
+              name="search"
+              value="{{ request.GET.search }}"
+              class="
+                py-1
+                px-4
+                text-sm
+              "
+            />
+          </div>
         </div>
-      </div>
 
-      <!-- Categories -->
-      <div>
-        <p>Categories</p>
-        <div id="category-selection">
-          {% for category in main_categories %}
-            {% include "products/categoryTree.html" %}
-          {% endfor %}
-        </div>
-      </div>
-
-      <!-- Price -->
-      <div>
-        <p>Price</p>
+        <!-- Categories -->
         <div>
-          <label for="number">Max Price</label>
-          <input
-            type="number"
-            name="maxPrice"
-            min="0"
-            max="{{max_price}}"
-          />
+          <p>Categories</p>
+          <div id="category-selection">
+            {% for category in main_categories %}
+              {% include "products/categoryTree.html" %}
+            {% endfor %}
+          </div>
         </div>
-      </div>
 
-      <!-- Reviews -->
-      <div>
-        <p>Reviews</p>
+        <!-- Price -->
         <div>
-          <!-- Filtering by reviews -->
+          <p>Price</p>
+          <div>
+            <label for="number">Max Price</label>
+            <input
+              type="number"
+              name="maxPrice"
+              min="0"
+              max="{{max_price}}"
+            />
+          </div>
         </div>
-      </div>
 
-      <!-- Submit button -->
-      <input
-        type="submit"
-        class="purple-btn"
-        value="Apply filters"
-      />
-    </div>
-  </form>
-  <div class="grid md:grid-cols-2 xl:grid-cols-4 grid-rows-2 gap-3 m-3 col-span-5">
-    {% for product in page %}
-      <div id="product-{{ product.id }}" class="flex flex-col bg-white rounded-lg p-3">
-        <a href="{% url 'products:details' product.id %}" class="flex h-48 justify-center">
-          <img src="{{ product.image.url|formaturl }}" class="max-h-48 self-center"/>
-        </a>
-        <p class="title-h1">${{ product.price }}</p>
-        <div class="text-color text-lg font-semibold mb-2">
-          <a
-            href="{% url 'products:details' product.id %}"
-            class="block h-6 truncate"
-            >{{ product.name }}</a
-          >
-          {% with product=product %}
-            <span class="text-xs">
-            {% with rating=product.get_avg_rating %}
-              {% include "products/ratingTemplate.html" %}
+        <!-- Reviews -->
+        <div>
+          <p>Reviews</p>
+          <div>
+            <!-- Filtering by reviews -->
+          </div>
+        </div>
+
+        <!-- Submit button -->
+        <input
+          type="submit"
+          class="purple-btn"
+          value="Apply filters"
+        />
+      </div>
+    </form>
+
+    <div class="grid phone:grid-cols-2  desktop:grid-cols-4 grid-rows-2 gap-3 m-3">
+      {% for product in page %}
+        <div id="product-{{ product.id }}" class="flex flex-col bg-white rounded-lg p-3">
+          <a href="{% url 'products:details' product.id %}" class="flex h-48 justify-center">
+            <img src="{{ product.image.url|formaturl }}" class="max-h-48 self-center"/>
+          </a>
+          <p class="title-h1">${{ product.price }}</p>
+          <div class="text-color text-lg font-semibold mb-2">
+            <a
+              href="{% url 'products:details' product.id %}"
+              class="block h-6 truncate"
+              >{{ product.name }}</a
+            >
+            {% with product=product %}
+              <span class="text-xs">
+              {% with rating=product.get_avg_rating %}
+                {% include "products/ratingTemplate.html" %}
+              {% endwith %}
+              </span>
             {% endwith %}
-            </span>
-          {% endwith %}
+          </div>
+          <p class="text-xs text-gray-600 mb-3 h-12 overflow-ellipsis overflow-hidden">
+            {{ product.description }}
+          </p>
+
+          <input
+            type="hidden"
+            id="{{ product.id }}-name"
+            value="{{ product.name }}"
+          />
+          <input
+            type="hidden"
+            id="{{ product.id }}-img-url"
+            value="{{ product.image.url|formaturl }}"
+          />
+          <input
+            type="hidden"
+            id="{{ product.id }}-price"
+            value="{{ product.price }}"
+          />
+
+          <button id="{{ product.id }}" onClick="addProduct(this.id)" class="purple-btn mb-2">
+            <i class="fas fa-shopping-cart"></i>
+            <span class="ml-1">Add to cart</span>
+          </button>
+          
         </div>
-        <p class="text-xs text-gray-600 mb-3 h-12">
-          {{ product.description|truncatetext:100 }}
-        </p>
-
-        <input
-          type="hidden"
-          id="{{ product.id }}-name"
-          value="{{ product.name }}"
-        />
-        <input
-          type="hidden"
-          id="{{ product.id }}-img-url"
-          value="{{ product.image.url|formaturl }}"
-        />
-        <input
-          type="hidden"
-          id="{{ product.id }}-price"
-          value="{{ product.price }}"
-        />
-
-        <button id="{{ product.id }}" onClick="addProduct(this.id)" class="purple-btn mb-2">
-          <i class="fas fa-shopping-cart"></i>
-          <span class="ml-1">Add to cart</span>
-        </button>
-        
-      </div>
-    {% empty %}
-      <div class="bg-white m-3 rounded-lg p-3 col-span-5 grid row-span-3">No products match your query.</div>
-    {% endfor %}
+      {% empty %}
+        <div class="bg-white rounded-lg p-3 col-span-5 grid row-span-3">No products match your query.</div>
+      {% endfor %}
+    </div>
   </div>
-  <div class="col-start-2 col-span-5 text-center">
+
+  <div class="text-center">
     {% with page=page %}
       {% include "paginator.html" %}
     {% endwith %}

@@ -4,7 +4,7 @@
 {% block title %}{{ product.name }}{% endblock title %}
 
 {% block content %}
-<div class="grid mt-2 xl:w-9/12 md:w-10/12 mx-auto">
+<div class="grid mt-2 w-11/12 desktop:w-9/12 landscapetablet:w-10/12 text-sm tablet:text-base mx-auto">
   <div class="background-color text-white px-6 py-3 rounded-t-lg">
     {% for category in categories reversed %}
       <a>{{ category }}</a>
@@ -45,7 +45,7 @@
         value="{{ product.price }}"
       />
 
-      <button id="{{ product.id }}" onClick="addProduct(this.id)" class="purple-btn w-6/12">
+      <button id="{{ product.id }}" onClick="addProduct(this.id)" class="purple-btn w-64 landscapetablet:w-72">
         <i class="fas fa-shopping-cart"></i>
         <span class="ml-1">Add to cart</span>
       </button>
@@ -62,21 +62,20 @@
     </div>
 
     <div class="px-8 mt-2">
-      <div class="grid xl:grid-cols-2">
+
+      <div class="grid landscapetablet:grid-cols-2">
         <div>
           <p class="title-h1">Reviews by ratings</p>
           <table class="table-fixed">
           {% for i in '54321'|make_list %}
             <tr>
               <td>
-                <span class="text-xs">
-                  {% with rating=i %}
-                    {% include "products/ratingTemplate.html" %}
-                  {% endwith %}
+                <span>
+                   {{i}} <i class="fas fa-star text-xs text-yellow-300"></i>
                 </span>
               </td>
               <td>
-                <div class="secondary-bg-color h-5 w-64">
+                <div class="secondary-bg-color h-5 w-44 phone:w-64 laptop:w-48 desktop:w-64">
                   <div style="width: {% keyvalue product.get_review_count_by_value i product.get_review_count %}%" class="background-color h-5"></div>
                 </div>
               </td>
@@ -85,6 +84,7 @@
           {% endfor %}
           </table>
         </div>
+
         <div>
           {% if request.user.is_authenticated %}
           <p class="title-h1">Write a review</p>
@@ -92,7 +92,7 @@
             {% csrf_token %}
             <div>
               <span>Your rating: </span>
-              <div class="rate text-yellow-300 cursor-pointer">
+              <span class="rate text-yellow-300 cursor-pointer">
                 <i
                   id="star-1"
                   onClick="setRating(this.id)"
@@ -118,22 +118,23 @@
                   onClick="setRating(this.id)"
                   class="far fa-star"
                 ></i>
-              </div>
+              </span>
+
               <input name="rating" class="hidden" oninvalid="alert('Choose a rating')" required/>
               <input name="product-id" type="hidden" value="{{ product.id }}"
             </div>
             <textarea
-              rows="4"
-              cols="50"
               name="comment"
-              class="flex border-2 rounded-lg p-2 focus:outline-none"
+              class="flex border-2 rounded-lg p-2 focus:outline-none w-80 phone:w-96 laptop:w-96 h-32"
               placeholder="Write about the product in detail (optional)"
             />
             <input type="submit" class="purple-btn cursor-pointer" />
           </form>
           {% endif %}
         </div>
+
       </div>
+
       <div class="mt-4 rounded-lg pb-4">
         <p class="title-h1">Reviews</p>
         {% for review in product.review_set.all %}

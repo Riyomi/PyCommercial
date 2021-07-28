@@ -1,5 +1,5 @@
 
-{% if page.object_list %}
+{% if page.object_list and page.has_other_pages %}
   <span class="paginator">
     <a {% if page.has_previous %} href="?page={{ page.previous_page_number }}&{{query_string}}" {% endif %}>
       <i class="fas fa-chevron-left"></i>

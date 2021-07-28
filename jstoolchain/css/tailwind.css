@@ -197,4 +197,34 @@
     @apply grid background-color text-white font-semibold py-1 px-4 rounded-b;
     grid-template-columns: 5fr 2fr;
   }
+
+  @screen landscapetablet {
+    #browse-page-content {
+      @apply grid;
+      grid-template-columns: 3fr 7fr;
+    }
+  }
+
+  @screen laptop {
+    #browse-page-content {
+      @apply grid;
+      grid-template-columns: 3fr 9fr;
+    }
+  }
+
+  @screen desktop {
+    #browse-page-content {
+      @apply grid;
+      grid-template-columns: 2fr 9fr;
+    }
+  }
+
+  #browse-page {
+    @apply grid;
+    grid-template-rows: 8fr 2rem;
+  }
+
+  #browse-page-content {
+    @apply grid;
+  }
 }
