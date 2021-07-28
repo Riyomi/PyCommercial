@@ -16,9 +16,7 @@
     </div>
     <div>
       <a id="dropbtncart" onclick="openMenu(this.id)">
-        <span id="badge-count" class="badge {% if request.session.cartdata %} inline-flex {% endif %}">
-          {{ request.session.totalitems }}
-        </span>
+        <span id="badge-count" class="badge {% if request.session.cartdata %} inline-flex {% endif %}">{{ request.session.totalitems}}</span>
         <i class="fas fa-shopping-cart"></i>
         <span class="pl-1">Cart</span>
       </a>

@@ -126,29 +126,34 @@ def addToCart(request):
 
     id = request.GET['id']
 
-    cart[id] = {
-        'name': request.GET['name'],
-        'img_url': request.GET['img_url'],
-        'price': int(request.GET['price']),
-        'qty': int(request.GET['qty']),
-        'total': int(request.GET['price'])*int(request.GET['qty']),
-    }
+    product = Product.objects.get(pk=id)
 
-    if 'cartdata' in request.session:
-        cart_data = request.session['cartdata']
-        if id in cart_data:
-            cart_data[id]['qty'] += int(request.GET['qty'])
-            cart_data[id]['total'] += int(request.GET['price']) * \
-                int(request.GET['qty'])
-            cart_data.update(cart_data)
+    if product:
+        cart[id] = {
+            'name': product.name,
+            'img_url': product.image.url.replace('/products', ''),
+            'price': product.price,
+            'qty': int(request.GET['qty']),
+            'total': product.price * int(request.GET['qty']),
+        }
+
+        if 'cartdata' in request.session:
+            cart_data = request.session['cartdata']
+            if id in cart_data:
+                cart_data[id]['qty'] += int(request.GET['qty'])
+                cart_data[id]['total'] += product.price * \
+                    int(request.GET['qty'])
+                cart_data.update(cart_data)
+            else:
+                cart_data.update(cart)
         else:
-            cart_data.update(cart)
-    else:
-        request.session['cartdata'] = cart
+            request.session['cartdata'] = cart
 
-    refreshTotal(request)
+        refreshTotal(request)
 
-    return JsonResponse({'data': request.session['cartdata'], 'totalitems': request.session['totalitems'], 'totalprice': request.session['totalprice']})
+        return JsonResponse({'data': request.session['cartdata'], 'totalitems': request.session['totalitems'], 'totalprice': request.session['totalprice']})
+
+    return JsonResponse()
 
 
 def removeFromCart(request):

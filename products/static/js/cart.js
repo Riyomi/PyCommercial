@@ -1,17 +1,11 @@
 function addProduct(id) {
   const btn = $(`#${id}`);
-  const name = $(`#${id}-name`).val();
-  const img_url = $(`#${id}-img-url`).val();
-  const price = $(`#${id}-price`).val();
   const qty = $(`#${id}-qty`).val();
 
   $.ajax({
     url: "/home/add-to-cart",
     data: {
       id: id,
-      name: name,
-      img_url: img_url,
-      price: price,
       qty: qty ? qty : 1,
     },
     dataType: "json",
@@ -129,6 +123,7 @@ function cartItemHTML(id, name, img, price) {
 
 $("body").on("DOMSubtreeModified", "#badge-count", function () {
   const count = $("#badge-count").text();
+  console.log(count);
   if (count === "0" || count === "") {
     $("#badge-count").removeClass("inline-flex");
   } else {

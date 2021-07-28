@@ -80,33 +80,15 @@
               class="block h-6 truncate"
               >{{ product.name }}</a
             >
-            {% with product=product %}
-              <span class="text-xs">
-              {% with rating=product.get_avg_rating %}
-                {% include "products/ratingTemplate.html" %}
-              {% endwith %}
-              </span>
+            <span class="text-xs">
+            {% with rating=product.get_avg_rating %}
+              {% include "products/ratingTemplate.html" %}
             {% endwith %}
+            </span>
           </div>
           <p class="text-xs text-gray-600 mb-3 h-12 overflow-ellipsis overflow-hidden">
             {{ product.description }}
           </p>
-
-          <input
-            type="hidden"
-            id="{{ product.id }}-name"
-            value="{{ product.name }}"
-          />
-          <input
-            type="hidden"
-            id="{{ product.id }}-img-url"
-            value="{{ product.image.url|formaturl }}"
-          />
-          <input
-            type="hidden"
-            id="{{ product.id }}-price"
-            value="{{ product.price }}"
-          />
 
           <button id="{{ product.id }}" onClick="addProduct(this.id)" class="purple-btn mb-2">
             <i class="fas fa-shopping-cart"></i>
