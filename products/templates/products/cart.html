@@ -17,10 +17,10 @@
   </div>
 
   <!-- Cart total -->
-  <div class="cart-summary">
-    <span class="checkout-total">
+  <div class="cart-summary grid grid-cols-2 text-sm p-2">
+    <span id="checkout-total">
       {% if request.session.totalprice > 0 %}
-        Total price: ${{ request.session.totalprice }} 
+        Total: ${{ request.session.totalprice }} 
       {% else %}
         Your cart is empty.
       {% endif %}

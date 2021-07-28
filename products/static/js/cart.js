@@ -79,12 +79,14 @@ function updateTotalPrice(id, response) {
 
 function updateCartTotal(response) {
   if (response.totalprice) {
-    $(".checkout-total").text(`Total price: $${response.totalprice}`);
+    $("#checkout-total").text(`Total: $${response.totalprice}`);
+    $(".price").text(`$${response.totalprice}`);
+
     $(".checkout-btn").removeClass("hidden");
 
     $("#complete-purchase").prop("disabled", false);
   } else {
-    $(".checkout-total").text("Your cart is empty.");
+    $("#checkout-total").text("Your cart is empty.");
     $(".checkout-btn").addClass("hidden");
 
     $("#complete-purchase").prop("disabled", true);

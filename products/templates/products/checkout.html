@@ -3,9 +3,9 @@
 {% block title %}Checkout{% endblock title %}
 
 {% block content %}
-<div class="mt-4 pb-4 flex justify-center md:w-5/6 mx-auto">
+<div class="mt-4 pb-4 flex flex-col landscapetablet:flex-row w-11/12 laptop:w-full justify-center mx-auto text-sm tablet:text-base">
   <!-- Order Form -->
-  <div class="bg-white rounded p-6">
+  <div class="bg-white rounded-b-lg landscapetablet:rounded-l-lg p-6 order-last landscapetablet:order-first">
     <p class="title-h1">Order details</p>
     <form method="POST">
       {% csrf_token %}
@@ -75,32 +75,30 @@
   </div>
 
   <!-- Shopping cart -->
-  <div class="background-color text-gray-100 rounded p-6" >
-    <p class="title-h1 text-gray-100 text-2xl">Shopping Cart</p>
+  <div class="bg-white landscapetablet:bg-green-800 landscapetablet:text-gray-100 rounded-t-lg landscapetablet:rounded-r-lg landscapetablet:rounded-t-none p-6 pb-0 landscapetablet:pb-6" >
+    <p class="title-h1 landscapetablet:text-gray-100 text-2xl">Shopping Cart</p>
 
-    <div class="checkout-summary">
+    <div class="checkout-summary text-xs tablet:text-base">
       <!-- Cart items -->
-      <div class="cart-items overflow-y-auto">
+      <div class="cart-items landscapetablet:overflow-y-auto">
         {% for id, item in request.session.cartdata.items %}
-          <div id="cart-{{id}}" class="grid grid-flow-col py-3">
-            <a href="/home/browse/product/{{ id }}" class="grid grid-flow-col auto-cols-max w-40">
-              <span class="break-words px-2 my-auto">{{ item.name }}</span>
+          <div id="cart-{{id}}" class="checkout-cart-layout py-2 landscapetablet:py-3">
+            <a href="/home/browse/product/{{ id }}">
+              <span class="px-2 my-auto">{{ item.name }}</span>
             </a>
-            <span id="cart-qty-{{id}}" class="w-6 my-auto">x{{ item.qty }}</span>
-            <span id="cart-price-{{id}}" class="w-16 font-bold my-auto">${{ item.total }}</span>
+            <span id="cart-qty-{{id}}" class="my-auto">x{{ item.qty }}</span>
+            <span id="cart-price-{{id}}" class="my-auto justify-self-end px-2">${{ item.total }}</span>
           </div>
         {% endfor %}
       </div>
 
       <!-- Cart total -->
-      <div class="cart-summary">
-        <span class="checkout-total">
-          {% if request.session.totalprice > 0 %}
-            Total price: ${{ request.session.totalprice }} 
-          {% else %}
-            Your cart is empty.
-          {% endif %}
-        </span>
+      <div class="checkout-cart-layout font-semibold  checkout-total">
+        {% if request.session.totalprice > 0 %}
+          <span class="col-span-2 pl-2">Total: </span><span class="price justify-self-end px-2">${{ request.session.totalprice }}</span>
+        {% else %}
+          Your cart is empty.
+        {% endif %}
       </div>
       
     </div>
