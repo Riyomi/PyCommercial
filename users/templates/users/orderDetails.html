@@ -62,7 +62,7 @@
           <span>
             <a href="{% url 'products:details' item.product.id %}" class="flex">
               <div class="w-32 inline-block">
-                <img src="{{ item.product.image.url|formaturl }}" class="max-h-24 mx-auto" />
+                <img src="{{ item.product.image.url }}" class="max-h-24 mx-auto" />
               </div>
               <span class="self-center"> {{ item.product.name }} </span>
             </a>

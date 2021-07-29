@@ -16,7 +16,7 @@
 
   <!-- Mobile layout -->
   <div id="product-{{ product.id }}" class="flex flex-col tablet:hidden bg-white p-3">
-    <img src="{{ product.image.url|formaturl }}" class="flex h-48 justify-center self-center"/>
+    <img src="{{ product.image.url }}" class="flex h-48 justify-center self-center"/>
     <p class="title-h1">${{ product.price }}</p>
     <div class="text-color text-lg font-semibold mb-2">
       <p class="h-6 truncate">{{ product.name }}</p>
@@ -37,7 +37,7 @@
 
   <!-- Tablet and desktop layout -->
   <div class="hidden tablet:grid justify-center tablet:grid-cols-2 py-2 w-full bg-white rounded-b-lg px-2">
-    <img src="{{ product.image.url|formaturl }}" class="mx-auto min-w-32 max-h-60 tablet:max-h-52"/>
+    <img src="{{ product.image.url }}" class="mx-auto min-w-32 max-h-60 tablet:max-h-52"/>
 
     <div class="grid grid-rows-4 text-lg px-2 w-full">
       <p class="title-h1 text-2xl laptop:text-3xl  font-semibold">{{ product.name }}</p>

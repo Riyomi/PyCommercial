@@ -66,7 +66,7 @@
       {% for product in page %}
         <div id="product-{{ product.id }}" class="flex flex-col bg-white rounded-lg p-3">
           <a href="{% url 'products:details' product.id %}" class="flex h-48 justify-center">
-            <img src="{{ product.image.url|formaturl }}" class="max-h-48 self-center"/>
+            <img src="{{ product.image.url }}" class="max-h-48 self-center"/>
           </a>
           <p class="title-h1">${{ product.price }}</p>
           <div class="text-color text-lg font-semibold mb-2">
