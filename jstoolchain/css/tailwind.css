@@ -52,12 +52,12 @@
     @apply shadow border rounded w-full py-2 px-3 text-gray-700 leading-tight mb-4;
   }
 
-  input:not([type="submit"]):not([type="checkbox"]):focus {
-    @apply outline-none ring ring-color;
+  select {
+    @apply mb-0;
   }
 
-  .checkout-btn {
-    @apply text-center;
+  input:not([type="submit"]):not([type="checkbox"]):focus {
+    @apply outline-none ring ring-color;
   }
 
   #searchbar-home {

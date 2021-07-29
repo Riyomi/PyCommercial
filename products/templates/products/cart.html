@@ -17,17 +17,14 @@
   </div>
 
   <!-- Cart total -->
-  <div class="cart-summary grid grid-cols-2 text-sm p-2">
-    <span id="checkout-total">
+  <div class="cart-summary grid grid-cols-3 text-sm py-1 px-2">
+    <div id="checkout-total" class="self-center text-base col-span-2">
       {% if request.session.totalprice > 0 %}
         Total: ${{ request.session.totalprice }} 
       {% else %}
         Your cart is empty.
       {% endif %}
-    </span>
-    <a href="{% url 'products:checkout' %}"
-        class="checkout-btn purple-btn {% if not request.session.totalprice > 0 %}hidden{% endif %}">
-        Checkout
-    </a>
+    </div>
+    <a href="{% url 'products:checkout' %}" class="checkout-btn purple-btn {% if not request.session.totalprice > 0 %}hidden{% endif %}">Checkout</a>
   </div>
 </div>
