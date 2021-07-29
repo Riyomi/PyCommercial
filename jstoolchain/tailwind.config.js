@@ -1,5 +1,12 @@
 module.exports = {
-  purge: [],
+  purge: {
+    enabled: true,
+    content: [
+      "../templates/*.html",
+      "../products/templates/products/*.html",
+      "../users/templates/users/*.html",
+    ],
+  },
   darkMode: false, // or 'media' or 'class'
   theme: {
     extend: {
