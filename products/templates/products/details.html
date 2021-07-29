@@ -30,7 +30,7 @@
 
     <button id="{{ product.id }}" onClick="addProduct(this.id)" class="purple-btn mb-2">
       <i class="fas fa-shopping-cart"></i>
-      <span class="ml-1">Add to cart</span>
+      <span class="ml-1 text-base">Add to cart</span>
     </button>
   </div>
 
@@ -67,95 +67,98 @@
       <a class="mx-6 font-semibold">Reviews</a>
     </div>
 
-    <div class="px-8 mt-2">
+    <div class="px-6 tablet:px-8 mt-2">
 
       {% if product.review_set.all %}
-      <div class="grid landscapetablet:grid-cols-2">
-        <div>
+      <div class="flex flex-col landscapetablet:flex-row">
+
+        <div class="w-full mb-4">
           <p class="title-h1">Reviews by ratings</p>
-          <table class="table-fixed">
+
+          <div class="w-full tablet:text-base text-xs">
           {% for i in '54321'|make_list %}
-            <tr>
-              <td>
-                <span>
-                   {{i}} <i class="fas fa-star text-xs text-yellow-300"></i>
-                </span>
-              </td>
-              <td>
-                <div class="secondary-bg-color h-5 w-48 desktop:w-64">
-                  <div style="width: {% keyvalue product.get_review_count_by_value i product.get_review_count %}%" class="background-color h-5"></div>
-                </div>
-              </td>
-              <td>{% keyvalue product.get_review_count_by_value i product.get_review_count %}%</td>
-            </tr>
-          {% endfor %}
-          </table>
-        </div>
-
-        <div class="w-full">
-          {% if request.user.is_authenticated %}
-          <p class="title-h1">Write a review</p>
-          <form method="POST" action="{% url 'products:rate-product' %}">
-            {% csrf_token %}
             <div>
-              <span>Your rating: </span>
-              <span class="rate text-yellow-300 cursor-pointer">
-                <i
-                  id="star-1"
-                  onClick="setRating(this.id)"
-                  class="far fa-star"
-                ></i>
-                <i
-                  id="star-2"
-                  onClick="setRating(this.id)"
-                  class="far fa-star"
-                ></i>
-                <i
-                  id="star-3"
-                  onClick="setRating(this.id)"
-                  class="far fa-star"
-                ></i>
-                <i
-                  id="star-4"
-                  onClick="setRating(this.id)"
-                  class="far fa-star"
-                ></i>
-                <i
-                  id="star-5"
-                  onClick="setRating(this.id)"
-                  class="far fa-star"
-                ></i>
-              </span>
-
-              <input name="rating" class="hidden" oninvalid="alert('Choose a rating')" required/>
-              <input name="product-id" type="hidden" value="{{ product.id }}"
+              <span class="inline-block">{{i}} <i class="fas fa-star text-xs text-yellow-300"></i></span>
+              <div class="secondary-bg-color h-5 w-9/12 tablet:w-6/12 inline-block align-middle	">
+                <div style="width: {% get_percentage product.get_review_count_by_value i product.get_review_count %}%" class="background-color h-5 align-middle	"/>
+              </div>
+              <span class="inline-block">{% get_percentage product.get_review_count_by_value i product.get_review_count %}%</span>
             </div>
-            <textarea
-              name="comment"
-              class="flex border-2 rounded-lg p-2 focus:outline-none w-full h-32"
-              placeholder="Write about the product in detail (optional)"
-            />
-            <input type="submit" class="purple-btn cursor-pointer" />
-          </form>
-          {% endif %}
+            
+          {% endfor %}
+          </div>
+
         </div>
 
+        {% if request.user.is_authenticated %}
+          <div class="w-full mx-auto my-auto ">
+            <p class="title-h1">Write a review</p>
+
+            <form method="POST" action="{% url 'products:rate-product' %}">
+              {% csrf_token %}
+              <div>
+                <span>Your rating: </span>
+                <span class="rate text-yellow-300 cursor-pointer">
+                  <i
+                    id="star-1"
+                    onClick="setRating(this.id)"
+                    class="far fa-star"
+                  ></i>
+                  <i
+                    id="star-2"
+                    onClick="setRating(this.id)"
+                    class="far fa-star"
+                  ></i>
+                  <i
+                    id="star-3"
+                    onClick="setRating(this.id)"
+                    class="far fa-star"
+                  ></i>
+                  <i
+                    id="star-4"
+                    onClick="setRating(this.id)"
+                    class="far fa-star"
+                  ></i>
+                  <i
+                    id="star-5"
+                    onClick="setRating(this.id)"
+                    class="far fa-star"
+                  ></i>
+                </span>
+
+                <input name="rating" class="hidden" oninvalid="alert('Choose a rating')" required/>
+                <input name="product-id" type="hidden" value="{{ product.id }}"
+              </div>
+              <textarea
+                name="comment"
+                class="flex border-2 rounded-lg p-2 my-2 focus:outline-none w-full h-32"
+                placeholder="Write about the product in detail (optional)"
+              />
+              <input type="submit" class="purple-btn cursor-pointer w-full tablet:w-auto text-base" />
+            </form>
+          </div>
+        {% endif %}
       </div>
       {% endif %}
 
 
-      <div class="mt-4 rounded-lg pb-4">
+      <div class="mt-4 rounded-lg">
         <p class="title-h1">Reviews</p>
         {% for review in product.review_set.all %}
           <div class="mb-4">
             <div class="border rounded-lg">
-              <div class="background-color text-white rounded-t-lg p-1 px-2"><i class="fas fa-user"></i><span class="font-semibold ml-1">{{ review.customer.user.username }}</span></div>
-            <span class="px-2">
+              <div class="background-color text-white rounded-t-lg py-1 px-3">
+                <i class="fas fa-user"></i>
+                <span class="font-semibold ml-1">{{ review.customer.user.username }}</span>
+              </div>
+            <div class="px-2 py-1">
             {% with rating=review.value %}
               {% include "products/ratingTemplate.html" %}
             {% endwith %}
-            </span>
-            <div class="p-2 pt-0">{{ review.comment }}</div>
+            </div>
+            {% if review.comment %}
+              <div class="px-2 pb-2">{{ review.comment }}</div>
+            {% endif %}
             </div>
           </div>
         {% empty %}
@@ -163,6 +166,8 @@
         {% endfor %}
       </div>
     </div>
+
+
   </div>
 
   {% else %}

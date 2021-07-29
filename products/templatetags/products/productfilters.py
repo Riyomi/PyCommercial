@@ -40,10 +40,10 @@ def encode_url(value):
 
 
 @register.simple_tag
-def keyvalue(list, key, total):
+def get_percentage(list, key, total):
     for item in list:
         if item['value'] == int(key):
-            return round(item['total']/total*100, 2)
+            return round(item['total']/total*100, 1)
     return 0
 
 
