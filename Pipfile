@@ -13,6 +13,7 @@ babel = "*"
 fontawesome-free = "*"
 pillow = "*"
 gunicorn = "*"
+django-heroku = "*"
 
 [dev-packages]
 
