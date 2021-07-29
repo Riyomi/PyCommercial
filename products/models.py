@@ -101,7 +101,8 @@ class Review(models.Model):
         'Product', on_delete=models.CASCADE)
     value = models.IntegerField(default=3, validators=[
                                 MaxValueValidator(5), MinValueValidator(1)])
-    comment = models.TextField('Description', blank=True, null=True)
+    comment = models.TextField(
+        'Description', max_length=1000, blank=True, null=True)
 
     def __str__(self):
         return str(self.id)

@@ -2,11 +2,12 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.http import JsonResponse
 from django.urls import reverse
 from django.core.paginator import Paginator
+from django.contrib import messages
+from django.db.models import Avg
 
 from .forms import OrderForm
 from .models import Product, Order, OrderItem, Review, Category, CreditCard
 from .utils import refreshTotal, get_all_categories, get_subcategories, get_query_string
-from django.db.models import Avg
 
 
 def homePage(request):
@@ -32,10 +33,11 @@ def homePage(request):
 
 def browsePage(request):
     search_param = request.GET.get('search', '')
-
+    
     max_price = Product.objects.latest('price').price
     max_price_filter = request.GET.get('maxPrice') if request.GET.get(
-        'maxPrice') else max_price
+        'maxPrice') and request.GET.get(
+        'maxPrice').isdigit() else max_price
 
     main_categories = Category.objects.filter(parent=None).order_by('name')
 
@@ -172,8 +174,11 @@ def rateProduct(request):
     comment = request.POST['comment']
     product = Product.objects.get(pk=int(request.POST['product-id']))
 
-    review = Review(customer=request.user.customer,
-                    product=product, value=rating, comment=comment)
-    review.save()
+    if len(comment) > 1000:
+        messages.error(request, 'You exceeded the maximum character limit. Your review must be maximum 1000 characters long.')
+    else:
+        review = Review(customer=request.user.customer,
+                        product=product, value=rating, comment=comment)
+        review.save()
 
     return redirect("%s?p=reviews" % reverse('products:details', kwargs={"product_id": int(request.POST['product-id'])}))

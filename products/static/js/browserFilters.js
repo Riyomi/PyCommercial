@@ -94,4 +94,16 @@ function persistFormInputs() {
   }
 }
 
+$("#show-filters").on("click", function () {
+  if ($("#categories-filter").hasClass("hidden")) {
+    $("#show-filters").text("Hide filters");
+    $("#categories-filter").removeClass("hidden");
+    $("#price-filter").removeClass("hidden");
+  } else {
+    $("#show-filters").text("Show filters");
+    $("#categories-filter").addClass("hidden");
+    $("#price-filter").addClass("hidden");
+  }
+});
+
 jQuery.fn.reverse = [].reverse;

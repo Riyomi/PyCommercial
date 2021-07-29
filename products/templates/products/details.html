@@ -132,8 +132,12 @@
               <textarea
                 name="comment"
                 class="flex border-2 rounded-lg p-2 my-2 focus:outline-none w-full h-32"
-                placeholder="Write about the product in detail (optional)"
+                placeholder="Write about the product in detail (optional, max 1000 characters)"
+                maxlength="1000"
               />
+              {% for message in messages %}
+                <p class="{{ message.tags }}">{{ message }}</p>
+              {% endfor %}
               <input type="submit" class="purple-btn cursor-pointer w-full tablet:w-auto text-base" />
             </form>
           </div>
@@ -144,7 +148,7 @@
 
       <div class="mt-4 rounded-lg">
         <p class="title-h1">Reviews</p>
-        {% for review in product.review_set.all %}
+        {% for review in product.review_set.all reversed %}
           <div class="mb-4">
             <div class="border rounded-lg">
               <div class="background-color text-white rounded-t-lg py-1 px-3">

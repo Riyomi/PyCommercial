@@ -27,7 +27,7 @@
         </div>
 
         <!-- Categories -->
-        <div>
+        <div id="categories-filter" class="hidden landscapetablet:block">
           <p>Categories</p>
           <div id="category-selection">
             {% for category in main_categories %}
@@ -37,7 +37,7 @@
         </div>
 
         <!-- Price -->
-        <div>
+        <div id="price-filter" class="hidden landscapetablet:block">
           <p>Price</p>
           <div>
             <label for="number">Max Price</label>
@@ -50,19 +50,14 @@
           </div>
         </div>
 
-        <!-- Reviews -->
-        <div>
-          <p>Reviews</p>
-          <div>
-            <!-- Filtering by reviews -->
-          </div>
-        </div>
+        <!-- Show/hide filters on mobile -->
+        <a id="show-filters" class="purple-btn landscapetablet:hidden mb-4">Show filters</a>
 
         <!-- Submit button -->
         <input
           type="submit"
           class="purple-btn"
-          value="Apply filters"
+          value="Search"
         />
       </div>
     </form>
