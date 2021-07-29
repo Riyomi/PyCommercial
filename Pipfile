@@ -12,6 +12,7 @@ phonenumbers = "*"
 babel = "*"
 fontawesome-free = "*"
 pillow = "*"
+gunicorn = "*"
 
 [dev-packages]
 
