@@ -7,7 +7,7 @@ from phonenumber_field.modelfields import PhoneNumberField
 
 class Product(models.Model):
     name = models.CharField('Product Name', max_length=100)
-    image = models.ImageField(upload_to='products/static/images')
+    image = models.ImageField(upload_to='static/images')
     category = models.ForeignKey('Category', on_delete=models.CASCADE)
     description = models.TextField('Description', blank=True, null=True)
     price = models.PositiveIntegerField('Price')
