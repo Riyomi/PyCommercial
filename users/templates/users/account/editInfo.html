@@ -1,38 +1,24 @@
-{% extends 'users/profile.html' %}
-
-{% block page %}
+{% extends 'users/profile.html' %} {% block page %}
 <form method="POST" class="user-form">
   {% csrf_token %}
-  
+
   <p class="title-h1 mb-2">Edit info</p>
 
-  {{ user_form.username }}
-  {{ user_form.email }}
+  {{ user_form.username }} {{ user_form.email }} {{ user_form.first_name }} {{
+  user_form.last_name }} {{ customer_form.country }} {{ customer_form.city }} {{
+  customer_form.address }} {{ customer_form.mobile }}
 
-  {{ user_form.first_name }}
-  {{ user_form.last_name }}
-  
-  {{ customer_form.country }}
-  {{ customer_form.city }}
-  {{ customer_form.address }}
-  {{ customer_form.mobile }}
-  
   <div class="mx-auto">
-    <input type="submit" class="purple-btn" value="Confirm changes">
+    <input type="submit" class="green-btn" value="Confirm changes" />
   </div>
 
   {% for message in messages %}
-    <p class="text-green-300">{{ message }}</p>
+  <p class="text-green-300">{{ message }}</p>
+  {% endfor %} {% for field, errors in user_form.errors.items %}
+  <div class="text-red-500">{{errors.0}}</div>
+  {% endfor %} {% for field, errors in customer_fom.errors.items %}
+  <div class="text-red-500">{{errors.0}}</div>
   {% endfor %}
-
-  {% for field, errors in user_form.errors.items %}
-    <div class="text-red-500">{{errors.0}}</div>
-  {% endfor %}
-  
-  {% for field, errors in customer_fom.errors.items %}
-    <div class="text-red-500">{{errors.0}}</div>
-  {% endfor %}
-
 </form>
 
 {% endblock %}

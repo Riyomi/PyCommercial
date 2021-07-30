@@ -1,17 +1,15 @@
-{% extends 'users/profile.html' %}
-
-{% block page %}
+{% extends 'users/profile.html' %} {% block page %}
 <p class="title-h1">My Account</p>
 
 {% for field in fields %}
-  <div class="border-b-2 flex justify-between">
-    <span class="p-2 secondary-text-color">{{ field.label }}</span>
-    <span class="p-2">{{ field.value }}</span>
-  </div>
+<div class="border-b-2 flex justify-between">
+  <span class="p-2 secondary-text-color">{{ field.label }}</span>
+  <span class="p-2">{{ field.value }}</span>
+</div>
 {% endfor %}
 
 <div class="mt-5 mx-auto">
-  <a href="{% url 'users:editInfo' %}" class="purple-btn">Edit info</a>
+  <a href="{% url 'users:editInfo' %}" class="green-btn">Edit info</a>
 </div>
 
 {% endblock %}

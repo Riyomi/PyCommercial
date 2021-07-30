@@ -65,15 +65,15 @@
   }
 
   /* General use buttons */
-  .purple-btn {
+  .green-btn {
     @apply background-color text-white h-10 font-bold px-4 py-2 rounded cursor-pointer;
   }
 
-  .purple-btn:focus {
+  .green-btn:focus {
     @apply outline-none ring;
   }
 
-  .purple-btn:hover {
+  .green-btn:hover {
     @apply background-color-hover;
   }
 

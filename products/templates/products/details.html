@@ -28,7 +28,7 @@
         <span class="text-black text-xs font-normal">({{ product.review_set.count }} reviews)</span>
     </div>
 
-    <button id="{{ product.id }}" onClick="addProduct(this.id)" class="purple-btn mb-2">
+    <button id="{{ product.id }}" onClick="addProduct(this.id)" class="green-btn mb-2">
       <i class="fas fa-shopping-cart"></i>
       <span class="ml-1 text-base">Add to cart</span>
     </button>
@@ -51,7 +51,7 @@
 
       <p class="text-xl self-start">${{ product.price }}</p>
 
-      <button id="{{ product.id }}" onClick="addProduct(this.id)" class="purple-btn w-full laptop:w-6/12 tablet:w-11/12 tablet:mx-0 mx-auto">
+      <button id="{{ product.id }}" onClick="addProduct(this.id)" class="green-btn w-full laptop:w-6/12 tablet:w-11/12 tablet:mx-0 mx-auto">
         <i class="fas fa-shopping-cart"></i>
         <span class="ml-1">Add to cart</span>
       </button>
@@ -69,7 +69,6 @@
 
     <div class="px-6 tablet:px-8 mt-2">
 
-      {% if product.review_set.all %}
       <div class="flex flex-col landscapetablet:flex-row">
 
         <div class="w-full mb-4">
@@ -90,60 +89,60 @@
 
         </div>
 
-        {% if request.user.is_authenticated %}
-          <div class="w-full mx-auto my-auto ">
-            <p class="title-h1">Write a review</p>
+        
+        <div class="w-full mx-auto my-auto ">
+          {% if request.user.is_authenticated %}
+          <p class="title-h1">Write a review</p>
 
-            <form method="POST" action="{% url 'products:rate-product' %}">
-              {% csrf_token %}
-              <div>
-                <span>Your rating: </span>
-                <span class="rate text-yellow-300 cursor-pointer">
-                  <i
-                    id="star-1"
-                    onClick="setRating(this.id)"
-                    class="far fa-star"
-                  ></i>
-                  <i
-                    id="star-2"
-                    onClick="setRating(this.id)"
-                    class="far fa-star"
-                  ></i>
-                  <i
-                    id="star-3"
-                    onClick="setRating(this.id)"
-                    class="far fa-star"
-                  ></i>
-                  <i
-                    id="star-4"
-                    onClick="setRating(this.id)"
-                    class="far fa-star"
-                  ></i>
-                  <i
-                    id="star-5"
-                    onClick="setRating(this.id)"
-                    class="far fa-star"
-                  ></i>
-                </span>
+          <form method="POST" action="{% url 'products:rate-product' %}">
+            {% csrf_token %}
+            <div>
+              <span>Your rating: </span>
+              <span class="rate text-yellow-300 cursor-pointer">
+                <i
+                  id="star-1"
+                  onClick="setRating(this.id)"
+                  class="far fa-star"
+                ></i>
+                <i
+                  id="star-2"
+                  onClick="setRating(this.id)"
+                  class="far fa-star"
+                ></i>
+                <i
+                  id="star-3"
+                  onClick="setRating(this.id)"
+                  class="far fa-star"
+                ></i>
+                <i
+                  id="star-4"
+                  onClick="setRating(this.id)"
+                  class="far fa-star"
+                ></i>
+                <i
+                  id="star-5"
+                  onClick="setRating(this.id)"
+                  class="far fa-star"
+                ></i>
+              </span>
 
-                <input name="rating" class="hidden" oninvalid="alert('Choose a rating')" required/>
-                <input name="product-id" type="hidden" value="{{ product.id }}"
-              </div>
-              <textarea
-                name="comment"
-                class="flex border-2 rounded-lg p-2 my-2 focus:outline-none w-full h-32"
-                placeholder="Write about the product in detail (optional, max 1000 characters)"
-                maxlength="1000"
-              />
-              {% for message in messages %}
-                <p class="{{ message.tags }}">{{ message }}</p>
-              {% endfor %}
-              <input type="submit" class="purple-btn cursor-pointer w-full tablet:w-auto text-base" />
-            </form>
-          </div>
-        {% endif %}
+              <input name="rating" class="hidden" oninvalid="alert('Choose a rating')" required/>
+              <input name="product-id" type="hidden" value="{{ product.id }}"
+            </div>
+            <textarea
+              name="comment"
+              class="flex border-2 rounded-lg p-2 my-2 focus:outline-none w-full h-32"
+              placeholder="Write about the product in detail (optional, max 1000 characters)"
+              maxlength="1000"
+            />
+            {% for message in messages %}
+              <p class="{{ message.tags }}">{{ message }}</p>
+            {% endfor %}
+            <input type="submit" class="green-btn cursor-pointer w-full tablet:w-auto text-base" />
+          </form>
+          {% endif %}
+        </div>
       </div>
-      {% endif %}
 
 
       <div class="mt-4 rounded-lg">
@@ -166,7 +165,7 @@
             </div>
           </div>
         {% empty %}
-          <p>This product does not have any reviews yet.</p>
+          <p class="mb-4">This product does not have any reviews yet.</p>
         {% endfor %}
       </div>
     </div>

@@ -3,7 +3,7 @@
 {% block title %}Checkout{% endblock title %}
 
 {% block content %}
-<div class="mt-4 pb-4 flex flex-col landscapetablet:flex-row w-11/12 laptop:w-full justify-center mx-auto text-sm tablet:text-base">
+<div class="mt-4 pb-4 flex flex-col landscapetablet:flex-row w-11/12 laptop:w-full justify-center mx-auto">
   <!-- Order Form -->
   <div class="bg-white rounded-b-lg landscapetablet:rounded-l-lg p-6 order-last landscapetablet:order-first">
     <p class="title-h1">Order details</p>
@@ -11,8 +11,9 @@
       {% csrf_token %}
 
       <p class="font-semibold">Customer info</p>
+
       <div class="mx-4">
-        <label>First name</label>
+        <label class="text-sm tablet:text-base">First name</label>
         <div class="text-red-500">{{ order_form.first_name.errors.0 }}</div>
         {{ order_form.first_name }}
 
@@ -30,9 +31,8 @@
       </div>
 
       <p class="font-semibold">Delivery info</p>
-
-      <div class="mx-4">
-        <label>Country</label>
+      <div class="mx-4 text-base">
+        <label class="text-sm tablet:text-base">Country</label>
         <div class="text-red-500">{{ order_form.country.errors.0 }}</div>
         {{ order_form.country }}
 
@@ -47,7 +47,7 @@
 
       <p class="font-semibold">Payment info</p>
       <div class="mx-4">
-        <label>Name on card</label>
+        <label class="text-sm tablet:text-base">Name on card</label>
         <div class="text-red-500">{{order_form.name.errors.0 }}</div>
         {{ order_form.name }}
 
@@ -65,7 +65,7 @@
       </div>
 
       <div class="w-full flex justify-center px-2">
-        <button id="complete-purchase" type="submit" class="purple-btn disabled:opacity-50 w-full" {% if not request.session.cartdata %} disabled {% endif %}>
+        <button id="complete-purchase" type="submit" class="green-btn disabled:opacity-50 w-full" {% if not request.session.cartdata %} disabled {% endif %}>
           <i class="fas fa-shopping-cart"></i>
           <span>Complete purchase</span>
         </button>
