@@ -74,7 +74,7 @@
         <div class="w-full mb-4">
           <p class="title-h1">Reviews by ratings</p>
 
-          <div class="w-full tablet:text-base text-xs">
+          <div class="w-full tablet:text-base text-xs {% if not request.user.is_authenticated %} tablet:w-6/12 {% endif %}">
           {% for i in '54321'|make_list %}
             <div>
               <span class="inline-block">{{i}} <i class="fas fa-star text-xs text-yellow-300"></i></span>
@@ -89,10 +89,8 @@
 
         </div>
 
-        
+        {% if request.user.is_authenticated %}
           <div class="w-full mx-auto my-auto ">
-          {% if request.user.is_authenticated %}
-          <span> </span>
             <p class="title-h1">Write a review</p>
 
             <form method="POST" action="{% url 'products:rate-product' %}">
@@ -141,8 +139,8 @@
               {% endfor %}
               <input type="submit" class="purple-btn cursor-pointer w-full tablet:w-auto text-base" />
             </form>
-            {% endif %}
           </div>
+        {% endif %}
       </div>
 
 
